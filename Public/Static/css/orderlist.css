@@ -1,0 +1,234 @@
+body,html{
+	background: #f5f5f5;
+}
+.fixed-top {
+    box-sizing: border-box;
+    position: fixed;
+    top: 44px;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 40px;
+}
+.tab-bar__wrap ul {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    background: #fcfcfc;
+    font-size: 14px;
+}
+.tab-bar__wrap ul li {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    text-align: center;
+}
+.tab-bar__wrap ul .acitve-tab {
+    border-bottom: 2px solid #ff5000;
+    color: #ff5000;
+}
+#mainContainer{
+	margin: 56px 0 45px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+.item-card{
+	margin: 0 0.12rem 12px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+}
+.shop_icon{
+	color: #ff0036;
+	display: flex; 
+	overflow: hidden; flex: 0 0 auto; width: 15px; height: 15px; margin-top: 16px; margin-bottom: 16px; margin-left: 12px;
+}
+.orderlist_head{
+	display: flex; overflow: hidden; height: auto; width: 100%; background-color: rgb(255, 255, 255);
+}
+.shop_name{
+	height: auto;
+    place-self: flex-start;
+    display: flex;
+    overflow: hidden;
+    flex: 0 0 auto;
+    width: 136px;
+    font-size: 12px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    /* margin-left: 5px; */
+    margin-left: 12px;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    align-items: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 14.4px;
+    white-space: nowrap;
+    color: #666;
+}
+.order_status{
+	display: flex;
+    -webkit-box-flex: 1;
+    width: -webkit-fit-content;
+    place-self: flex-start;
+    font-size: 12px;
+    color: #ff0036;
+    margin: 16px 12px;
+    height: auto;
+    justify-content: flex-end;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 14.4px;
+    white-space: nowrap;
+}
+.order_time{
+	display: flex;
+    overflow: hidden;
+    -webkit-box-flex: 1;
+    flex: 1 1 0%;
+    width: -webkit-fit-content;
+    place-self: flex-start;
+    font-size: 12px;
+    color: #999;
+    margin: 16px 8px;
+    height: auto;
+    width: -webkit-fit-content;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    align-items: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 14.4px;
+    white-space: nowrap;
+}
+.orderlist_sub{
+	display: flex; overflow: hidden; height: auto; width: 100%; background-color: rgb(255, 255, 255);
+	display: flex; overflow: hidden; height: 90px; width: 100%; margin-bottom: 12px; place-self: flex-start; position: relative;
+}
+.TImage{
+	display: flex; overflow: hidden; position: absolute; width: 90px; height: 90px; margin-left: 12px; border-radius: 6px; visibility: visible;
+}
+.TText{
+	display: flex; overflow: hidden; position: absolute; background-color: rgb(255, 255, 255); height: auto; width: 225px; right: 0px; top: 0px; margin-right: 12px; -webkit-box-orient: vertical; flex-direction: column;
+	}
+.TText .Ttitle{
+	display: flex; overflow: hidden; flex: 0 0 auto; color: rgb(51, 51, 51); max-width: 170px; margin-bottom: 5px; height: auto; width: -webkit-fit-content; font-size: 12px; -webkit-box-pack: start; justify-content: flex-start; -webkit-box-align: center; align-items: center;
+	text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+}
+.TText .Tdesc{
+	display: flex; overflow: hidden; flex: 0 0 auto; max-width: 170px; color: rgb(153, 153, 153); margin-bottom: 5px; height: auto; width: -webkit-fit-content; font-size: 12px; -webkit-box-pack: start; justify-content: flex-start; -webkit-box-align: center; align-items: center;
+	text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+}
+.TInfo{
+	display: flex; overflow: hidden; position: absolute; right: 0px; top: 0px; margin-right: 12px; -webkit-box-orient: vertical; flex-direction: column; height: auto; width: -webkit-fit-content;
+}
+.TInfo .price{
+	display: flex; overflow: hidden; flex: 0 0 auto; margin-top: 3.5px; margin-bottom: 3.5px; height: auto; width: -webkit-fit-content; place-self: flex-start;color: rgb(51, 51, 51); margin-left: 12px; font-size: 12px; visibility: visible; height: auto; width: -webkit-fit-content; -webkit-box-pack: start; justify-content: flex-start; -webkit-box-align: center; align-items: center;
+}
+.TInfo .qt{
+	display: flex; overflow: hidden; color: rgb(153, 153, 153); font-size: 12px; visibility: visible; margin-top: 3.5px; margin-bottom: 3.5px; -webkit-box-pack: end; justify-content: flex-end; -webkit-box-align: center; align-items: center; height: auto; width: 100%;text-overflow: ellipsis; overflow: hidden; line-height: 14.4px; white-space: nowrap;
+}
+.orderlist_pay{
+	background-color: rgb(255, 255, 255);
+	position: relative;
+	padding-right: 12px;
+    padding-bottom: 12px;
+    padding-top: 6px;
+    text-align: right;
+}
+.qt_desc{
+	 margin-left: 12px; color: rgb(153, 153, 153); height: auto; width: -webkit-fit-content; font-size: 12px; visibility: visible; -webkit-box-pack: start; justify-content: flex-start; -webkit-box-align: center; align-items: center;
+	text-overflow: ellipsis; overflow: hidden; line-height: 14.4px; white-space: nowrap;
+}
+.total_price{
+    margin-left: 12px;
+    font-size: 12px;
+    color: rgb(51, 51, 51);
+    visibility: visible;
+    height: auto;
+    width: -webkit-fit-content;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    align-items: center;
+	text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 14.4px;
+    white-space: nowrap;
+}
+.orderlist_btns{
+	display: block;
+	padding:10px;
+	border-top: 1px solid rgb(248, 248, 248);
+}
+.orderlist_btns a{
+	display: inline-block;
+    overflow: hidden;
+    flex: 0 0 auto;
+    height: 28px;
+    width: 81px;
+    border-radius: 15px;
+    visibility: visible;
+    border-style: solid;
+    border-width: 1px;
+    place-self: flex-start;
+    position: relative;
+    text-align: center;
+    line-height: 28px;
+}
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+.ml10{
+	margin-left: 10px;
+}
+.gray_btn{
+    border-color: rgb(153, 153, 153);
+}
+.red_btn{
+    border-color: #ff0036;
+    color: #ff0036;
+}
+.more_btn{
+	 height: 28px;-webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; color: rgb(102, 102, 102); font-size: 13px; visibility: visible; width: 60px;
+	text-overflow: ellipsis; overflow: hidden; line-height: 15.6px; white-space: nowrap;
+}
+.empty-block {
+    text-align: center;
+    margin-top: 1.3rem;
+}
+.empty-block img {
+    width: 1.075rem;
+    margin: 0.06rem 0;
+}
+.empty-block .empty-title {
+    color: #333333;
+    font-size: 0.16rem;
+    margin: 0.06rem 0;
+}
+.empty-block .empty-content {
+    color: #999999;
+    font-size: 0.12rem;
+}
+.empty-block .empty-btn span {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 32px;
+    padding: 0 0.23rem;
+    height: 32px;
+    color: #ffffff;
+    background: linear-gradient(90deg,#eb3c3c,#ff7459);
+    border-radius: 16px;
+    margin-top: 0.385rem;
+}
+.empty-icon{
+	font-size: 36px;
+}

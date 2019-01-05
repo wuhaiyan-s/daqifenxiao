@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+<meta content="telephone=no" name="format-detection">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>购物车</title>
+<link rel="stylesheet" type="text/css" href="{$StaticDir}iconfont/iconfont.css">
+<link href="{$StaticDir}mui/css/mui.min.css" type="text/css" rel="stylesheet">
+<link href="{$StaticCss}base.css" type="text/css" rel="stylesheet">
+<link href="{$StaticCss}cart.css" type="text/css" rel="stylesheet">
+<script src="{$StaticDir}mui/js/mui.min.js" language="javascript" type="text/javascript"></script>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav headerTop">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">购物车</h1>
+</header>
+<div class="order-list">
+  <div class="grid-shop">
+    <div class="grid-bundle grid-bundle-SM_725677994 grid-bundle-shop" id="orderList">
+	  <empty name="cartData">
+	  	<div class="cartHasNone">您的购物车为空.</div>
+	  <else/>
+	  	<volist name="cartData" id="goods">
+		  <div class="grid-main">
+	        <div class="grid-order" id="grid-order-{$goods.id}" goodsid="{$goods.id}"  goodsname="{$goods.name}" price="{$goods.price}"  num="{$goods.num}" image="{$goods.image}" unit_price="{$goods.unit_price}">
+	          <div class="order-select" id="order-select-{$goods.id}" goodsid="{$goods.id}"  goodsname="{$goods.name}" price="{$goods.price}"  num="{$goods.num}" image="{$goods.image}">
+	            <div class="icon"></div>
+	          </div>
+	          <a href="{:U('Index/detail',array('id'=>$goods['id']))}" class="order-link" target="_blank">
+	            <div class="link-mask"></div>
+	            <img src="__PUBLIC__/Uploads/{$goods.image}"></a>
+	          <div class="order-des">
+	            <a href="{:U('Index/detail')}">{$goods.name}</a>
+	            <span class="ui-number">
+	              <a class="decrease" onclick="addToCart({$goods.id},'decrease')">-</a>
+	              <input type="number" class="num" min="1" pattern="[0-9]*" autocomplete="off" id="goods-num-{$goods.id}" value="{$goods.num}" onchange="addToCart({$goods.id},'change')">
+	              <a class="increase" onclick="addToCart({$goods.id},'increase')">+</a></span>
+	          </div>
+	          <div class="order-opt">
+	            <div class="opt-num">数量 x{$goods.num}</div>
+	            <p class="price">
+	              <span class="ui-price-icon">￥</span><?php echo sprintf('%.2f',$goods['price']);?></p>
+	            <a class="opt-delete" onclick="addToCart({$goods.id},'del')"></a>
+	          </div>
+	        </div>
+	      </div>
+		  </volist>
+	  </empty>
+    </div>
+  </div>
+</div>
+<div class="float-box">
+  <div class="tm-mcApart"></div>
+  <a class="order-select">
+    <div class="icon" goods_count="{$goods_count}" id="selectAllBtn" onclick="selectAll($(this));"></div>
+  </a>
+  <div class="float-sum">
+    <p class="fee">
+      <span class="total-title">总价：</span>
+      <span class="total-fee-box">
+        <span class="tc-rmb">￥</span>
+        <span class="total-fee" id="total-fee" total_fee="0.00">0.00</span></span>
+    </p>
+  </div>
+  <div class="float-go">
+    <a class="go-btn" id="toBuyBtn" goods_selected="0" onclick="toBuy()">结算(<i>0</i>)</a></div>
+</div>
+<include file="Application/Tpl/App/default/Index/toolbar.html"/>
+<script src="{$StaticDir}mui/js/mui.min.js "></script>
+<script src="{$StaticDir}mui/js/mui.view.js "></script>
+<script src="{$StaticJs}main.js "></script>
+<script language="javascript" type="text/javascript">
+	var goods_selected = 0;//加入结算的所有商品的总个数（一个商品买多件算1个）
+	var total_price_t  = 0.00;
+	var goods_count    = {$goods_count};
+	var total_price    = {$total_price};
+	
+	mui.init({
+		keyEventBind: {
+			backbutton: true  //开启back按键监听
+		}
+	});
+	$(function(){
+		//单个商品的选择和取消 小数运算时数值结果可能会有bug
+		$('#orderList .order-select .icon').click(function(){
+			console.log(goods_selected);
+			var parentObj  = $(this).parent().parent();
+			var isSelected = parentObj.hasClass('grid-order-selected');
+			var price      = parentObj.attr('price');
+			if( !isSelected ){
+				$(this).addClass('icon-selected');
+				parentObj.addClass('grid-order-selected');
+				
+				goods_selected += 1;
+				if( goods_selected == goods_count ){
+					$('#selectAllBtn').addClass('icon-selected');//全选
+				}
+			}else{
+				$(this).removeClass('icon-selected');
+				$(this).parent().parent().removeClass('grid-order-selected');
+				
+				goods_selected -= 1;
+				$('#selectAllBtn').removeClass('icon-selected');//全不选
+			}
+			console.log(goods_selected);
+			updateCart();
+		});
+	});
+	
+	//全选或全不选
+	function selectAll(obj)
+	{
+		goods_selected = 0;
+		var isSelected = obj.hasClass('icon-selected');
+		if( isSelected ){
+			//全不选
+			obj.removeClass('icon-selected');
+			$('.grid-order').removeClass('grid-order-selected');
+			$('#orderList .order-select .icon').removeClass('icon-selected');
+		}else{
+			goods_selected = goods_count;
+			//全选
+			obj.addClass('icon-selected');
+			$('.grid-order').addClass('grid-order-selected');
+			$('#orderList .order-select .icon').addClass('icon-selected');
+		}
+		updateCart();
+	}
+	
+	//根据选择更新要结算的商品id
+	function updateCart()
+	{
+		var orders = $('.grid-order-selected'),
+			l = orders.length;
+		
+		buydata = {};
+		total_price_t = 0;
+		if( l > 0 ){
+			for( var i = 0;i < l;i++ ){
+				var Id      = $(orders[i]).attr('goodsid');
+				var goods   = {};
+				goods.id    = Id;
+				goods.num   = parseInt($(orders[i]).attr('num'));
+				goods.price = $(orders[i]).attr('price');
+				goods.image = $(orders[i]).attr('image');
+				goods.name  = $(orders[i]).attr('goodsname');
+				buydata[Id] = goods;
+				total_price_t += goods.price * goods.num;
+			}
+		}
+		buyinfo.total_price = toDecimal2(total_price_t);
+		buyinfo.goods_count = goods_selected;
+		$('#toBuyBtn').attr('goods_selected',goods_selected).find('i').html(goods_selected);
+		$('#total-fee').html( toDecimal2(total_price_t) );
+	}
+</script>
+</body>
+</html>

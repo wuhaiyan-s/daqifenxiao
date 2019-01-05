@@ -1,0 +1,124 @@
+body{
+	font-family: "微软雅黑";
+}
+.headerTop{
+	background: #e4393c;
+}
+.headerTop .mui-action-back{
+	color: #ffffff;
+}
+.headerTop h1{
+	color: #ffffff;
+}
+.topNav{
+	margin-top: 44px;
+	background: #f7f7f7;;
+}
+.topNav .timeline{
+	font-family: 'arial';
+	margin-top: 10px;
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 14px;
+	color: #666;
+}
+.topNav .timeline .mui-icon-arrowleft,.topNav .mui-icon-arrowright{
+	font-size: 20px;
+	margin-top: 10px;
+	color: #333;
+}
+.topNav .timeline .mui-icon-arrowleft{
+	float: left;
+	margin-left: 10px;
+}
+.topNav .timeline .mui-icon-arrowright{
+	float: right;
+	margin-right: 10px;
+}
+.totalget{
+	display: block;
+	height: 70px;
+	line-height: 60px;
+	text-align: center;
+	font-size: 24px;
+	color: #333;
+	font-weight: normal;
+}
+.money_info{
+	display: block;
+}
+.money_info li{
+	display: inline-block;
+	text-align: center;
+	width: 50%;
+	float: left;
+	padding:20px 0px;
+	background: #efefef;
+	position: relative;
+	font-size: 14px;
+}
+.money_info li span{
+	font-size: 12px;
+	color: #666;
+}
+.money_info li b{
+	font-weight: normal;
+	color: #333;
+}
+.money_info li:first-child:after{
+	position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    content: '';
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    background-color: #c8c7cc;
+    width: 1px;
+}
+.money_info li b,.money_info li span{
+	display: block;
+}
+.mui-table-view-cell:after{
+	background: #e5e5e5;
+}
+.mui-table-view .mui-media-object{
+	max-width:65px;
+	max-height:65px;
+	width:65px;
+	height:65px;
+	border-radius: 50%;
+}
+.sale_info h3{
+	font-weight: normal;
+	height: 45px;
+	line-height: 45px;
+	font-size: 14px;
+	padding:0px 15px;
+	margin:0px;
+}
+.sale_info h3 b{
+	font-size: 20px;
+	float: right;
+	color:#e93b3d; 
+	font-weight: normal;
+}
+.sale_list .mui-ellipsis span{
+	display: block;
+	font-size: 14px;
+	color: #666;
+	line-height: 136%;
+}
+.sale_list .mui-ellipsis span i{
+	font-style: normal;
+	color: #e93b3d;
+}
+.mui-table-view-cell p{
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.mui-table-view:before,.mui-table-view:after{
+	background: #e5e5e5;
+}

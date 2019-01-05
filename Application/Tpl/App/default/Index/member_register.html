@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html style="font-size: 37.5px;"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+<meta content="telephone=no" name="format-detection">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title></title>
+<link href="./Public/Plugin/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+<link href="./Public/Static/css/base.css" type="text/css" rel="stylesheet">
+<link href="./Public/Static/css/login.css" type="text/css" rel="stylesheet">
+<script src="./Public/Static/js/jquery3.min.js" language="javascript" type="text/javascript"></script>
+<script type="text/javascript">
+    function check(theForm){
+	    var phone = theForm.phone.value;
+        if( phone == ""){
+            alert("请输入手机号!");
+            theForm.phone.focus();
+            return false;
+        }
+        if(theForm.password.value == ""){
+            alert("请输入密码!");theForm.password.focus();return false;
+        }
+        var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+        if( !myreg.test( phone ) ){ 
+	        alert("请输入正确的手机号!");
+            theForm.phone.focus();
+            return false;
+        }
+        return true;
+    }
+    $(function(){
+		var fontSize = $(window).width() / 375 * 37.5;
+		$('html').css('font-size',fontSize+'px');
+	});
+</script>
+</head>
+<body>
+	<div class="head"><a class="backBtn" href="{:U('App/Member/login')}"></a>用户注册</div>
+	<form id="regForm"  onSubmit="javascript:return check(formUser);" class="mlogin"  name="formUser" action="" method="post">
+	    <div class="field autoClear">
+            <div class="label">手机号</div>
+            <div class="field-control">
+                <input type="text" class="input-required" name="phone" placeholder="请输入11位手机号码" value="" id="username">
+                <span id="getCode" class="hide">获取验证码</span>
+            </div>
+        </div>
+        <div class="field autoClear hide">
+            <div class="label">验证码</div>
+            <div class="field-control">
+                <input type="text" class="input-required" name="TPL_username" placeholder="" value="" id="checkcode">
+            </div>
+        </div>
+        <div class="field autoClear">
+            <div class="label">登录密码</div>
+            <div class="field-control">
+                <input type="password" class="input-required" name="password" placeholder="请输入密码" value="" id="password">
+            </div>
+            <div class="icon-clear" style="visibility: hidden;"><i class="iconfont"></i></div>
+            <div class="pwd pwd-show" id="show-pwd"></div>
+        </div>
+		<div class="checkcode-wrap">
+        	<div id="checkcode"></div>
+        </div>
+    	<div class="submit">
+            <button type="submit" class="button regBtn" id="submit-btn">确定</button>
+        </div>
+    </form>
+</body>
+</html>

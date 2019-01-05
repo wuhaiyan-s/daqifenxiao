@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html style="font-size: 37.5px;"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+<meta content="telephone=no" name="format-detection">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title></title>
+<link href="../Public/Plugin/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+<link href="../Public/Static/css/base.css" type="text/css" rel="stylesheet">
+<link href="../Public/Static/css/login.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="head">账户登录</div>
+<form id="loginForm" class="mlogin" action="" method="post">
+    
+	                         <div class="field autoClear">
+            <div class="label">账户</div>
+            <div class="field-control">
+                <input type="text" class="input-required" name="TPL_username" placeholder="手机号" value="" id="username">
+            </div>
+            <div class="icon-clear" style="visibility: hidden;"><i class="iconfont"></i></div>
+        </div>
+        <div class="field autoClear">
+            <div class="label">登录密码</div>
+            <div class="field-control">
+                <input type="password" class="input-required" name="TPL_password" placeholder="请输入密码" value="" id="password">
+            </div>
+            <div class="icon-clear" style="visibility: hidden;"><i class="iconfont"></i></div>
+            <div class="pwd pwd-show" id="show-pwd"></div>
+        </div>
+
+					<div class="checkcode-wrap">
+        		<div id="checkcode"></div>
+        	</div>
+    	    <div class="submit">
+	            <button type="submit" class="button" id="submit-btn">登 录</button>
+	            <a href="" class="ft-right reg">免费注册</a>
+	        </div>
+	        <div class="other-link">
+	        	<div class="weixinLogin">
+	        		<span class="icon"></span>
+	        		<span class="txt">微信登录</span>
+	        	</div>
+	        </div>
+             </div></form>
+</body>
+</html>

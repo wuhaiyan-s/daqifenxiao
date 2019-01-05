@@ -1,0 +1,305 @@
+body,html{
+	background: #f7f7f7;
+}
+.header_con {
+    background-color: #fff;
+    padding: 10px
+}
+
+.user_name {
+    color: #999;
+    padding-left: .5rem
+}
+
+.line1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.jx {
+    max-width: 3.25rem
+}
+
+.change-account {
+    max-width: 9rem
+}
+
+.my_header {
+    background: -webkit-linear-gradient(left,#eb3c3c,#ff7459);
+    background: -webkit-gradient(linear,left top,right top,from(#eb3c3c),to(#ff7459));
+    background: linear-gradient(90deg,#eb3c3c,#ff7459);
+    border-radius: 6px
+}
+
+.my_header.shadow {
+    box-shadow: 0 2px 4px rgba(228,57,60,.4)
+}
+
+.my_header.plus_user {
+    background: -webkit-linear-gradient(90deg,#dd9b4c,#ffd787);
+    background: -webkit-gradient(linear,left top,right top,from(#dd9b4c),to(#ffd787));
+    background: -webkit-linear-gradient(left,#dd9b4c,#ffd787);
+    background: linear-gradient(90deg,#dd9b4c,#ffd787);
+    box-shadow: 0 .1rem .25rem #f8e3c6
+}
+
+.my_header .user_info {
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+    width: 100%
+}
+
+.my_header .user_info .head-tip {
+    height: 30px;
+    margin-left: 9px;
+    margin-top: 15px;
+    position: absolute;
+    width: 30px;
+    z-index: 1
+}
+
+.my_header .avatar_wrap {
+    -webkit-transform: translateY(-50%);
+    left: 15px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.my_header .avatar {
+    border: 1px solid hsla(0,0%,100%,.4);
+    border-radius: 60px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    overflow: hidden
+}
+
+.my_header .avatar,.my_header .avatar .image_info {
+    height: 60px;
+    width: 60px
+}
+
+.my_header .image_info {
+    height: 100%;
+    width: 100%
+}
+.my_header .goto_arrow {
+    padding-right: 14px!important;
+    position: relative
+}
+
+.my_header .goto_arrow:after {
+    -webkit-transform: rotate(135deg);
+    -webkit-transform-origin: 50%;
+    border-left: 1px solid hsla(0,0%,100%,.7);
+    border-top: 1px solid hsla(0,0%,100%,.7);
+    content: "";
+    display: block;
+    height: 4px;
+    position: absolute;
+    right: 6px;
+    top: 5px;
+    transform: rotate(135deg);
+    transform-origin: 50%;
+    width: 4px
+}
+.my_header .personal_wrap {
+    -webkit-transform: translateY(-50%);
+    left: 85px;
+    position: absolute;
+    top: 49%;
+    transform: translateY(-50%)
+}
+
+.my_header .login {
+    background: #c8483f;
+    border-radius: 10px;
+    color: #fff;
+    display: inline-block;
+    font-size: 10px;
+    height: 15px;
+    line-height: 16px;
+    margin-right: 5px;
+    margin-top: 10px;
+    padding: 0 8px;
+    text-align: center
+}
+
+.my_header .bind-wrap {
+    background-image: url(https://img11.360buyimg.com/jdphoto/s64x50_jfs/t27097/208/1034438165/4013/84f827b6/5bbf1a36Nd9c5f012.png);
+    background-repeat: no-repeat;
+    background-size: 1.4rem 1rem;
+    font-size: .5rem;
+    height: 1rem;
+    line-height: 1.1rem;
+    padding-left: 1.25rem
+}
+.my_header .name {
+    color: #fff;
+    font-size: 14px
+}
+
+.my_header .name text {
+    display: inline
+}
+
+.my_header .name .my_header_v4_name_edit {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAzUExURUdwTP///////////////////////////////////////////////////////////////8/RimEAAAAQdFJOUwB3a5m4Veb3H6QDji7WgAgChXPEAAAApElEQVQoz3WSSwLDIAhEMUHBtkm4/2mL+Ld1VvGN4gQByGKHgehCxzCKI0lVHCzfsYp85YcsOsp++ZGd4anOaccp3RMnXgpHPbDw4jC4MQ8+apzp0wF2/v4EdYwLQugcQJ3MJQANXJ26pGYYf7WIVEstXEthzzlwvTzH5YVrXPvBa+VpZ1rfmmfisTTR39fUXWvitu37h9o/bRoG+TsMbXxCH58vmgwXoPcjyaAAAAAASUVORK5CYII=) 0 0/12px;
+    display: inline-block;
+    height: 12px;
+    margin: 0 0 0 4px;
+    vertical-align: middle;
+    width: 12px
+}
+
+.my_header .pin {
+    color: hsla(0,0%,100%,.7);
+    display: block;
+    font-size: 12px;
+    margin:2px 0px;
+    width: 12rem;
+}
+.my_header .pin a{
+	position: relative;
+	font-style: normal;
+	color: #ffffff;
+	background: #c8483f;
+    border-radius: 6px;
+    margin-left: 5px;
+    padding:0px 15px 0px 5px;
+    box-shadow: 0.05rem 0.1rem 0.05rem #c6934d;
+}
+.my_header .pin.line2 i{
+	padding-right: 5px;
+}
+.my_header .pin.line1 a:after {
+    -webkit-transform: rotate(135deg);
+    -webkit-transform-origin: 50%;
+    border-left: 1px solid hsla(0,0%,100%,.7);
+    border-top: 1px solid hsla(0,0%,100%,.7);
+    content: "";
+    display: block;
+    height: 4px;
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    transform: rotate(135deg);
+    transform-origin: 50%;
+    width: 4px
+}
+.my_header .account_wrap {
+    height: 3.25rem;
+    line-height: 3.25rem;
+    overflow: hidden;
+    position: absolute;
+    right: 15px;
+    top: 0
+}
+
+.my_header .account_wrap_content {
+    color: rgba(76,0,0,.7);
+    font-size: 12px;
+    height: 3.25rem;
+    padding-left: 15px;
+    position: relative
+}
+
+.my_header .account_wrap_content span{
+    display: inline-block;
+    height: 12px;
+    line-height: 12px;
+    position: relative;
+    right: 2px;
+    top: 0px;
+    width: 12px;
+    font-size: 1rem;
+}
+.my_header .account_wrap_content span:before{
+	
+}
+.ublock{
+	margin: 15px 10px;
+	background: #ffffff;
+	border-radius: 4px;
+}
+.ublock h2{
+	font-size: 1.25rem;
+	padding:15px 15px 15px 15px;
+	position: relative;
+	color: #333;
+	margin:0px;
+	font-weight: normal;
+}
+.ublock h2 a{
+	display: block;
+}
+.ublock h2 em{
+	font-style: normal;
+	position: absolute;
+    right: 15px;
+    top: 25px;
+}
+.ublock h2 em:after{
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    content: "";
+    display: block;
+    height: 6px;
+    transform: rotate(225deg);
+    transform-origin: 50%;
+    width: 6px;
+    font-weight: bold;
+}
+.ublock h2.toShow{
+	background: #eeeeee;
+	font-weight: bold;
+}
+.ublock h2.toShow em:after{
+	transform: rotate(45deg);
+}
+.ublock h2 span{
+	font-weight: normal;
+	color: #e93b3d;
+	font-size: 1rem;
+	background: #e93b3d;
+	color: #fff;
+	padding:2px 7px;
+	border-radius: 10px;
+}
+.ublock h2 span i{
+	font-style: normal;
+	font-size: 1.083rem;
+}
+.ublock h2 span,.ublock li span{
+	position: absolute;
+	right: 30px;
+	top: 15px;
+}
+.ublock ul{
+	display: none;
+}
+.ublock li{
+	padding: 11px 20px;
+	position: relative;
+	color: #666;
+	font-size: 13px;
+}
+.ublock li:after{
+	position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 18px;
+    right: 18px;
+    height: 1px;
+    content: '';
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    background-color: #c8c7cc;
+}
+.ublock li span{
+	color: #c00;
+}
+.ublock ul li:last-child:after{
+	height: 0px;
+}

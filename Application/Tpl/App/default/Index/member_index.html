@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html style="font-size: 12px;">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+<meta content="telephone=no" name="format-detection">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title></title>
+<link rel="stylesheet" type="text/css" href="./Public/Static/iconfont/iconfont.css">
+<link href="./Public/Static/css/base.css" type="text/css" rel="stylesheet">
+<link href="./Public/Static/css/member_index.css" type="text/css" rel="stylesheet">
+</head>
+<body id="ucenter">
+<div class="page-container">
+	<div class="header_con" id="myHeader">
+	  <div class="my_header shadow">
+	    <div class="user_info">
+	      <!---->
+	      <div class="avatar_wrap">
+	        <div class="avatar">
+	          <div class="image_info" style="background: url(&quot;http://storage.360buyimg.com/i.imageUpload/7738687931343735383236363135323935_mid.jpg&quot;) 0px 0px / 100% 100% no-repeat;"></div>
+	        </div>
+	      </div>
+	      <div class="personal_wrap">
+	        <div class="name line1">
+	          <span class="line1">绿芝麻51</span>
+<!-- 	          <span class="my_header_v4_name_edit"></span> -->
+	          <span class="my_header_level hide">(一级代理商)</span>
+	        </div>
+	        <span class="pin line1">销售额<a href="{:U('Member/sale')}">￥{$all_buy_price}</a></span>
+	      </div>
+	      <div class="account_wrap">
+	        <a href="{:U('Member/setting')}" class="account_wrap_content">
+	          <span class="iconfont icon-setting-preferences-gear-office-application-structure-define-process-fbaaebdf"></span>账号管理</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="uinfolist" id="uinfolist">
+		<div class="ublock umember">
+			<h2>家族成员<span><i>0</i>人</span><em></em></h2>
+			<ul>
+				<li>一级会员<span>{$users.a_cnt}</span></li>
+				<li>二级会员<span>{$users.b_cnt}</span></li>
+				<li>三级会员<span>{$users.c_cnt}</span></li>
+			</ul>
+		</div>
+		<div class="ublock ubuy">
+			<h2>家族推广<span><i>5</i>单</span><em></em></h2>
+			<ul>
+				<li>下单未购买<span>{$all_over_buy}</span></li>
+				<li>下单已购买<span>{$all_buy}</span></li>
+			</ul>
+		</div>
+		<div class="ublock">
+			<h2>我的佣金<span><i>0.25</i>元</span><em></em></h2>
+			<ul>
+				<li>未付款定单佣金<span>{$start_price}</span></li>
+				<li>已付款定单佣金<span>{$over_price}</span></li>
+				<li>已收货定单佣金<span>{$confirm_price}</span></li>
+				<li>已完成定单佣金<span>{$add_over_price}</span></li>
+				<li>待审核提现佣金<span>{$get_start_price}</span></li>
+				<li>已提现佣金<span>{$get_end_price}</span></li>
+				<li>可提现佣金<span>{$users.price}</span></li>
+			</ul>
+		</div>
+		<div class="ublock">
+			<h2>申请提现</h2>
+		</div>
+	</div>
+</div>
+<include file="Application/Tpl/App/default/Index/toolbar.html"/>
+<script language="javascript" type="text/javascript">
+	$(function(){
+		$('#uinfolist h2 em').click(function(){
+			var showStatus = $(this).parent().hasClass('toShow');
+			if( showStatus ){
+				$(this).parent().next().slideUp();
+				$(this).parent().removeClass('toShow');
+			}else{
+				$(this).parent().next().slideDown();
+				$(this).parent().addClass('toShow');
+			}
+		});
+	});
+</script>
+</body>
+</html>

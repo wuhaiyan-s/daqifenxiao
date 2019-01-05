@@ -1,0 +1,368 @@
+body,html {
+    font: 400 14px/1.3 "Helvetica Neue",Helvetica,Arial,sans-serif,'\5b8b\4f53';
+    color: #666;
+    background-color: #eee;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+    margin: 0;
+    padding: 0;
+}
+.mui-flex>.cell.fixed {
+    -webkit-box-flex: 0!important;
+    -webkit-flex: none!important;
+    -ms-flex: none!important;
+    flex: none!important;
+    width: auto;
+}
+.mui-flex>.cell {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width: 0;
+    -webkit-flex-basis: 0;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+    display: block;
+    padding: 0!important;
+    position: relative;
+}
+.mui-flex, .mui-flex *, .mui-flex :after, .mui-flex :before {
+    box-sizing: border-box;
+}
+.mui-flex.align-center {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+mui-flex, .mui-flex *, .mui-flex :after, .mui-flex :before {
+    box-sizing: border-box;
+}
+.mui-flex {
+    display: -webkit-box!important;
+    display: -webkit-flex!important;
+    display: -ms-flexbox!important;
+    display: flex!important;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.order-address {
+	margin-top: 44px;
+    padding: 15px 9px;
+    margin-bottom: 9px;
+    background-color: #fff;
+    -ms-box-shadow: 0 1px 0 0 rgba(0,0,0,.2),0 .5px 0 0 rgba(0,0,0,.3);
+    box-shadow: 0 1px 0 0 rgba(0,0,0,.2),0 .5px 0 0 rgba(0,0,0,.3)
+}
+
+.order-address .icon {
+    margin-right: 9px;
+    height: 21px;
+    width: 21px;
+    background: url("data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAoCAMAAADezbogAAAAh1BMVEUAAABKTWFWVmddY21YYWte Y25eY21eY21eY21eY25eY21dYm1cX2pfZG1eY21eY21bX2lfY21eY21eY21eY25eY21dYmxdYm1b YWxdYmlbXWheZG1fY21eY21eY25eY21eY21eY25fY2xeYmteY21fZG5eY21dYm1eY21dY2xeYm5c YmxfZG7p6izKAAAALHRSTlMABgxcGezi2Magc2Uj+bOPHefevph7RDUuKhP078q7qKSHgT3Rzaxr YE5tVNnA90sAAAGcSURBVDjLjZLZlqJAEERBRJFFdlQ20Xbrnvv/3zdDFjUtS5/T8UIGUWRGBmX8 Hmsv7NpH6J6WRMtBI8lXE/HjDmDf2nsMEHsj9RnAJj+qGU8H2JnfagiV+8Y/E3D+D/iC5DjqVrbw 0HMhKadO95Cr6k51Glazcm8oVzeqSDYCV96YFwD2a2EH2PVPh40paoOC7Yt+Jlj9awhXoRew3eJ1 A0dbsgzDA3Edgd23NVOwRLc59x9VQjxw9dBuMN8YRsdWSA6FcgipFBlxf0aNeoIK2teJXAj6Mxsh J9hKjjv4MqTo+7qwHhbhXpTHDhIV95a9OFFNy5gBH3qIK4fSIdK9iNuDoleI1EP/riI8Z5apajNW nqNAwp3ipdPZgT9TzS2JoVfqlj5+DuVZpo+w2sh/FPgB6US+6skqPv6M1KiieWtlsxnd/IfKRsOC 8I1+Mtk1hcO7L7vURLu7mZpk8DLGyOGqo4V2lkMDB926jmbyKfi+Dp4xhwuZWmJvLKHtw/Fr4nJR XtvUvgPFXNJp1CqfZYRAY/4om1mdjnb6C23/MgGcMJnDAAAAAElFTkSuQmCC") 50% 50% no-repeat;
+    background-size: 15px 20px
+}
+
+.order-address .content {
+    margin-right: 15px
+}
+
+.order-address .content .info {
+    line-height: 1.5
+}
+
+.order-address .content .detail {
+    line-height: 1.3;
+    margin-bottom: 2px
+}
+
+.order-address .content .ext {
+    font-size: 12px;
+    line-height: 1.3;
+    color: #FFA800
+}
+
+.order-address .content .tel {
+    float: right
+}
+.order-order {
+    margin-bottom: 9px;
+    background-color: #fff;
+    -ms-box-shadow: 0 1px 0 0 rgba(0,0,0,.1),0 .5px .5px 0 rgba(0,0,0,.2);
+    box-shadow: 0 1px 0 0 rgba(0,0,0,.1), 0 0.5px 0.5px 0 rgba(0,0,0,.2);
+}
+.order-item {
+    background-color: #f5f5f5
+}
+
+.order-itemInfo {
+    padding: 9px
+}
+
+.order-itemInfo .item-pic .activity {
+    margin-top: 5px;
+    max-width: 92px
+}
+
+.order-itemInfo .item-pic .activity img {
+    height: 12px;
+    margin-right: 4px
+}
+
+.order-itemInfo .item-pic .activity img:last-of-type {
+    margin-right: 0
+}
+
+.order-itemInfo .img-cell {
+    width: 92px!important;
+    height: 92px;
+    margin-right: 9px;
+    overflow: hidden
+}
+
+.order-itemInfo .img-cell .img {
+    width: 92px;
+    height: 92px;
+    display: block;
+    background-position: 50% 50%;
+    -ms-background-size: contain;
+    background-size: contain;
+    background-repeat: no-repeat
+}
+
+.order-itemInfo .icon-ext,.order-itemInfo .title {
+    line-height: 1.5
+}
+
+.order-itemInfo .sku-alicommun,.order-itemInfo .sku-info {
+    color: #999
+}
+
+.order-itemInfo .sku-level-info {
+    color: #FFA800
+}
+
+.order-itemInfo .icon-main .invisible {
+    visibility: hidden
+}
+
+.order-itemInfo .icon-main .activity,.order-itemInfo .icon-main .item-icon-tip {
+    display: inline-block;
+    font-size: 10px;
+    line-height: 12px;
+    margin: 0 1px;
+    padding: 0 1px;
+    background-color: #EE243A;
+    color: #fff
+}
+
+.order-itemInfo .icon-main .item-icon-tip {
+    background-color: #FBE9E9;
+    color: #ff0036;
+    padding: 0 3px
+}
+
+.order-itemInfo .icon-main .item-icon-more {
+    background-color: #f5f5f5;
+    color: #ff0036;
+    display: inline
+}
+
+.order-itemInfo .icon-main .activity {
+    background-color: #f5f5f5
+}
+
+.order-itemInfo .icon-main .activity img {
+    height: 12px;
+    vertical-align: top;
+    margin-right: 2px
+}
+
+.order-itemInfo .icon-main .activity img:last-of-type {
+    margin-right: 0
+}
+
+.order-itemInfo .ext {
+    font-size: 12px;
+    text-align: right
+}
+
+.order-itemInfo .ext .price {
+    min-height: 20px;
+    font-weight: bolder;
+    color: #ff0036
+}
+
+.order-itemInfo .ext .price .dollar {
+    padding: 0 2px
+}
+
+.order-itemInfo .ext .price .main-price {
+    font-size: 16px
+}
+
+.order-itemInfo .ext .weight {
+    margin-top: 9px;
+    color: #999;
+    line-height: 1.5
+}
+
+.order-itemInfo .icon-gift img {
+    width: 42px;
+    height: 12px
+}
+
+.order-quantity .buy-single-row {
+    padding: 10px 9px
+}
+
+.order-quantity .btn {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-color: #ccc;
+    position: relative;
+    line-height: 1
+}
+
+.order-quantity .minus {
+    margin-right: 10px
+}
+
+.order-quantity .plus {
+    margin-left: 10px
+}
+
+.order-quantity .off {
+    background-color: #f5f5f5
+}
+
+.order-quantity .minus:after,.order-quantity .plus:after,.order-quantity .plus:before {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    border-bottom: 2px solid #999;
+    width: 12px;
+    height: 1px;
+    content: ' '
+}
+
+.order-quantity .plus:before {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+
+.order-quantity .amount {
+    display: inline-block;
+    vertical-align: top;
+    width: 28px;
+    height: 32px;
+    border: none;
+    text-align: center;
+    line-height: 1
+}
+
+.order-quantity .content {
+    line-height: 1
+}
+
+.order-submitOrder {
+    position: fixed;
+    left: 0;
+    bottom: 46px;
+    width: 100%;
+    background-color: #fff;
+    margin-top: 9px;
+    z-index: 999;
+}
+
+@supports (width: constant(safe-area-inset-bottom)) {
+    .order-submitOrder {
+        padding-bottom:constant(--windvane-safe-area-inset-bottom,constant(safe-area-inset-bottom))
+    }
+}
+
+@supports (width: env(safe-area-inset-bottom)) {
+    .order-submitOrder {
+        padding-bottom:env(--windvane-safe-area-inset-bottom,env(safe-area-inset-bottom))
+    }
+}
+
+.order-submitOrder .realPay {
+    text-align: right;
+    margin-right: 9px
+}
+
+.order-submitOrder .count,.order-submitOrder .weight {
+    color: #ff0036;
+    font-weight: 400
+}
+
+.order-submitOrder .price {
+    color: #ff0036;
+    font-weight: bolder;
+    font-size: 12px
+}
+
+.order-submitOrder .price .dollar {
+    padding: 0 2px
+}
+
+.order-submitOrder .price .main-price {
+    font-size: 16px;
+    font-weight: 400
+}
+
+.order-submitOrder .action {
+    pointer-events: none;
+    background-color: #ff0036;
+    color: #fff
+}
+
+.order-submitOrder .action .mui-flex {
+    padding: 1.1em 1.4em;
+    pointer-events: all;
+    font-size: 16px
+}
+
+.order-submitOrder .agree-tip {
+    padding: 9px 9px 18px;
+    background-color: #EEE
+}
+
+.order-submitOrder .agree-tip .checker input+.indicator {
+    border-radius: 0
+}
+
+.order-submitOrder .address-bottom {
+    padding: 5px 8px;
+    background: #fffbf1;
+    color: #ecaf58
+}
+
+.order-submitOrder .hide {
+    display: none
+}
+.buy-single-row {
+    background-color: #fff;
+    color: #999;
+    padding: 9px;
+    line-height: 2;
+}
+.buy-single-row .title {
+    width: 56px;
+    margin-right: 9px;
+    color: #666;
+}
+.buy-single-row .content {
+    text-align: right;
+    color: #666;
+    line-height: 28px;
+}
+.select .select-face {
+    line-height: 2;
+    width: 100%;
+}

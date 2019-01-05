@@ -1,0 +1,32 @@
+<div class="tb-toolbar-container">
+  <a class="tab" href="{:U('App/Index/index')}" data-action="index_index">
+    <span class="tb-toolbar-iconfont iconfont tb-icon-homepage"></span>
+    <p class="text">首页</p></a>
+  <a class="tab" href="{:U('App/Index/cart')}" data-action="index_cart">
+    <span class="tb-toolbar-iconfont iconfont tb-icon-cart"></span>
+    <p class="text">购物车</p></a>
+  <a class="tab" href="{:U('App/Member/orderlist')}" data-action="member_orderlist">
+    <span class="tb-toolbar-iconfont iconfont tb-icon-activity"></span>
+    <p class="text">订单</p></a>
+  <a class="tab" href="{:U('App/Member/index')}" data-action="member_index">
+    <span class="tb-toolbar-iconfont iconfont tb-icon-mine"></span>
+    <p class="text">我的</p></a>
+</div>
+<script src="./Public/Static/js/jquery3.min.js" language="javascript" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+	$(function(){
+		var a = getParam('a').toLowerCase();
+		var m = getParam('m').toLowerCase();
+		var action = m + '_' + a;
+		$('.tb-toolbar-container a[data-action='+action+']').addClass('active').siblings().removeClass('active');
+	});
+	
+	function getParam(paramName) { 
+	    paramValue = "", isFound = !1; 
+	    if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) { 
+	        arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0; 
+	        while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++ 
+	    } 
+	    return paramValue == "" && (paramValue = null), paramValue 
+	} 
+</script>

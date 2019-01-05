@@ -1,0 +1,18 @@
+<div class="div_header">
+	<span class="headimg">
+		<php>
+			$wx_info = json_decode($users['wx_info'],true);
+			$img = !empty($wx_info['headimgurl'])?$wx_info['headimgurl']:'../Public/Static/images/defult.jpg';
+			echo "<img src='".$img."' width='70px;' height='70px;'>";
+		</php>
+	</span>
+	<span class="header_right">
+		<div class="header_l_di">
+			<span>昵称：<php> echo $wx_info['nickname'];</php></span>&nbsp;&nbsp;
+			<<a style='color:red' href="./index.php?g=App&m=Member&a=index&uid={$users.uid}">账号设置</a>>
+		</div>
+		<div><span>代理：<if condition="$users.member eq 1">是<else/>否(<a style='color:red' href='http://c.6gcc.com/weixin/index.php?g=App&m=Index&a=listsp&id=1'></a>)</if></span></div>
+		<div><span>关注时间：<php>echo date('Y-m-d',$wx_info['subscribe_time']);</php></span></div>
+<!-- 				<div><span> 会员ID：{$users.id} </span></div> -->
+		<div><span><a style='color:red' href="./index.php?g=App&m=Member&a=logout">退出登录</a></span></div>
+</div>

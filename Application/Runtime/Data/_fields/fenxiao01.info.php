@@ -1,0 +1,1 @@
+<?php	return array ( 0 => 'id', 1 => 'name', 2 => 'notification', 3 => 'theme', 4 => 'site_url', '_autoinc' => true, '_pk' => 'id', '_type' => array ( 'id' => 'int(10) unsigned', 'name' => 'text', 'notification' => 'text', 'theme' => 'text', 'site_url' => 'varchar(255)', ), );?>
