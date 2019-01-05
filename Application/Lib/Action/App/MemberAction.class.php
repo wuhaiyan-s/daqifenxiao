@@ -74,6 +74,7 @@ class MemberAction extends BaseAction {
 			$this->assign ( "get_end_price", $get_end_price );
 			$this->assign ( "all_price", $all_price );
 			$this->assign ( "users", $usersresult );
+			$this->assign ( "wx_info", json_decode($usersresult['wx_info'],true) );
 			
 			$type_a_url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/member_info',array('type'=>1,'id'=>$usersresult['id']));
 			$type_b_url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/member_info',array('type'=>2,'id'=>$usersresult['id']));
@@ -259,7 +260,6 @@ class MemberAction extends BaseAction {
 			$ticket = R ( "Api/Api/ticket", array (
 					$usersresult 
 			) );
-			
 			$this->assign ( "ticket", $ticket['ticket'] );
 			$this->assign ( "dongjia_time", $this->dongjia_time );
 			$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.'g=App&m=Member&a=register&mid='.$usersresult['id'];

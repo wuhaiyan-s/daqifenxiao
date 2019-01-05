@@ -81,6 +81,7 @@
   left: 100%;
 }
 .carousel-control {
+	display: none;
   position: absolute;
   top: 0;
   left: 0;

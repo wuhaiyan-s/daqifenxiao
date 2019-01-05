@@ -73,6 +73,9 @@ class IndexAction extends BaseAction {
 	
 	//新首页
 	public function index() {
+		$cartData = json_decode($_COOKIE['cartData'],true);
+		$this->assign( "cart_num", count($cartData) );
+		
 		$goodsArr = D('Goods')->getGoods( array('status'=>1),'id,name,price,old_price,image,goods_desc' );
 		$this->assign ( "goods", $goodsArr );
 		$this->assign("users", $this->$userinfo );

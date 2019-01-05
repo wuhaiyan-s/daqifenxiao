@@ -7,10 +7,10 @@
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title></title>
-<link rel="stylesheet" type="text/css" href="./Public/Static/iconfont/iconfont.css">
-<link href="./Public/Static/css/base.css" type="text/css" rel="stylesheet">
-<link href="./Public/Static/css/member_index.css" type="text/css" rel="stylesheet">
+<title>我的</title>
+<link rel="stylesheet" type="text/css" href="{$StaticDir}iconfont/iconfont.css">
+<link href="{$StaticCss}base.css" type="text/css" rel="stylesheet">
+<link href="{$StaticCss}member_index.css" type="text/css" rel="stylesheet">
 </head>
 <body id="ucenter">
 <div class="page-container">
@@ -25,7 +25,7 @@
 	      </div>
 	      <div class="personal_wrap">
 	        <div class="name line1">
-	          <span class="line1">绿芝麻51</span>
+	          <span class="line1"><?php echo $wx_info ? $wx_info['nickname'] : $users['username'];?></span>
 <!-- 	          <span class="my_header_v4_name_edit"></span> -->
 	          <span class="my_header_level hide">(一级代理商)</span>
 	        </div>
@@ -40,7 +40,7 @@
 	</div>
 	<div class="uinfolist" id="uinfolist">
 		<div class="ublock umember">
-			<h2>家族成员<span><i>0</i>人</span><em></em></h2>
+			<h2>家族成员<span><i>{$all_cnt}</i>人</span><em></em></h2>
 			<ul>
 				<li>一级会员<span>{$users.a_cnt}</span></li>
 				<li>二级会员<span>{$users.b_cnt}</span></li>

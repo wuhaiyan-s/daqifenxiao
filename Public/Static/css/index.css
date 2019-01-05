@@ -17,6 +17,21 @@ body,html{
     -webkit-transition: background .3s;
     transition: background .3s;
 }
+#cart_num{
+	position: absolute;
+    background-color: #FF0036;
+    border: 1px solid #fff;
+    color: #fff;
+    top: -2px;
+    left: 4px;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    font-size: 20px;
+    height: 24px;
+    line-height: 24px;
+    padding: 2px 10px;
+    border-radius: 20px;
+}
 #header {
 	background: #ffffff;
     font-size: 12px;
@@ -38,9 +53,6 @@ body,html{
 }
 #header-wrapper #header .back, #header-wrapper #header .menu {
     width: 40px;
-}
-#header-wrapper #header .icon {
-    z-index: 1;
 }
 #header .icon {
     width: 46px;
@@ -178,6 +190,7 @@ div#header .menu svg {
 #header .tinycart {
     background: 0 0;
     color: #5F646E;
+    position: relative;
 }
 #header .tinycart svg {
     margin-left: -15px;
