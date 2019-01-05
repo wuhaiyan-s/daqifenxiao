@@ -35,14 +35,14 @@
 	            <div class="link-mask"></div>
 	            <img src="__PUBLIC__/Uploads/{$goods.image}"></a>
 	          <div class="order-des">
-	            <a href="{:U('Index/detail')}">{$goods.name}</a>
+	            <a href="{:U('Index/detail',array('id'=>$goods['id']))}" target="_blank">{$goods.name}</a>
 	            <span class="ui-number">
 	              <a class="decrease" onclick="addToCart({$goods.id},'decrease')">-</a>
 	              <input type="number" class="num" min="1" pattern="[0-9]*" autocomplete="off" id="goods-num-{$goods.id}" value="{$goods.num}" onchange="addToCart({$goods.id},'change')">
 	              <a class="increase" onclick="addToCart({$goods.id},'increase')">+</a></span>
 	          </div>
 	          <div class="order-opt">
-	            <div class="opt-num">数量 x{$goods.num}</div>
+	            <div class="opt-num">数量 x<span id="opt-num-{$goods.id}">{$goods.num}</span></div>
 	            <p class="price">
 	              <span class="ui-price-icon">￥</span><?php echo sprintf('%.2f',$goods['price']);?></p>
 	            <a class="opt-delete" onclick="addToCart({$goods.id},'del')"></a>
@@ -88,7 +88,6 @@
 	$(function(){
 		//单个商品的选择和取消 小数运算时数值结果可能会有bug
 		$('#orderList .order-select .icon').click(function(){
-			console.log(goods_selected);
 			var parentObj  = $(this).parent().parent();
 			var isSelected = parentObj.hasClass('grid-order-selected');
 			var price      = parentObj.attr('price');
@@ -107,7 +106,6 @@
 				goods_selected -= 1;
 				$('#selectAllBtn').removeClass('icon-selected');//全不选
 			}
-			console.log(goods_selected);
 			updateCart();
 		});
 	});
@@ -140,6 +138,7 @@
 		
 		buydata = {};
 		total_price_t = 0;
+		goods_selected = 0;
 		if( l > 0 ){
 			for( var i = 0;i < l;i++ ){
 				var Id      = $(orders[i]).attr('goodsid');
@@ -151,10 +150,13 @@
 				goods.name  = $(orders[i]).attr('goodsname');
 				buydata[Id] = goods;
 				total_price_t += goods.price * goods.num;
+				goods_selected += 1;
 			}
 		}
 		buyinfo.total_price = toDecimal2(total_price_t);
 		buyinfo.goods_count = goods_selected;
+		console.log(buydata);
+		console.log(buyinfo);
 		$('#toBuyBtn').attr('goods_selected',goods_selected).find('i').html(goods_selected);
 		$('#total-fee').html( toDecimal2(total_price_t) );
 	}

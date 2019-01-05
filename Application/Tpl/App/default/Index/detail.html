@@ -18,7 +18,7 @@
 </head>
 <body>
 <div class="index-con">
-	<div id="head" class="header-dom"><div class="mui-flex main-dom"><div class="left-btns"><a href="./index.php?g=App&m=Index&a=index" class="icon-link back-link"><svg t="1516605784224" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1221" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M393.390114 512.023536l347.948667-336.348468c20.50808-19.85828 20.50808-51.997258 0-71.792093-20.507056-19.826558-53.778834-19.826558-74.28589 0L281.990954 476.135164c-20.476357 19.826558-20.476357 51.981908 0 71.746044l385.061936 372.236839c10.285251 9.91379 23.728424 14.869662 37.173644 14.869662 13.446243 0 26.889417-4.956895 37.112246-14.901385 20.50808-19.826558 20.50808-51.919487 0-71.746044L393.390114 512.023536" p-id="1222"></path></svg> <span>返回</span> </a></div><div class="right-btns"><a href="{:U('Index/cart')}" class="icon-link cart-link detail-tinycart" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 1077 1024"><path d="M267 879a70 70 0 1 1 0 139 70 70 0 0 1 0-139zm605 0a70 70 0 1 1 0 139 70 70 0 0 1 0-139zm37-131H255l-50-474h776l-72 474zm145-537a38 38 0 0 0-29-13H197L179 31a38 38 0 0 0-38-34H18v76h89l76 717c2 19 19 34 38 34h720a38 38 0 0 0 38-33l84-549a38 38 0 0 0-9-31z"></path></svg> <span>购物车</span> </a>  </div></div></div>
+	<div id="head" class="header-dom"><div class="mui-flex main-dom"><div class="left-btns"><a href="./index.php?g=App&m=Index&a=index" class="icon-link back-link"><svg t="1516605784224" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1221" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M393.390114 512.023536l347.948667-336.348468c20.50808-19.85828 20.50808-51.997258 0-71.792093-20.507056-19.826558-53.778834-19.826558-74.28589 0L281.990954 476.135164c-20.476357 19.826558-20.476357 51.981908 0 71.746044l385.061936 372.236839c10.285251 9.91379 23.728424 14.869662 37.173644 14.869662 13.446243 0 26.889417-4.956895 37.112246-14.901385 20.50808-19.826558 20.50808-51.919487 0-71.746044L393.390114 512.023536" p-id="1222"></path></svg> <span>返回</span> </a></div><div class="right-btns"><a href="{:U('Index/cart')}" class="icon-link cart-link detail-tinycart" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 1077 1024"><path d="M267 879a70 70 0 1 1 0 139 70 70 0 0 1 0-139zm605 0a70 70 0 1 1 0 139 70 70 0 0 1 0-139zm37-131H255l-50-474h776l-72 474zm145-537a38 38 0 0 0-29-13H197L179 31a38 38 0 0 0-38-34H18v76h89l76 717c2 19 19 34 38 34h720a38 38 0 0 0 38-33l84-549a38 38 0 0 0-9-31z"></path></svg> <span id="cart_num">{$cart_num}</span> </a>  </div></div></div>
 	<div id="carousel-example-generic" class="carousel slide m-slider" data-ride="carousel">
 	  <!-- Indicators -->
 	  <ol class="carousel-indicators">
@@ -29,13 +29,13 @@
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
 	    <div class="item active">
-	      <img src="__PUBLIC__/Uploads/{$goods.image}"/>
+	      <img src="{$UploadDir}{$goods.image}"/>
 	      <div class="carousel-caption">
 	        1/2
 	      </div>
 	    </div>
 	    <div class="item">
-	      <img src="/weixin/images/p2.png" alt="">
+	      <img src="./images/p2.png" alt="">
 	      <div class="carousel-caption">
 	       	2/2
 	      </div>

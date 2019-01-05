@@ -1,4 +1,4 @@
-var base_url = '/weixin';
+var base_url = '';
 function getGoods()
 {
 	var url = base_url+'/index.php?g=App&m=Goods&a=getList';
@@ -46,22 +46,22 @@ function getParam(paramName) {
 }
 
 function toDecimal2(x) { 
-   var f = parseFloat(x); 
-   if (isNaN(f)) { 
-    return false; 
-   } 
-   var f = Math.round(x*100)/100; 
-   var s = f.toString(); 
-   var rs = s.indexOf('.'); 
-   if (rs < 0) { 
-    rs = s.length; 
-    s += '.'; 
-   } 
-   while (s.length <= rs + 2) { 
-    s += '0'; 
-   } 
-   return s; 
-  } 
+	var f = parseFloat(x); 
+	if (isNaN(f)) { 
+	return false; 
+	} 
+	var f = Math.round(x*100)/100; 
+	var s = f.toString(); 
+	var rs = s.indexOf('.'); 
+	if (rs < 0) { 
+	rs = s.length; 
+	s += '.'; 
+	} 
+	while (s.length <= rs + 2) { 
+	s += '0'; 
+	} 
+	return s; 
+} 
   
 function showMsg(msg,type,gourl)
 {
@@ -191,12 +191,11 @@ function addToCart(goodsId,type)
 		$('#grid-order-'+goodsId).attr('num',num);
 		$('#order-select-'+goodsId).attr('num',num);
 		$('#goods-num-'+goodsId).val(num);
-		updateCart();
+		$('#opt-num-'+goodsId).html(num);
 	}
 	var param   = {};
 	param.id    = goodsId;
 	param.num   = num;
-	console.log(param);
 	var url = base_url+"/index.php?g=Api&m=Api&a=addToCart";
 	$.post(url,param,function(res){
 		if( typeof res == 'string' ){
@@ -207,10 +206,14 @@ function addToCart(goodsId,type)
 		}else{
 			if( num == 0 ){
 				$('#grid-order-'+goodsId).remove();
-				goods_count += 1;
+				goods_count -= 1;
 			}
-			//showMsg(res.errmsg);
+			if( type == 'add' ){
+				$('#cart_num').html( res.data.goods_count );
+				showMsg('添加成功');
+			}
 		}
+		updateCart();
 	});
 }
 

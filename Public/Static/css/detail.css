@@ -577,3 +577,21 @@
 	background: #e4393c;
 	color: #fff;
 }
+#cart_num{
+	position: absolute;
+    content: attr(data-price);
+    background-color: #FF0036;
+    border: 1px solid #fff;
+    color: #fff;
+    top: -7px;
+    right: -7px;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    font-size: 20px;
+    height: 26px;
+    line-height: 26px;
+    -webkit-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+    padding: 0 20px;
+    border-radius: 20px;
+}

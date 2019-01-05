@@ -28,9 +28,10 @@ class ApiAction extends Action {
 			$goods['num']         = $num;
 			$cartData[ $goodsId ] = $goods;
 		}
+		$goods_count = count($cartData);
 		$cartData = json_encode($cartData,JSON_UNESCAPED_UNICODE);
 		setcookie('cartData',$cartData,time()+2592000);//cookie默认保存1个月
-		showMsg(200,'操作成功');
+		showMsg(200,'操作成功',array('goods_count'=>$goods_count) );
 	}
 	
 	//将商品加入结算

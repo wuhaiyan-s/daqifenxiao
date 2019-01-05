@@ -1,4 +1,4 @@
-var base_url = '/weixin';
+var base_url = '';
 function login()
 {
 	var param = {};

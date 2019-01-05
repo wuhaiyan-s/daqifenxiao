@@ -87,6 +87,8 @@ class IndexAction extends BaseAction {
 		if( empty($goods) ){
 			showMsg(404,'商品已下架','','html');
 		}
+		$cartData = json_decode($_COOKIE['cartData'],true);
+		$this->assign( "cart_num", count($cartData) );
 		$this->assign( "goods", $goods );
 		$this->display();
 	}
