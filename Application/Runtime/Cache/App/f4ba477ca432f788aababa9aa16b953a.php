@@ -7,14 +7,14 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title></title>
-<link href="./Public/Plugin/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-<link href="./Public/Static/mui/css/mui.min.css" type="text/css" rel="stylesheet">
-<link href="./Public/Static/css/base.css" type="text/css" rel="stylesheet">
-<link href="./Public/Static/css/login.css" type="text/css" rel="stylesheet">
-<script src="./Public/Static/mui/js/mui.min.js" language="javascript" type="text/javascript"></script>
-<script src="./Public/Static/js/jquery3.min.js" language="javascript" type="text/javascript"></script>
-<script src="./Public/Static/js/main.js "></script>
-<script src="./Public/Static/js/member.js "></script>
+<link href="<?php echo ($StaticDir); ?>bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+<link href="<?php echo ($StaticDir); ?>mui/css/mui.min.css" type="text/css" rel="stylesheet">
+<link href="<?php echo ($StaticCss); ?>base.css" type="text/css" rel="stylesheet">
+<link href="<?php echo ($StaticCss); ?>login.css" type="text/css" rel="stylesheet">
+<script src="<?php echo ($StaticDir); ?>mui/js/mui.min.js" language="javascript" type="text/javascript"></script>
+<script src="<?php echo ($StaticJs); ?>jquery3.min.js" language="javascript" type="text/javascript"></script>
+<script src="<?php echo ($StaticJs); ?>main.js "></script>
+<script src="<?php echo ($StaticJs); ?>member.js "></script>
 <script language="javascript" type="text/javascript">
 	$(function(){
 		var fontSize = $(window).width() / 375 * 37.5;

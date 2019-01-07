@@ -97,26 +97,18 @@ class ApiAction extends Action {
 		$data["cartdata"]     = $cartdata;
 		$data["phone"]        = $phone;
 		$data["address"]      = $address;
+		$data["postcode"]     = $_POST['postcode'];
 		$data["shouhuoname"]  = $shouhuoren;
 		$data["user_id"]      = $uid;
-		//var_dump($data);
 		
 		//把地址、电话保存到用户信息中
-		$userdata = M('User')->find($uid);
-		$user = array();
-		if( empty($userdata['address']) ){
-			$user['address'] = $address;
-		}
-		if( empty($userdata['username']) ){
-			$user['username'] = $shouhuoren;
-		}
-		if( empty($userdata['phone']) ){
-			$user['phone'] = $phone;
-		}
-		if( !empty($userdata) && !empty($user) ){
-			$user['id'] = $uid;
-			M( "User" )->save( $user );
-		}
+		$user             = array();
+		$user['id']       = $uid;
+		$user['username'] = $shouhuoren;
+		$user['address']  = $address;
+		$user['phone']    = $phone;
+		$user['postcode'] = $data["postcode"];
+		M( "User" )->save( $user );
 		
 		//保存订单信息
 		$oid = M( "Order" )->add( $data );
@@ -147,7 +139,7 @@ class ApiAction extends Action {
 		$page     = $_GET['p'] ? intval($_GET['p']) : 1;
 		$pageSize = C('ORDER_PAGESIZE');
 		$limit    = ($page - 1) * $pageSize .','.$pageSize;
-		$orders   = M('Order')->where( array('user_id'=>$uid) )->limit($limit)->order('id desc')->field('id,orderid,pay_status,order_status,time,cartdata,totalprice,goods_count')->select();
+		$orders   = M('Order')->where( array('user_id'=>$uid) )->limit($limit)->order('id desc')->field('id,orderid,pay_status,order_status,time,cartdata,totalprice,goods_count,address,postcode,shouhuoname,phone')->select();
 		if( empty($orders) ){
 			showMsg(200,'',array());
 		}

@@ -109,41 +109,28 @@ function toBuy()
 function addOrder()
 {
 	var url = base_url+'/index.php?g=Api&m=Api&a=addOrder';
-	var userinfo_province = $('#userinfo_province').val();
-	var userinfo_city     = $('#userinfo_city').val();
-	var userinfo_county   = $('#userinfo_county').val();
-	var userinfo_address4 = $('#userinfo_address4').val();
-	var userinfo_address  = $('#userinfo_address').val();
-	var userdata = {};
-	userdata.name    = $('#userinfo_name').val();
-	userdata.phone   = $('#userinfo_phone').val();
-	userdata.address = userinfo_province+","+userinfo_city+","+userinfo_county+","+userinfo_address4+","+userinfo_address;
+	
+	var userdata = {},
+		userinfo_address = $('#userinfo_address').val();
+		
+	userdata.name     = $('#userinfo_name').val();
+	userdata.phone    = $('#userinfo_phone').val();
+	userdata.address  = $('#userinfo_address').val();
+	userdata.postcode = $('#userinfo_postcode').val();
 	if( userdata.name == '' ){
 		showMsg('收货人姓名不能为空','alert');
 		return;
 	}
 	if( userdata.phone.length < 11 ){
-		showMsg('收货人电话格式不正确','alert');
+		showMsg('收货人手机号格式不正确','alert');
 		return;
 	}
-	if( userinfo_province == '' ){
+	if( userdata.address == '' ){
 		showMsg('请填写完整的收货人地址','alert');
 		return;
 	}
-	if( userinfo_city.length == '' ){
-		showMsg('请填写完整的收货人地址','alert');
-		return;
-	}
-	if( userinfo_county.length == '' ){
-		showMsg('请填写完整的收货人地址','alert');
-		return;
-	}
-	if( userinfo_address4 == '' ){
-		showMsg('请填写完整的收货人地址','alert');
-		return;
-	}
-	if( userinfo_address == '' ){
-		showMsg('请填写详细的收货人地址','alert');
+	if( userdata.postcode.length == '' ){
+		showMsg('邮编不能为空','alert');
 		return;
 	}
 	$.post(url,userdata,function(res){
@@ -166,8 +153,8 @@ function addToCart(goodsId,type)
 		var num = 1;
 	}else{
 		var numInput = $('#goods-num-'+goodsId),
+			num = parseInt( numInput.val() ),
 			goodsBox = $('#grid-order-'+goodsId);
-		var num = parseInt(numInput.val());
 		//增
 		if( type === 'increase' ){
 			num += 1;
@@ -188,10 +175,7 @@ function addToCart(goodsId,type)
 			}
 */
 		}
-		$('#grid-order-'+goodsId).attr('num',num);
-		$('#order-select-'+goodsId).attr('num',num);
-		$('#goods-num-'+goodsId).val(num);
-		$('#opt-num-'+goodsId).html(num);
+		
 	}
 	var param   = {};
 	param.id    = goodsId;
@@ -211,9 +195,14 @@ function addToCart(goodsId,type)
 			if( type == 'add' ){
 				$('#cart_num').html( res.data.goods_count );
 				showMsg('添加成功');
+			}else{
+				$('#grid-order-'+goodsId).attr('num',num);
+				$('#order-select-'+goodsId).attr('num',num);
+				$('#goods-num-'+goodsId).val(num);
+				$('#opt-num-'+goodsId).html(num);
+				updateCart();
 			}
 		}
-		updateCart();
 	});
 }
 

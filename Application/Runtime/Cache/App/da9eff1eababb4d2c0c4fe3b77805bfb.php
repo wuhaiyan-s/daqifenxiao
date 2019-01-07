@@ -47,7 +47,7 @@ function callpay()
 			<table>
 				<tr><td>姓名：<?php echo ($shouhuoname); ?></td></tr>
 				<tr><td>电话：<?php echo ($phone); ?></td></tr>
-				<tr><td>地址：<?php echo ($address); ?></td></tr>
+				<tr><td>地址：<?php echo ($address); ?> <?php echo ($postcode); ?></td></tr>
 			</table>
 		</ul>
 </div>

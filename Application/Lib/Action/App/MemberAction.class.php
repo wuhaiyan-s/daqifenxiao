@@ -321,13 +321,19 @@ class MemberAction extends BaseAction {
 	{
 		$uid = $this->uid;
 		$goodsList = $_SESSION['buyData'];
-		$buy_info = $_SESSION['buyInfo'];
-		$total_price = 0;
-		foreach( $goodsList as $goods ){
-			$goods['price'] = sprintf('%.2f',$goods['price']);
-			$total_price += $goods['price'] * $goods['num'];
+		$buy_info  = $_SESSION['buyInfo'];
+		$user      = D('Member')->getOne($uid);
+		$address   = $user['address'];
+		$address2  = '';
+		$address1  = '';
+		if( !empty($address) ){
+			$address = explode(',', $address);
+			$address1 = $address[0].','.$address[1].','.$address[2];
+			$address2 = $address[3];
 		}
-		$total_price = sprintf('%.2f',$total_price);
+		$this->assign( "user", $user );
+		$this->assign( "address1", $address1 );
+		$this->assign( "address2", $address2 );
 		$this->assign( "goodsList", $goodsList );
 		$this->assign( "buy_info", $buy_info );
 		$this->display();
@@ -360,10 +366,6 @@ class MemberAction extends BaseAction {
 		$out_trade_no = $order_info['orderid'];
 		$returnUrl    = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/payover',array('out_trade_no'=>$out_trade_no));
 		
-		$totalprice   = $order_info['totalprice'];
-		$shouhuoname  = $order_info['shouhuoname'];
-		$phone        = $order_info['phone'];
-		$address      = $order_info['address'];
 		$cartdata     = json_decode($order_info['cartdata'],true);
 		$cartnames    = '购买商品：';
 		foreach($cartdata as $cart){
@@ -371,10 +373,11 @@ class MemberAction extends BaseAction {
 		}
 		$cartnames = trim($cartnames,",");
 
-		$this->assign ( "shouhuoname", $shouhuoname );
-		$this->assign ( "phone", $phone );
-		$this->assign ( "address", $address );
-		$this->assign ( "totalprice", $totalprice );
+		$this->assign ( "shouhuoname", $order_info['shouhuoname'] );
+		$this->assign ( "phone", $order_info['phone'] );
+		$this->assign ( "address", $order_info['address'] );
+		$this->assign ( "postcode", $order_info['postcode'] );
+		$this->assign ( "totalprice", $order_info['totalprice'] );
 		
 		import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
 		$config = M ( "Wxconfig" )->where ( array (

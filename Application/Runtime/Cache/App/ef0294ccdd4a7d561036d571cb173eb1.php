@@ -13,8 +13,8 @@
 <link href="<?php echo ($StaticDir); ?>mui/css/mui.min.css" type="text/css" rel="stylesheet">
 <script src="<?php echo ($StaticJs); ?>jquery3.min.js" language="javascript" type="text/javascript"></script>
 <script src="<?php echo ($StaticDir); ?>bootstrap/js/bootstrap.min.js" language="javascript" type="text/javascript"></script>
-<script src="<?php echo ($StaticDir); ?>/mui/js/mui.min.js" language="javascript" type="text/javascript"></script>
-<script src="<?php echo ($StaticJs); ?>/main.js" language="javascript" type="text/javascript"></script>
+<script src="<?php echo ($StaticDir); ?>mui/js/mui.min.js" language="javascript" type="text/javascript"></script>
+<script src="<?php echo ($StaticJs); ?>main.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <div class="index-con">
