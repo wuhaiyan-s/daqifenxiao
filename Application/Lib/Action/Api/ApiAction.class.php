@@ -24,7 +24,27 @@ class ApiAction extends Action {
 				$cartData[ $goodsId ]['num'] = $num;
 			}
 		}else{
-			$goods                = D('Goods')->getOne($goodsId,'id,name,image,price');
+			$goods          = D('Goods')->getOne($goodsId,'id,name,image,price,commision');
+			$goods['lirun'] = $goods['commision'];
+			unset($goods['commision']);
+			//重复折扣
+			$zhekou         = 0;
+			if(file_exists('./Public/Conf/zhekou.php'))
+			{
+				require './Public/Conf/zhekou.php';
+			}
+			if( $zhekou > 0 && $this->uid > 0 )
+			{
+				$order = M ( "Order" )->where ( array (
+					"user_id" => $this->uid,
+					"pay_status" => 1
+				) )->find ();
+				
+				if( !empty($order) )
+				{
+					$goods['price'] = $goods['price'] * ($zhekou/100);
+				}
+			}
 			$goods['num']         = $num;
 			$cartData[ $goodsId ] = $goods;
 		}
@@ -80,7 +100,7 @@ class ApiAction extends Action {
 		}
 		$now        = time();
 		$orderid    = C('ORDER_PREFIX').date("YmdHis",$now).mt_rand(100,999);
-		$totallirun = $order_info['totalLirun'];
+		$totallirun = $order_info['totallirun'];
 		$cartdata   = json_encode($_SESSION ['buyData'],JSON_UNESCAPED_UNICODE);
 		
 		$time       = date ( "Y/m/d H:i:s",$now );
@@ -112,6 +132,104 @@ class ApiAction extends Action {
 		
 		//保存订单信息
 		$oid = M( "Order" )->add( $data );
+		
+		//保存佣金相关信息
+		import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
+		$config = M ( "Wxconfig" )->where ( array (
+				"id" => "1" 
+		) )->find ();
+		
+		$options = array (
+				'token' => $config ["token"], // 填写你设定的key
+				'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
+				'appid' => $config ["appid"], // 填写高级调用功能的app id
+				'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
+				'partnerid' => $config ["partnerid"], // 财付通商户身份标识
+				'partnerkey' => $config ["partnerkey"], // 财付通商户权限密钥Key
+				'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
+				);
+		$weObj = new Wechat ( $options );
+		$userdata = D('Member')->getOne($uid);
+		$wx_info = json_decode($userdata['wx_info'],true);
+		$yongjin = array();
+		$yongjin['yongjin_1'] = 15;
+		$yongjin['yongjin_2'] = 10;
+		$yongjin['yongjin_3'] = 5;
+		if(file_exists('./Public/Conf/yongjin.php'))
+		{
+			require './Public/Conf/yongjin.php';
+			$yongjin = json_decode($yongjin,true); 
+		}
+		//上级佣金计算
+		if($userdata['l_id']>0)
+		{
+			$user_order_level = array();
+			$user_order_level['order_id'] = $orderid;
+			$user_order_level['status'] = 0;
+			$user_order_level['level_id'] = $userdata['l_id'];
+			$user_order_level['level_type'] = 1;
+			$user_order_level['user_id'] = $uid;
+			$my_price = $user_order_level['price'] = $totallirun*($yongjin['yongjin_1']/100);
+			M ( "Order_level" )->add ( $user_order_level );
+			
+			$l_id_info = M ( "User" )->where(array('id'=>$userdata['l_id']))->find();
+			$l_id_wx_info = $l_id_info['wx_info'] ? json_decode($l_id_info['wx_info'],true) : '';
+			if( !empty($l_id_wx_info) )
+			{
+				$data = array();
+				$data['touser'] = $l_id_wx_info['openid'];
+				$data['msgtype'] = 'text';
+				$data['text']['content'] = '您的一级会员【'.$wx_info['nickname'].'】在'.$time.'下单，订单号为：'.$orderid.'；订单金额为：'.$totalprice.'元；您将获得的佣金为：'.$my_price.'元。';
+				$weObj->sendCustomMessage($data);
+			}
+		}
+		//上上级佣金
+		if($userdata['l_b']>0)
+		{
+			$user_order_level = array();
+			$user_order_level['order_id'] = $orderid;
+			$user_order_level['status'] = 0;
+			$user_order_level['level_id'] = $userdata['l_b'];
+			$user_order_level['level_type'] = 2;
+			$user_order_level['user_id'] = $uid;
+			$my_price = $user_order_level['price'] = $totallirun*($yongjin['yongjin_2']/100);
+			M ( "Order_level" )->add ( $user_order_level );
+			
+			$l_b_info    = M ( "User" )->where(array('id'=>$userdata['l_b']))->find();
+			$l_b_wx_info = $l_b_info['wx_info'] ? json_decode($l_b_info['wx_info'],true) : '';
+			if( !empty($l_b_wx_info) )
+			{
+				$data = array();
+				$data['touser'] = $l_b_wx_info['openid'];
+				$data['msgtype'] = 'text';
+				$data['text']['content'] = '您的二级会员【'.$wx_info['nickname'].'】在'.$time.'下单，订单号为：'.$orderid.'；订单金额为：'.$totalprice.'元；您将获得的佣金为：'.$my_price.'元。';
+				$weObj->sendCustomMessage($data);
+			}
+		}
+		//上上上级佣金
+		if($userdata['l_c']>0)
+		{
+			$user_order_level = array();
+			$user_order_level['order_id'] = $orderid;
+			$user_order_level['status'] = 0;
+			$user_order_level['level_id'] = $userdata['l_c'];
+			$user_order_level['level_type'] = 3;
+			$user_order_level['user_id'] = $uid;
+			$my_price = $user_order_level['price'] = $totallirun*($yongjin['yongjin_3']/100);
+			M ( "Order_level" )->add ( $user_order_level );
+			
+			$l_c_info = M ( "User" )->where(array('id'=>$userdata['l_c']))->find();
+			$l_c_wx_info = $l_c_info['wx_info'] ? json_decode($l_c_info['wx_info'],true) : '';
+			if( !empty($l_c_wx_info) )
+			{
+				$data= array();
+				$data['touser'] = $l_c_wx_info['openid'];
+				$data['msgtype'] = 'text';
+				$data['text']['content'] = '您的三级会员【'.$wx_info['nickname'].'】在'.$time.'下单，订单号为：'.$orderid.'；订单金额为：'.$totalprice.'元；您将获得的佣金为：'.$my_price.'元。';
+				$weObj->sendCustomMessage($data);
+			}
+		}
+			
 		
 		//把已购买的商品从购物车移除
 		$cartData = json_decode($_COOKIE['cartData'],true);
@@ -166,6 +284,43 @@ class ApiAction extends Action {
 			$orders[$k]['status'] = $status;
 		}
 		showMsg(200,'',$orders);
+	}
+	
+	//从微信服务器上获取媒体文件
+	public function uploadMedia()
+	{
+		$uid = $this->uid;
+		$media_id   = $_POST['media_id'];
+		$file_name  = $_POST['file_name'];
+		$ERROR_LIST = $this->ERROR_LIST;
+		
+		import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
+	$config = M ( "Wxconfig" )->where ( array (
+				"id" => "1" 
+		) )->find ();
+		$options = array (
+			'token' => $config ["token"], // 填写你设定的key
+			'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
+			'appid' => $config ["appid"], // 填写高级调用功能的app id
+			'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
+			);
+			
+		$weObj   = new Wechat ( $options );
+		$media_data = $weObj->getMedia($media_id);
+		if( strlen($media_data) > 200 ){
+			$path = './Public/Uploads/head_img/'.$uid.'_'.time().'.jpg';
+			file_put_contents($path, $media_data);
+			if( file_exists($path) ){ // 上传错误提示错误信息
+				$data = array();
+				$data['id'] = $uid;
+				$data['head_img'] = $path;
+				M("User")->save( $data );
+				showMsg(200,'修改成功',array($file_name=>$path));
+			}else{
+				showMsg(50302,$upload->getError());
+			}
+		}
+		showMsg(50301,$ERROR_LIST[50301]);
 	}
 
 	public function get_user_pic($uid,$ticket)
@@ -272,6 +427,8 @@ class ApiAction extends Action {
 			return $result ["username"];
 		}
 	}
+	
+	
 	public function getsetting() {
 		$result = M ( "Info" )->find ();
 		if ($result) {

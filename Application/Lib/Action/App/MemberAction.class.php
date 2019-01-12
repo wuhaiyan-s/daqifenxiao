@@ -18,130 +18,30 @@ class MemberAction extends BaseAction {
 	//会员中心首页
 	public function index()
 	{
-		if($this->uid > 0) {
-			$uid = $this->uid;
-			$usersresult = R ( "Api/Api/getuser", array (
-					$uid 
-			) );
-			
-			$where = array();
-			$where ["status"] = 0;
-			$where ["level_id"] = $usersresult['id'];
-			$start_price = M ( "Order_level" )->where($where)->sum('price');
-			
-			$where = array();
-			$where ["status"] = 1;
-			$where ["level_id"] = $usersresult['id'];
-			$over_price = M ( "Order_level" )->where($where)->sum('price');
-			
-			$where = array();
-			$where ["status"] = 2;
-			$where ["level_id"] = $usersresult['id'];
-			$confirm_price = M ( "Order_level" )->where($where)->sum('price');
-			
-			$where = array();
-			$where ["status"] = 3;
-			$where ["level_id"] = $usersresult['id'];
-			$add_over_price = M ( "Order_level" )->where($where)->sum('price');
-			
-			$where = array();
-			$where ["status"] = 0;
-			$where ["uid"] = $usersresult['id'];
-			$get_start_price = M ( "Tx_record" )->where($where)->sum('price');
-			
-			$where = array();
-			$where ["status"] = 1;
-			$where ["uid"] = $usersresult['id'];
-			$get_end_price = M ( "Tx_record" )->where($where)->sum('price');
-			
-			$start_price = $start_price>0 ? $start_price : 0;
-			$over_price = $over_price>0 ? $over_price : 0;
-			$confirm_price = $confirm_price>0 ? $confirm_price : 0;
-			$add_over_price = $add_over_price>0 ? $add_over_price : 0;
-			$get_end_price = $get_end_price>0 ? $get_end_price : 0;
-			$get_start_price = $get_start_price>0 ? $get_start_price : 0;
-			
-			$all_price = $start_price+$over_price+$confirm_price+$add_over_price;
-			$all_price = bcadd($start_price, $over_price, 2);
-			$all_price = bcadd($all_price, $confirm_price, 2);
-			$all_price = bcadd($all_price, $add_over_price, 2);
-			
-			$this->assign ( "start_price", $start_price );
-			$this->assign ( "over_price", $over_price );
-			$this->assign ( "confirm_price", $confirm_price );
-			$this->assign ( "add_over_price", $add_over_price );
-			$this->assign ( "get_start_price", $get_start_price );
-			$this->assign ( "get_end_price", $get_end_price );
-			$this->assign ( "all_price", $all_price );
-			$this->assign ( "users", $usersresult );
-			$this->assign ( "wx_info", json_decode($usersresult['wx_info'],true) );
-			
-			$type_a_url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/member_info',array('type'=>1,'id'=>$usersresult['id']));
-			$type_b_url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/member_info',array('type'=>2,'id'=>$usersresult['id']));
-			$type_c_url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/member_info',array('type'=>3,'id'=>$usersresult['id']));
-			$this->assign ( "type_a_url", $type_a_url );
-			$this->assign ( "type_b_url", $type_b_url );
-			$this->assign ( "type_c_url", $type_c_url );
-			
-			$all_cnt = $usersresult['a_cnt']+$usersresult['b_cnt']+$usersresult['c_cnt'];
-			$this->assign ( "all_cnt", $all_cnt );
-			
-			$where = array();
-			$where ["uid"] = $usersresult['id'];
-			$tx_record = M ( "Tx_record" )->where($where)->select();
-
-			$this->assign ( "tx_record", $tx_record );
-			
-			$member_obj = D ( "Member" );
-			if($usersresult['member']==1 && (empty($usersresult['ticket']) || empty($usersresult['url'])))
-			{
-				$member_obj->add_meber($usersresult['id'],$usersresult['uid']);
-			}
-			
-			$where = array();
-			$where ["level_id"] = $usersresult['id'];
-			$all_buy = M ( "Order_level" )->where($where)->count();
-			
-			$where = array();
-			$where ["status"] = 0;
-			$where ["level_id"] = $usersresult['id'];
-			$all_over_buy = M ( "Order_level" )->where($where)->count();
-			
-			$all_start_buy = $all_buy - $all_over_buy;//已付款
-			
-			$this->assign ( "all_buy", $all_start_buy );//已付款
-			$this->assign ( "all_over_buy", $all_over_buy );//未付款
-			$this->assign ( "all_count_buy", $all_buy );//总付款
-			
-			//营业额
-			/*$result = M ( "Good" )->find ();
-			$all_buy_price = $result['price']*$all_buy;
-			$this->assign ( "all_buy_price", $all_buy_price );*/
-			$db = new Model();
-			$sql = "SELECT sum(`totalprice`) as total FROM `wemall_order_level` inner join `wemall_order` on `wemall_order_level`.`order_id` =  `wemall_order`.`orderid` where `level_id`=$usersresult[id]";
-            $ALL_COUNT = $db->query($sql);
-			$all_buy_price = empty($ALL_COUNT[0]['total']) ? 0 : $ALL_COUNT[0]['total'];
-			$this->assign ( "all_buy_price", $all_buy_price );
-			
-			//推荐人
-			$l_name = $this->get_l_info($usersresult['l_id']);
-			$l_name = $l_name['nickname'];
-			$l_name = !empty($l_name) ? $l_name : ''.$message_name.'';
-			$this->assign ( "l_name", $l_name );
-			
-			
-			$ticket = R ( "Api/Api/ticket", array (
-					$usersresult 
-			) );
-			
-			$this->assign ( "ticket", $ticket['ticket'] );
-			$this->assign ( "dongjia_time", $this->dongjia_time );
-			$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.'g=App&m=Member&a=register&mid='.$usersresult['id'];
-			$this->assign ( "member_url", $url );
-			$this->display();
-		}else{
-			$this->redirect('Member/login');
-		}
+		$uid = $this->uid;
+		$user = D('Member')->getOne($uid);
+		$this->assign("head_img", $user['head_img']);
+		
+		$db = new Model();
+		//团队销售额
+		$sql1 = "SELECT SUM(ol.price) as yongjin,SUM(o.totalprice) as team_sale  
+		FROM wemall_order_level ol
+		LEFT JOIN wemall_order o ON ol.order_id = o.orderid 
+		WHERE ol.level_id = {$uid}";
+		$sale1 = $db->query($sql1);
+		$team_sale = $sale1 ? $sale1[0]['team_sale'] : 0;
+		$this->assign("yongjin", $sale1[0]['yongjin']);
+		
+		//个人销售额
+		$sql2 = "SELECT SUM(totalprice) AS totalprice 
+		FROM wemall_order 
+		WHERE user_id = {$uid}
+		";
+		$sale2 = $db->query($sql2);
+		$my_sale  = $sale2 ? $sale2[0]['totalprice'] : 0;
+		$all_sale = sprintf("%.2f",$my_sale + $team_sale);
+		$this->assign("all_sale", $all_sale);
+		$this->display();
 	}
 	
 	public function index2()
@@ -273,47 +173,63 @@ class MemberAction extends BaseAction {
 	//销售榜单
 	public function sale()
 	{
-		$id = $this->uid;
-		if ($id > 0) {
-			$usersresult = D('Member')->getOne( array('id'=>$id) );
-			
-			if(empty($usersresult))
-			{
-				exit('未查到该用户信息');
-			}
-			
-			$db = new Model();
-			$top_info = $db->query("SELECT level_id, SUM( totalprice ) AS total, wx_info
-			FROM (
-			SELECT level_id, totalprice
-			FROM  `wemall_order_level` 
-			INNER JOIN  `wemall_order` ON  `wemall_order_level`.`order_id` =  `wemall_order`.`orderid`
-			) AS t1
-			INNER JOIN  `wemall_user` ON  `wemall_user`.id = level_id
-			GROUP BY level_id
-			ORDER BY `total` DESC , `t1`.`level_id` DESC 
-			LIMIT 0 , 100");
-
-			
-			$ALL_COUNT = $db->query("SELECT sum(`totalprice`) as total FROM `wemall_order_level` inner join `wemall_order` on `wemall_order_level`.`order_id` =  `wemall_order`.`orderid` where `level_id`=$usersresult[id]");
-			$all_buy_price = empty($ALL_COUNT[0]['total']) ? 0 : $ALL_COUNT[0]['total'];
-				
-			$query_info = $db->query("SELECT  SUM( totalprice ) AS total
-			FROM (
-			SELECT level_id, totalprice
-			FROM  `wemall_order_level` 
-			INNER JOIN  `wemall_order` ON  `wemall_order_level`.`order_id` =  `wemall_order`.`orderid`
-			) AS t1
-			GROUP BY level_id
-	having total>$all_buy_price");
-
-			$my_top = count($query_info)+1;
-			
-			$this->assign ( "top_info", $top_info );
-			$this->assign ( "user", $usersresult );
-			$this->assign ( "my_top", $my_top );
-			$this->display();
+		$uid = $this->uid;
+		
+		$month = $_GET['month'] ? $_GET['month'] : date('Y-m');
+		$month = date('Y-m',strtotime($month));
+		$this->assign( "month",$month );
+		$this->assign( "currentY",date('Y',strtotime($month)) );
+		$this->assign( "currentM",date('m',strtotime($month)) );
+		$this->assign( "month",$month );
+		$this->assign( "maxMonth", date('m') );
+		$this->assign( "maxYear", date('Y') );
+		$start_time = $month.'-01 00:00:00';//所选月份始天
+		$end_time   = date('Y-m-t',strtotime($month)).' 23:59:59';//所选月份末天
+		
+		$db = new Model();
+		//获得佣金
+		$sql1 = "SELECT SUM(ol.price) as yongjin,SUM(o.totalprice) as team_sale  
+		FROM wemall_order_level ol
+		LEFT JOIN wemall_order o ON ol.order_id = o.orderid 
+		WHERE ol.level_id = {$uid} AND (ol.active_time >= '{$start_time}' AND ol.active_time <= '{$end_time}')";
+		$team_sale = $db->query($sql1);
+		if( $team_sale ){
+			$team_sale = $team_sale[0];
+			$team_sale['yongjin']   = sprintf("%.2f",$team_sale['yongjin']);
+			$team_sale['team_sale'] = sprintf("%.2f",$team_sale['team_sale']);//团队销售额
 		}
+		$this->assign( "team_sale", $team_sale );
+		
+		//个人销售额
+		$sql2 = "SELECT SUM(totalprice) AS totalprice 
+		FROM wemall_order 
+		WHERE user_id = {$uid} AND (time >= '{$start_time}' AND time <= '{$end_time}')
+		";
+		$my_sale = $db->query($sql2);
+		if( $my_sale ){
+			$my_sale = $my_sale[0]['totalprice'];
+		}
+		$my_sale  = sprintf("%.2f",$my_sale);
+		$all_sale = sprintf("%.2f",$my_sale + $team_sale['team_sale']);
+		$this->assign( "my_sale", $my_sale );
+		$this->assign( "all_sale", $all_sale );
+		
+		$sql3 = "SELECT SUM(o.totalprice) as sale,o.user_id user_id,user.username,user.wx_info,ol.level_type
+		FROM wemall_order_level ol
+		LEFT JOIN wemall_order o ON ol.order_id = o.orderid 
+		LEFT JOIN wemall_user user ON o.user_id = user.id 
+		WHERE ol.level_id = {$uid} AND (ol.active_time >= '{$start_time}' AND ol.active_time <= '{$end_time}') 
+		GROUP BY o.user_id 
+		";
+		$top_info = $db->query($sql3);
+		$level_type = array(1=>'一级代理商',2=>'二级代理商',3=>'三级代理商');
+		$this->assign ( "top_info", $top_info );
+		$this->assign ( "level_type", $level_type );
+		
+		$user = D('Member')->getOne( array('id'=>$uid) );
+		$this->assign ( "top_info", $top_info );
+		$this->assign ( "user", $user );
+		$this->display();
 	}
 	
 	//结算
@@ -396,10 +312,10 @@ class MemberAction extends BaseAction {
 		$appid            = $options['appid'];
 		$mch_id           = $options['partnerid'];
 		$body             = $cartnames;
-		$total_fee        = $totalprice * 100;
+		$total_fee        = $order_info['totalprice'] * 100;
 		$notify_url       = 'http://' . $_SERVER ['SERVER_NAME'];
 		$spbill_create_ip = $_SERVER["REMOTE_ADDR"];
-		$nonce_str = $weObj->generateNonceStr();
+		$nonce_str        = $weObj->generateNonceStr();
 		
 		$pay_xml = $weObj->createPackageXml($appid,$mch_id,$nonce_str,$body,$out_trade_no,$total_fee,$spbill_create_ip,$notify_url,$openid);
 		
@@ -504,61 +420,10 @@ class MemberAction extends BaseAction {
 	public function setting()
 	{
 		$uid = $this->uid;
-		$users = D('Member')->getOne( array('uid'=>$uid) );
-		
-		$this->assign("users",$users);
-		if ( empty($users) ) {
-			exit('未查到该用户信息');
-		}
-		if ( IS_POST ) {
-			if (!$_POST['login']) {
-				$this->error("请输入用户名");
-				exit;
-			}else {
-				$map['login'] = $_POST['login'];
-				$map['uid'] = array('neq',$_GET['uid']);
-				$check = M("User")->where($map)->find();
-				if (!empty($check)) {
-					$this->error("该用户名已存在！请重新输入");
-					exit;
-				}
-			}
-
-			if (!$_POST['password']) {
-				unset($_POST['password']);
-			}else {
-				$_POST['password'] = md5($_POST['password']);
-			}
-
-			import ( 'ORG.Net.UploadFile' );
-			$upload = new UploadFile (); // 实例化上传类
-			$upload->maxSize = 3145728; // 设置附件上传大小
-			$upload->allowExts = array (
-					'jpg',
-					'gif',
-					'png',
-					'jpeg',
-					'xlsx',
-					'xls'
-			); // 设置附件上传类型
-			$upload->savePath = './Public/Uploads/';
-			$wx_info = array();
-			$wx_info = json_decode($users['wx_info'],true);
-			if (! $upload->upload ()) { // 上传错误提示错误信息
-				$wx_info['nickname'] = $_POST['login'];
-				$_POST['wx_info'] = json_encode($wx_info);
-			} else { 
-				$info = $upload->getUploadFileInfo ();
-				$path = $upload->savePath.$info[0]['savename'];
-				$wx_info['nickname'] = $_POST['login'];
-				$wx_info['headimgurl'] = $path;
-				$_POST['wx_info'] = json_encode($wx_info);
-			}
-			M("User")->where($where)->save($_POST);
-			$this->success("保存成功！",U('App/Index/member',array("uid"=>$users['uid'])) );
-			exit;
-		}
-
+		$user = D('Member')->getOne( $uid );
+		$ticket = R ( "Api/Api/ticket", array ($user) );
+		$this->assign("user",$user);
+		$this->assign("ticket",$ticket['ticket']);
 		$this->display();
 	}
 	

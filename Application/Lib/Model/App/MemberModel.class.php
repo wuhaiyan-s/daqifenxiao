@@ -50,6 +50,11 @@ class MemberModel extends RelationModel {
 		}else{
 			$user = M("User")->where($where)->find();
 		}
+		if( $user ){
+			$wx_info = json_decode($user['wx_info'],true);
+			$user['username'] = $user['username'] ? $user['username'] : ( $wx_info ? $wx_info['nickname'] : '' );
+			$user['head_img'] = $user['head_img'] ? $user['head_img'] : ( $wx_info ? $wx_info['headimgurl'] : './images/user_headimg.png');
+		}
 		return  $user;
 	}
 }

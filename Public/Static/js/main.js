@@ -285,3 +285,17 @@ function getorders(page)
         }  
     });
 }
+
+//显示大图
+function showImg(imgurl)
+{
+	var html = '<div id="bigImgBg" onclick="hideImg()"></div><img src="'+imgurl+'" id="bigImgFixed" onclick="hideImg()"/>';
+	$('body').append(html);
+}
+
+//隐藏大图
+function hideImg()
+{
+	$('#bigImgBg').remove();
+	$('#bigImgFixed').remove();
+}

@@ -373,7 +373,6 @@ mui-flex, .mui-flex *, .mui-flex :after, .mui-flex :before {
 	left: 0px;
 	top: 0px;
 	width: 100%;
-	height: 667px;
 	z-index: 1001;
 	background: #efefef;
 	display: none;
@@ -428,7 +427,8 @@ mui-flex, .mui-flex *, .mui-flex :after, .mui-flex :before {
 	height: 48px;
 	line-height:  48px;
 	text-decoration: none;
-	border:1px solid #ddd;
+	border:0px;
+	z-index: 1010;
 }
 .mui-poppicker{
 	z-index: 10001;

@@ -422,9 +422,10 @@ body {
 .mui-table-view-chevron .mui-table-view-cell>a:not(.mui-btn),
 .mui-table-view-cell>a:not(.mui-btn) {
 	font-size: 1.167rem;
-	padding: 2rem 0.2rem 1.58rem 1rem;
+	padding: 1.25rem 0.2rem 1.25rem 1rem;
 	margin: 0px;
 	color: #000000;
+	line-height: 40px;
 }
 
 .mui-table-view-chevron .mui-table-view-cell,
@@ -442,11 +443,11 @@ body {
 
 .mui-table-view-cell input,
 .mui-table-view-cell select {
-	color: #B1B1B1;
+	color: #666666;
 	font-size: 1.167rem;
 	text-align: right;
 	margin: 0px;
-	padding: 0px;
+	padding: 5px;
 }
 
 #carprovince {
@@ -528,4 +529,19 @@ body {
 #shengming .mui-scroll{
 	background: white;
 	padding: 1rem
+}
+#info img{
+	width: 40px;
+	height: 40px;
+}
+#saveBtn{
+	margin: 1.5rem 1.75rem;
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 1.167rem;
+    display: block;
+    text-align: center;
+    border-radius: 0.5rem;
+    background: #04be02;
+    color: #fff;
 }

@@ -95,10 +95,12 @@
 	goods.price = "{$goods.price}";
 	goods.image = "{$goods.image}";
 	goods.name  = "{$goods.name}";
+	goods.commision = "{$goods.commision}";//总佣金
 	buydata[{$goods['id']}] = goods;
 	
 	buyinfo.total_price = "{$goods['price']}";
-	buyinfo.goods_count = 1;	
+	buyinfo.goods_count = 1;
+	buyinfo.totallirun  = "{$goods['commision']}";	
 </script>
 </body>
 </html>

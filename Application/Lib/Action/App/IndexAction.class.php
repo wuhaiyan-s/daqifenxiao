@@ -90,6 +90,26 @@ class IndexAction extends BaseAction {
 		if( empty($goods) ){
 			showMsg(404,'商品已下架','','html');
 		}
+		
+		//重复折扣
+		$zhekou = 0;
+		if(file_exists('./Public/Conf/zhekou.php'))
+		{
+			require './Public/Conf/zhekou.php';
+		}
+		if( $zhekou > 0 && $this->uid > 0 )
+		{
+			$order = M ( "Order" )->where ( array (
+				"user_id" => $this->uid,
+				"pay_status" => 1
+			) )->find ();
+			
+			if( !empty($order) )
+			{
+				$goods['price'] = $goods['price'] * ($zhekou/100);
+			}
+		}
+			
 		$cartData = json_decode($_COOKIE['cartData'],true);
 		$this->assign( "cart_num", count($cartData) );
 		$this->assign( "goods", $goods );
@@ -102,13 +122,18 @@ class IndexAction extends BaseAction {
 		$cartData = json_decode($_COOKIE['cartData'],true);
 		$this->assign ( "cartData", $cartData );
 		$total_price = 0;
+		$totallirun = 0;
 		foreach( $cartData as $goods ){
-			$goods['price'] = sprintf('%.2f',$goods['price']);
 			$total_price += $goods['price'] * $goods['num'];
+			$totallirun  += $goods['lirun'] * $goods['num'];
+			$goods['price'] = sprintf('%.2f',$goods['price']);
+			$goods['lirun'] = sprintf('%.2f',$goods['lirun']);
 		}
 		$total_price = sprintf('%.2f',$total_price);
+		$totallirun = sprintf('%.2f',$totallirun);
 		$this->assign( "goods_count", count($cartData) );
 		$this->assign( "total_price", $total_price );
+		$this->assign( "totallirun", $totallirun );
 		$this->display();
 	}
 	
@@ -323,7 +348,7 @@ class IndexAction extends BaseAction {
 		$totalprice = $_GET['totalprice'];
 		$cart_names = $_GET['cart_name'];
 		//$openid = $_GET['uid'];
-		$openid = $_SESSION['uid'];
+		$openid = $this->openid;
 		$orderid = $_GET['orderid'];
 		
 		$agent = $_SERVER['HTTP_USER_AGENT']; 
@@ -350,22 +375,6 @@ class IndexAction extends BaseAction {
 				'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
 				);
 		$weObj = new Wechat ( $options );
-		
-		if(strlen($openid)<=10)
-		{
-			$info = $weObj->getOauthAccessToken();
-			if(!$info)
-			{
-				$callback = 'http://' . $_SERVER ['SERVER_NAME']. U("App/Index/pay",$_GET);
-				$url = $weObj->getOauthRedirect($callback,'','snsapi_base');
-				header("Location: $url");
-				exit();
-			}
-			else
-			{
-				$openid = $info['openid'];
-			}
-		}
 		
 		$order_info = M('Order')->where(array('orderid'=>$orderid))->find();
 		
@@ -411,7 +420,8 @@ class IndexAction extends BaseAction {
 		$pay_xml = $weObj->createPackageXml($appid,$mch_id,$nonce_str,$body,$out_trade_no,$total_fee,$spbill_create_ip,$notify_url,$openid);
 		
 		$pay_xml =  $weObj->get_pay_id($pay_xml);
-
+		var_dump($pay_xml);
+		exit;
 		if($pay_xml['err_code']=="ORDERPAID")
 		{
 			$this->redirect('App/Index/payover', array('out_trade_no'=>$out_trade_no,'uid'=>$_SESSION['uid'])); 
@@ -919,7 +929,7 @@ class IndexAction extends BaseAction {
 				$_GET['id']=1;
 			}
 
-			$goodsresult=M("good")->where(array("id"=>$_GET['id']))->find();
+			$goodsresult = M("good")->where(array("id"=>$_GET['id']))->find();
 			
 			if($zhekou>0)
 			{

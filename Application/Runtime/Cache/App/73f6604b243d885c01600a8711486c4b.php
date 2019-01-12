@@ -25,8 +25,8 @@
 	  <?php if(empty($cartData)): ?><div class="cartHasNone">您的购物车为空.</div>
 	  <?php else: ?>
 	  	<?php if(is_array($cartData)): $i = 0; $__LIST__ = $cartData;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$goods): $mod = ($i % 2 );++$i;?><div class="grid-main">
-	        <div class="grid-order" id="grid-order-<?php echo ($goods["id"]); ?>" goodsid="<?php echo ($goods["id"]); ?>"  goodsname="<?php echo ($goods["name"]); ?>" price="<?php echo ($goods["price"]); ?>"  num="<?php echo ($goods["num"]); ?>" image="<?php echo ($goods["image"]); ?>" unit_price="<?php echo ($goods["unit_price"]); ?>">
-	          <div class="order-select" id="order-select-<?php echo ($goods["id"]); ?>" goodsid="<?php echo ($goods["id"]); ?>"  goodsname="<?php echo ($goods["name"]); ?>" price="<?php echo ($goods["price"]); ?>"  num="<?php echo ($goods["num"]); ?>" image="<?php echo ($goods["image"]); ?>">
+	        <div class="grid-order" id="grid-order-<?php echo ($goods["id"]); ?>" goodsid="<?php echo ($goods["id"]); ?>"  goodsname="<?php echo ($goods["name"]); ?>" price="<?php echo ($goods["price"]); ?>" lirun="<?php echo ($goods["lirun"]); ?>" num="<?php echo ($goods["num"]); ?>" image="<?php echo ($goods["image"]); ?>">
+	          <div class="order-select" id="order-select-<?php echo ($goods["id"]); ?>" goodsid="<?php echo ($goods["id"]); ?>"  goodsname="<?php echo ($goods["name"]); ?>" price="<?php echo ($goods["price"]); ?>" lirun="<?php echo ($goods["lirun"]); ?>" num="<?php echo ($goods["num"]); ?>" image="<?php echo ($goods["image"]); ?>">
 	            <div class="icon"></div>
 	          </div>
 	          <a href="<?php echo U('Index/detail',array('id'=>$goods['id']));?>" class="order-link" target="_blank">
@@ -104,8 +104,10 @@
 <script language="javascript" type="text/javascript">
 	var goods_selected = 0;//加入结算的所有商品的总个数（一个商品买多件算1个）
 	var total_price_t  = 0.00;
+	var totallirun_t   = 0.00;
 	var goods_count    = <?php echo ($goods_count); ?>;
 	var total_price    = <?php echo ($total_price); ?>;
+	var totallirun     = <?php echo ($totallirun); ?>;
 	
 	mui.init({
 		keyEventBind: {
@@ -165,6 +167,7 @@
 		
 		buydata = {};
 		total_price_t = 0;
+		totallirun_t = 0;
 		goods_selected = 0;
 		if( l > 0 ){
 			for( var i = 0;i < l;i++ ){
@@ -175,12 +178,15 @@
 				goods.price = $(orders[i]).attr('price');
 				goods.image = $(orders[i]).attr('image');
 				goods.name  = $(orders[i]).attr('goodsname');
+				goods.lirun = $(orders[i]).attr('lirun');
 				buydata[Id] = goods;
 				total_price_t += goods.price * goods.num;
+				totallirun_t  += goods.lirun * goods.num;
 				goods_selected += 1;
 			}
 		}
 		buyinfo.total_price = toDecimal2(total_price_t);
+		buyinfo.totallirun  = toDecimal2(totallirun_t);
 		buyinfo.goods_count = goods_selected;
 		console.log(buydata);
 		console.log(buyinfo);

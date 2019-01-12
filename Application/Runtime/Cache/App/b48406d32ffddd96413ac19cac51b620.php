@@ -200,8 +200,12 @@
 				}, false);
 			});
 		})(mui, document);
+		
+		
 		$(function(){
-			
+			var w = $(document).width(),
+				h = $(document).height();
+			$('#addressBox').width(w).height(h);
 		});
 		function editAdress(isEdit)
 		{

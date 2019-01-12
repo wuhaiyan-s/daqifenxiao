@@ -8,7 +8,7 @@ class BaseAction extends Action {
 	public function _initialize() {
 		header("Content-type: text/html; charset=utf-8"); 
 		$this->uid    = intval($_SESSION['uid']);//用户唯一id,user表的id
-		$this->openid = $_SESSION['openid'] ? $_SESSION['openid'] : $_GET['openid'];
+		$this->openid = $_SESSION['openid'];
 		$this->userAuth();//用户登录判断
 		
 		$this->ERROR_LIST = C('ERROR_LIST');
@@ -23,23 +23,8 @@ class BaseAction extends Action {
 	{
 		$whiteArr = array('index.index','index.detail','index.cart','member.login');//免登录的方法名
 		$action_name = strtolower( $this->getActionName() ).'.'.strtolower(ACTION_NAME);
-		
 		$ERROR_LIST = $this->ERROR_LIST;
-		import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
-	$config = M ( "Wxconfig" )->where ( array (
-				"id" => "1" 
-		) )->find ();
-		
-		$options = array (
-				'token' => $config ["token"], // 填写你设定的key
-				'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
-				'appid' => $config ["appid"], // 填写高级调用功能的app id
-				'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
-				'partnerid' => $config ["partnerid"], // 财付通商户身份标识
-				'partnerkey' => $config ["partnerkey"], // 财付通商户权限密钥Key
-				'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
-				);
-		$weObj = new Wechat ( $options );
+				
 		if( $this->uid ){
 			$this->userinfo = D('Member')->getOne($this->uid);
 			if( empty($this->userinfo) ){
@@ -49,12 +34,32 @@ class BaseAction extends Action {
 		
 		$agent = $_SERVER['HTTP_USER_AGENT'];
 		if( strpos($agent,"icroMessenger") ){//用微信浏览器打开
+			import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
+	$config = M ( "Wxconfig" )->where ( array (
+				"id" => "1" 
+		) )->find ();
+			$options = array (
+				'token' => $config ["token"], // 填写你设定的key
+				'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
+				'appid' => $config ["appid"], // 填写高级调用功能的app id
+				'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
+				);
+				
+			$weObj                 = new Wechat ( $options );
+			$wxApi                 = array();
+		    $wxApi["timestamp"]    = time();
+		    $wxApi["noncestr"]     = $weObj->generateNonceStr();
+		    $wxApi['jsapi_ticket'] = $weObj->getJsTicket();;
+		    $wxApi['url']          = $redirect = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		    $wxApi["signature"]    = $weObj->getSignature($wxApi);
+		    $wxApi["appId"]        = $config['appid'];
+		    $this->assign('wxApi',$wxApi);
+		    
 			//没有授权登录的 授权登录获取openid
 			if( empty($this->openid) ){
 				$info = $weObj->getOauthAccessToken();
 				if( empty($info) )
 				{
-					$redirect = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 					$url = $weObj->getOauthRedirect($redirect,'','snsapi_base');
 					header("Location: $url");
 					exit();
@@ -71,21 +76,43 @@ class BaseAction extends Action {
 					showMsg(101,$ERROR_LIST[101],'','html');
 				}else
 				{
-					if( strlen($this->userinfo ['head_img']) < 10 ){
+					$userinfo = $this->userinfo;
+					if( $userinfo['openid'] && $userinfo['openid'] != $this->openid ){
+						showMsg(103,$ERROR_LIST[103],'','html');
+					}
+					
+					$user            = array();
+					if( strlen($userinfo['head_img']) < 10 ){
+						$user['head_img'] = $wx_info['headimgurl'];
+					}
+					$user['id']      = $this->uid;
+					$user['wx_info'] = json_encode($wx_info);
+					$user['openid']  = $this->openid;
+					M( "User" )->save ( $user );
+				}
+			}else{
+				$userinfo = M('User')->where( array('openid'=>$this->openid) )->find();
+				if( $userinfo ){
+					$this->uid       = $_SESSION['uid'] = $userinfo['id'];
+					$this->userinfo  = $userinfo;
+					$user            = array();
+					if( strlen($userinfo['head_img']) < 10 ){
 						$user['head_img'] = $wx_info['headimgurl'];
 					}
 					$user['id']      = $this->uid;
 					$user['wx_info'] = json_encode($wx_info);
 					M( "User" )->save ( $user );
+				}else{
+					//根据微信信息新增用户
+					$user             = array();
+					$user['head_img'] = $wx_info['headimgurl'];
+					$user['wx_info']  = json_encode($wx_info);
+					$user['openid']   = $this->openid;
+					$user['uid']      = $this->openid;
+					$this->uid        = $_SESSION['uid'] = M( "User" )->add( $user );
+					$this->userinfo   = D('Member')->getOne($this->uid);
 				}
-			}else{
-				//根据微信信息新增用户
-				$user             = array();
-				$user['head_img'] = $wx_info['headimgurl'];
-				$user['wx_info']  = json_encode($wx_info);
-				$this->uid        = $_SESSION['uid'] = M ( "User" )->add ( $user );
 			}
-			
 		}elseif( empty($this->uid) && !in_array($action_name,$whiteArr) ){//用普通网页浏览器打开
 			$url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Member/login');
 			header("Location: $url");

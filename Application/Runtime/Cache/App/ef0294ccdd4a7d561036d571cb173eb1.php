@@ -95,10 +95,12 @@
 	goods.price = "<?php echo ($goods["price"]); ?>";
 	goods.image = "<?php echo ($goods["image"]); ?>";
 	goods.name  = "<?php echo ($goods["name"]); ?>";
+	goods.commision = "<?php echo ($goods["commision"]); ?>";//总佣金
 	buydata[<?php echo ($goods['id']); ?>] = goods;
 	
 	buyinfo.total_price = "<?php echo ($goods['price']); ?>";
-	buyinfo.goods_count = 1;	
+	buyinfo.goods_count = 1;
+	buyinfo.totallirun  = "<?php echo ($goods['commision']); ?>";	
 </script>
 </body>
 </html>

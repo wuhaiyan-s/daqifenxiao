@@ -97,6 +97,7 @@ class Wechat
 	const SEMANTIC_API_URL= 'https://api.weixin.qq.com/semantic/semproxy/search?';
 	const PAY_API_URL= 'https://api.mch.weixin.qq.com/pay/unifiedorder';
 	const TK_API_URL = 'https://api.mch.weixin.qq.com/secapi/pay/refund';
+	const GET_TICKET_URL = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?';
 	
 	
 	private $token;
@@ -1660,6 +1661,31 @@ class Wechat
 		$paySign = md5($paramstring);
 		
 		return $paySign;
+	}
+	
+	public function getAccessToken()
+	{
+		
+	}
+	public function getJsTicket()
+	{
+		$authname = 'wechat_access_token'.$this->appid;
+		$access_token = S($authname);
+		if( empty($access_token) ){
+			$access_token = $this->checkAuth();
+		}
+		$result = $this->http_get(self::GET_TICKET_URL.'access_token='.$access_token.'&type=jsapi');
+		if ($result)
+		{
+			$json = json_decode($result,true);
+			if (!$json || !empty($json['errcode'])) {
+				$this->errCode = $json['errcode'];
+				$this->errMsg = $json['errmsg'];
+				return false;
+			}
+			return $json['ticket'];
+		}
+		return false;
 	}
 	
 	/**

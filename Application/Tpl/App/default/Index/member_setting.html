@@ -7,19 +7,58 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<link href="{$StaticDir}mui/css/mui.min.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" href="{$StaticCss}base.css">
 	<link rel="stylesheet" href="{$StaticCss}setting.css">
-	<style>
-		.aboutus {
-			text-align: justify;
-			border: 1px solid #ccc;
-			border-radius: 10px;
-			background: white;
-			padding: 0 10px;
-		}
-		.aboutus p {
-			text-indent: 2rem;
-		}
-	</style>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script>
+	  wx.config({
+	      debug: false,
+	      appId: '{$wxApi['appId']}', // 必填，公众号的唯一标识
+		  timestamp: '{$wxApi['timestamp']}', // 必填，生成签名的时间戳
+		  nonceStr: '{$wxApi['noncestr']}', // 必填，生成签名的随机串
+		  signature: '{$wxApi['signature']}',// 必填，签名
+	      jsApiList: [
+	        'checkJsApi',
+	        'onMenuShareTimeline',
+	        'onMenuShareAppMessage',
+	        'onMenuShareQQ',
+	        'onMenuShareWeibo',
+	        'onMenuShareQZone',
+	        'hideMenuItems',
+	        'showMenuItems',
+	        'hideAllNonBaseMenuItem',
+	        'showAllNonBaseMenuItem',
+	        'translateVoice',
+	        'startRecord',
+	        'stopRecord',
+	        'onVoiceRecordEnd',
+	        'playVoice',
+	        'onVoicePlayEnd',
+	        'pauseVoice',
+	        'stopVoice',
+	        'uploadVoice',
+	        'downloadVoice',
+	        'chooseImage',
+	        'previewImage',
+	        'uploadImage',
+	        'downloadImage',
+	        'getNetworkType',
+	        'openLocation',
+	        'getLocation',
+	        'hideOptionMenu',
+	        'showOptionMenu',
+	        'closeWindow',
+	        'scanQRCode',
+	        'chooseWXPay',
+	        'openProductSpecificView'
+	      ]
+	  });
+	  wx.ready(function () {
+		    wx.error(function(res){
+			    //alert(JSON.stringify(res));
+			});
+	  });
+	</script>
 </head>
 <body class="mui-fullscreen">
 	<!--页面主结构开始-->
@@ -65,7 +104,7 @@
 							<a href="#about" class="mui-navigate-right">关于我们</a>
 						</li>
 					</ul>
-					<a class="exitBtn redBtn">退出登录</a>
+					<a class="exitBtn redBtn" onclick="logout();">退出登录</a>
 				</div>
 			</div>
 		</div>
@@ -84,37 +123,38 @@
 				<div class="mui-scroll">
 
 					<ul class="mui-table-view">
-
 						<li class="mui-table-view-cell">
 
 							<a id="head">头像
 								<span class="mui-pull-right head">
-									<img class="head-img mui-action-preview" id="head-img1" src="./images/user_headimg.png" />
+									<img class="head-img mui-action-preview" id="head-img1" onclick="chooseImage()" src="{$user.head_img}" />
 								</span>
 							</a>
 						</li>
 					</ul>
+					<form id="infoBase">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell">
 							<a>手机
-								<span class="mui-pull-right" id="mobile"></span>
+								<span class="mui-pull-right" id="mobile"><input type="text" name="phone" value="{$user.phone}"/></span>
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
 							<a>昵称
 								<span class="mui-pull-right">
-									<input id="username" placeholder="请输入昵称" />
+									<input type="text" name="username" value="{$user.username}"/>
 								</span>
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
 							<a>我的二维码
 								<span class="mui-pull-right">
-									<img src=""/>
+									<img src="{$ticket}" id="ticket_img" class="bigImgFixed" onclick="showImg('{$ticket}');"/>
 								</span>
 							</a>
 						</li>
 					</ul>
+					</form>
 				</div>
 			</div>
 
@@ -132,12 +172,13 @@
 		<div class="mui-page-content">
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
+					<form id="infoAuth">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell">
 
 							<a>旧密码
 								<span class="mui-pull-right">
-									<input id="oldpwd" placeholder="请输入旧密码" />
+									<input name="oldpassword" id="oldpassword" placeholder="请输入旧密码" />
 								</span>
 							</a>
 							
@@ -146,12 +187,13 @@
 
 							<a>新密码
 								<span class="mui-pull-right">
-									<input id="newpwd" placeholder="请输入新密码" />
+									<input name="password"  id="password" placeholder="请输入新密码" />
 								</span>
 							</a>
-
 						</li>
 					</ul>
+					<a id="saveBtn" onclick="savePwd()">确定</a>
+					</form>
 				</div>
 			</div>
 
@@ -176,31 +218,15 @@
 			<div class="mui-scroll-wrapper">
 			</div>
 		</div>
-
 	</div>
 	</body>
-	<script src=".{$StaticJs}jquery3.min.js"></script>
+	<script src="{$StaticJs}jquery3.min.js"></script>
+	<script src="{$StaticJs}main.js"></script>
+	<script src="{$StaticJs}member.js"></script>
 	<script src="{$StaticDir}mui/js/mui.min.js "></script>
 	<script src="{$StaticDir}mui/js/mui.view.js "></script>
 	<script>
 		mui.init();
-		
-		mui.plusReady(function () {
-    		
-			mui('.mui-scroll').on('tap', '.exitBtn', function(e) {
-				//setStore('userinfo','');
-				mui.toast('已经退出登录.');
-				var vw = plus.webview.currentWebview();
-				var vwu = plus.webview.getWebviewById("user.html");
-				vwu.reload();
-				vw.close();
-			});
-			
-			mui('#head').on('tap', '#head-img1', function(e) {
-				//galleryImg();
-			});
-
-		});
 
 		//初始化单页view
 		var viewApi = mui('#app').view({
@@ -208,110 +234,72 @@
 		});
 
 			
-		getUserInfo();
+		//getUserInfo();
 
 		var view = viewApi.view;
 		(function($) {
 			//处理view的后退与webview后退
 			var oldBack = $.back;
 			$.back = function() {
-				if (viewApi.canBack()) { //如果view可以后退，则执行view的后退
+				if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
 					viewApi.back();
 				} else { //执行webview后退
 					oldBack();
 				}
 			};
 		})(mui);
-		mui('.mui-scroll-wrapper').scroll();
 		
 		$(function(){
+			$('#infoBase input').change(function(){
+				var info = $('#infoBase').serialize();
+				var url = base_url + '/index.php?g=Api&m=Member&a=saveInfo';
+				$.post(url,info,function(res){
+					if( typeof res == 'string' ){
+						res = JSON.parse(res);
+					}
+					if( res.errno == 200 ){
+						showMsg(res.errmsg);
+					}else{
+						showMsg(res.errmsg,'alert');
+					}
 
-			$('#info select').change(function(){
-				saveBaseInfo();
+				});
 			});
-
-			$('#info input').mouseout(function(){
-				saveBaseInfo();
-			});
-
-			$('#info input').blur(function(){
-				saveBaseInfo();
-			});
-
 		});
 		
-		function getUserInfo()
+		//选择图片
+		function chooseImage()
 		{
-			
+			wx.chooseImage({
+				count: 1, // 默认9
+				sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+				sourceType: ['album','camera'], // 可以指定来源是相册还是相机，默认二者都有
+				success: function (res) {
+					uploadImage(res.localIds[0]);
+				}
+			});
 		}
 		
-		// 从相册中选择图片 
-		function galleryImg() {
-		    plus.gallery.pick( function(path){
-		    	createUpload(path);
-		    }, function ( e ) {
-		    	console.log( "取消选择图片" );
-		    }, {filter:"image"} );
-		}
 		//上传图片
-		function createUpload(path)
-		{
-			var uuinfo = userinfo;
-			if( typeof userinfo == 'string' ){
-				uuinfo = JSON.parse(uuinfo);
-			}
-			var url = api_site+'/index.php?g=Api&a=uploadHeadimg';
-
-			var wt   = plus.nativeUI.showWaiting(); 
-
-			var task = plus.uploader.createUpload( url,{ method:"POST",blocksize:12048000,priority:100,timeout:300 },
-
-				function ( t, status ) {
-
-					alert(JSON.stringify(t));
-
-					if( status != 200 ){
-
-						malert('上传失败，错误码1'+status);
-
-						return;
-
-					}
-
-					var reText = JSON.parse(t.responseText);
-
-					if( reText.code == 200 ){
-
-						uuinfo.userpic = uuinfo.head_img = reText.data.file;
-
-						//if( is_app ){
-
-							setStore('userinfo',JSON.stringify(userinfo));
-
-						//}
-
-						$('#head-img1').attr('src',uuinfo.userpic);
-
-						mtoast('上传成功');
-
-						return;
-
-					}
-
-					malert('上传失败，错误码3'+reText.code);
-
-					wt.close();
-
+		function uploadImage(localId){
+			wx.uploadImage({
+				localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+				isShowProgressTips: 0, // 默认为1，显示进度提示
+				success: function (res) {
+					var url = base_url+'/index.php?g=Api&m=Api&a=uploadMedia';
+					$.post(url,{media_id:res.serverId,file_name:'head_img'},function(e){
+						if( typeof e == 'string' ){
+							e = JSON.parse(e);
+						}
+						if( e.errno == 200 ){
+							$('#head-img1').attr('src',e.data.head_img);
+							showMsg(e.errmsg);
+						}else{
+							showMsg(e.errmsg,'alert');
+						}
+					});
 				}
-
-			);
-
-			task.addFile( path, {key:"headimg"} );
-
-			task.addData( "userid", uuinfo.userid );
-
-			task.start();
-
-		}
+			});
+		}	  
 	</script>
 </html>

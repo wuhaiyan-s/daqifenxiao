@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link href="../Public/Static/css/foods.css?444" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="../Public/Static/js/jquery.min.js"></script>
-<script type="text/javascript" src="../Public/Static/js/wemall.js"></script>
-<script type="text/javascript" src="../Public/Static/js/alert.js"></script>
+<link href="/Application/Tpl/App/default/Public/Static/css/foods.css?444" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/Application/Tpl/App/default/Public/Static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Application/Tpl/App/default/Public/Static/js/wemall.js"></script>
+<script type="text/javascript" src="/Application/Tpl/App/default/Public/Static/js/alert.js"></script>
 <script type="text/javascript">
 var appurl = '__APP__';
 var rooturl = '__ROOT__';
@@ -162,7 +162,7 @@ var rooturl = '__ROOT__';
 			<span style='float:left;margin-left:10px;margin-right:10px;'>
 				<php>
 					$wx_info = json_decode($users['wx_info'],true);
-					$img = !empty($wx_info['headimgurl'])?$wx_info['headimgurl']:'../Public/Static/images/defult.jpg';
+					$img = !empty($wx_info['headimgurl'])?$wx_info['headimgurl']:'/Application/Tpl/App/default/Public/Static/images/defult.jpg';
 					echo "<img src='".$img."' width='70px;' height='70px;'>";
 				</php>
 			</span>
@@ -194,7 +194,7 @@ var rooturl = '__ROOT__';
 							<span style='float:left;margin-left:10px;margin-right:10px;margin-top:5px;'>
 							<php>
 								$wx_info = json_decode($result['wx_info'],true);
-								$img = !empty($wx_info['headimgurl'])?$wx_info['headimgurl']:'../Public/Static/images/defult.jpg';
+								$img = !empty($wx_info['headimgurl'])?$wx_info['headimgurl']:'/Application/Tpl/App/default/Public/Static/images/defult.jpg';
 								echo "<img src='".$img."' width='40px;' height='40px;'>";
 								
 							</php>

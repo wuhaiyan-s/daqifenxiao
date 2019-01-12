@@ -20,16 +20,16 @@
 	      <!---->
 	      <div class="avatar_wrap">
 	        <div class="avatar">
-	          <div class="image_info" style="background: url(&quot;http://storage.360buyimg.com/i.imageUpload/7738687931343735383236363135323935_mid.jpg&quot;) 0px 0px / 100% 100% no-repeat;"></div>
+	          <div class="image_info" style="background: url(<?php echo ($head_img); ?>) 0px 0px / 100% 100% no-repeat;"></div>
 	        </div>
 	      </div>
 	      <div class="personal_wrap">
 	        <div class="name line1">
-	          <span class="line1"><?php echo $wx_info ? $wx_info['nickname'] : $users['username'];?></span>
+	          <span class="line1"><?php echo ($username); ?></span>
 <!-- 	          <span class="my_header_v4_name_edit"></span> -->
 	          <span class="my_header_level hide">(一级代理商)</span>
 	        </div>
-	        <span class="pin line1">销售额<a href="<?php echo U('Member/sale');?>">￥<?php echo ($all_buy_price); ?></a></span>
+	        <span class="pin line1">销售额<a href="<?php echo U('Member/sale');?>">￥<?php echo ($all_sale); ?></a></span>
 	      </div>
 	      <div class="account_wrap">
 	        <a href="<?php echo U('Member/setting');?>" class="account_wrap_content">
@@ -55,7 +55,7 @@
 			</ul>
 		</div>
 		<div class="ublock">
-			<h2>我的佣金<span><i>0.25</i>元</span><em></em></h2>
+			<h2>我的佣金<span><i><?php echo ($yongjin); ?></i>元</span><em></em></h2>
 			<ul>
 				<li>未付款定单佣金<span><?php echo ($start_price); ?></span></li>
 				<li>已付款定单佣金<span><?php echo ($over_price); ?></span></li>
