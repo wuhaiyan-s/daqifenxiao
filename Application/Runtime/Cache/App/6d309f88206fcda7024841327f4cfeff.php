@@ -112,6 +112,7 @@
 <script src="<?php echo ($StaticDir); ?>mui/js/mui.min.js "></script>
 <script src="<?php echo ($StaticDir); ?>mui/js/mui.view.js "></script>
 <script src="<?php echo ($StaticJs); ?>main.js "></script>
+<script src="<?php echo ($StaticJs); ?>member.js "></script>
 <script language="javascript" type="text/javascript">	
 	mui.init({
 		keyEventBind: {

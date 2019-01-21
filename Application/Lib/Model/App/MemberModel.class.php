@@ -22,6 +22,7 @@ class MemberModel extends RelationModel {
 	public function add_meber($user_id)
 	{
 		//生成永久二weima
+/*
 		$weObj = $this->init ();
 		$code_id = $user_id;
 		$return = $weObj->getQRCode($code_id,1);
@@ -30,7 +31,9 @@ class MemberModel extends RelationModel {
 		$data ["member"] = 1;
 		$data ["ticket"] = $return['ticket'];
 		$data ["url"] = $return['url'];
-		
+*/
+		$data ["id"] = (int)$user_id;
+		$data ["member"] = 1;
 		$result = M ( "User" )->save ( $data );
 		
 		if ($result) {
@@ -45,7 +48,7 @@ class MemberModel extends RelationModel {
 	//获取当个用户信息
 	public function getOne($where)
 	{
-		if( is_int($where) ){
+		if( is_numeric($where) ){
 			$user = M("User")->find($where);
 		}else{
 			$user = M("User")->where($where)->find();

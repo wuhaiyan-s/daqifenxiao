@@ -39,12 +39,15 @@
 	  </div>
 	</div>
 	<div class="uinfolist" id="uinfolist">
+		<div class="ublock">
+			<h2><a href="<?php echo U('Member/orderlist');?>">订单列表</a></h2>
+		</div>
 		<div class="ublock umember">
 			<h2>家族成员<span><i><?php echo ($all_cnt); ?></i>人</span><em></em></h2>
 			<ul>
-				<li>一级会员<span><?php echo ($users["a_cnt"]); ?></span></li>
-				<li>二级会员<span><?php echo ($users["b_cnt"]); ?></span></li>
-				<li>三级会员<span><?php echo ($users["c_cnt"]); ?></span></li>
+				<li>一级会员<span><?php echo ($user["a_cnt"]); ?></span></li>
+				<li>二级会员<span><?php echo ($user["b_cnt"]); ?></span></li>
+				<li>三级会员<span><?php echo ($user["c_cnt"]); ?></span></li>
 			</ul>
 		</div>
 		<div class="ublock ubuy">
@@ -66,9 +69,9 @@
 				<li>可提现佣金<span><?php echo ($users["price"]); ?></span></li>
 			</ul>
 		</div>
-		<div class="ublock">
-			<h2>申请提现</h2>
-		</div>
+		<?php if($yongjin > 0): ?><div class="ublock">
+				<h2><a href="<?php echo U('Member/tixian');?>">申请提现</a></h2>
+			</div><?php endif; ?>
 	</div>
 </div>
 <div class="tb-toolbar-container">

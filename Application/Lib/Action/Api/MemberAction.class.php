@@ -12,22 +12,20 @@ class MemberAction extends Action {
 	public function login()
 	{
 		$ERROR_LIST = $this->ERROR_LIST;
-		if (!$_POST['login']) {
+		if (!$_POST['username']) {
 			showMsg(50201,$ERROR_LIST[50201]);
 		}
 		if (!$_POST['password']) {
 			showMsg(50202,$ERROR_LIST[50202]);
 		}
 		
-		$where = array(
-				'login'    => $_POST['login'],
-				'password' => md5($_POST['password'])
-			);
-		$thisUser = M("User")->where($where)->find();
+		$username = $_POST['username'];
+		$password = md5($_POST['password']);
+		$thisUser = M("User")->where( "(phone = '{$username}') AND password = '{$password}' " )->find();
 		if (empty($thisUser)) {
 			showMsg(50203,$ERROR_LIST[50203]);
 		}else {
-			$_SESSION['uid'] = $thisUser['id'];
+			$this->uid = $_SESSION['uid'] = $thisUser['id'];
 			showMsg(200,'登录成功');
 		}
 	}
@@ -47,6 +45,13 @@ class MemberAction extends Action {
 			} 
 			unset($data['oldpassword']);
 			$data['password'] = md5($data['password']);
+		}
+		if( isset($_POST['phone']) ){
+			$phone = $_POST['phone'];
+			$hasPhone = M('User')->where("phone = '{$phone}'")->find();
+			if( $hasPhone && $hasPhone['id'] != $uid ){
+				showMsg(50303,$ERROR_LIST[50303]);
+			}
 		}
 		M('User')->save($data);
 		showMsg(200,'修改成功');

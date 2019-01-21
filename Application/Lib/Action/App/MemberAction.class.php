@@ -20,14 +20,17 @@ class MemberAction extends BaseAction {
 	{
 		$uid = $this->uid;
 		$user = D('Member')->getOne($uid);
+		$all_cnt = $user['a_cnt']+$user['b_cnt']+$user['c_cnt'];
 		$this->assign("head_img", $user['head_img']);
+		$this->assign("user", $user);
+		$this->assign("all_cnt",$all_cnt);
 		
 		$db = new Model();
 		//团队销售额
 		$sql1 = "SELECT SUM(ol.price) as yongjin,SUM(o.totalprice) as team_sale  
 		FROM wemall_order_level ol
 		LEFT JOIN wemall_order o ON ol.order_id = o.orderid 
-		WHERE ol.level_id = {$uid}";
+		WHERE ol.level_id = {$uid} AND o.pay_status > 0";
 		$sale1 = $db->query($sql1);
 		$team_sale = $sale1 ? $sale1[0]['team_sale'] : 0;
 		$this->assign("yongjin", $sale1[0]['yongjin']);
@@ -35,12 +38,246 @@ class MemberAction extends BaseAction {
 		//个人销售额
 		$sql2 = "SELECT SUM(totalprice) AS totalprice 
 		FROM wemall_order 
-		WHERE user_id = {$uid}
+		WHERE user_id = {$uid}  AND pay_status > 0
 		";
 		$sale2 = $db->query($sql2);
 		$my_sale  = $sale2 ? $sale2[0]['totalprice'] : 0;
 		$all_sale = sprintf("%.2f",$my_sale + $team_sale);
 		$this->assign("all_sale", $all_sale);
+		$this->display();
+	}
+	
+	//佣金提现
+	public function tixian()
+	{
+		$where = array();
+		$where ["uid"] = $this->uid;
+		$tx_record = M ( "Tx_record" )->where($where)->select();
+		$this->assign ( "tx_record", $tx_record );
+		$this->display();
+	}
+	
+	//销售榜单
+	public function sale()
+	{
+		$uid = $this->uid;
+		
+		$month = $_GET['month'] ? $_GET['month'] : date('Y-m');
+		$month = date('Y-m',strtotime($month));
+		$this->assign( "month",$month );
+		$this->assign( "currentY",date('Y',strtotime($month)) );
+		$this->assign( "currentM",date('m',strtotime($month)) );
+		$this->assign( "month",$month );
+		$this->assign( "maxMonth", date('m') );
+		$this->assign( "maxYear", date('Y') );
+		$start_time = $month.'-01 00:00:00';//所选月份始天
+		$end_time   = date('Y-m-t',strtotime($month)).' 23:59:59';//所选月份末天
+		
+		$db = new Model();
+		//获得佣金
+		$sql1 = "SELECT SUM(ol.price) as yongjin,SUM(o.totalprice) as team_sale  
+		FROM wemall_order_level ol
+		LEFT JOIN wemall_order o ON ol.order_id = o.orderid 
+		WHERE ol.level_id = {$uid} AND (ol.active_time >= '{$start_time}' AND ol.active_time <= '{$end_time}') AND o.pay_status > 0";
+		$team_sale = $db->query($sql1);
+		if( $team_sale ){
+			$team_sale = $team_sale[0];
+			$team_sale['yongjin']   = sprintf("%.2f",$team_sale['yongjin']);
+			$team_sale['team_sale'] = sprintf("%.2f",$team_sale['team_sale']);//团队销售额
+		}
+		$this->assign( "team_sale", $team_sale );
+		
+		//个人销售额
+		$sql2 = "SELECT SUM(totalprice) AS totalprice 
+		FROM wemall_order 
+		WHERE user_id = {$uid} AND (time >= '{$start_time}' AND time <= '{$end_time}')  AND pay_status > 0
+		";
+		$my_sale = $db->query($sql2);
+		if( $my_sale ){
+			$my_sale = $my_sale[0]['totalprice'];
+		}
+		$my_sale  = sprintf("%.2f",$my_sale);
+		$all_sale = sprintf("%.2f",$my_sale + $team_sale['team_sale']);
+		$this->assign( "my_sale", $my_sale );
+		$this->assign( "all_sale", $all_sale );
+		
+		$sql3 = "SELECT SUM(o.totalprice) as sale,o.user_id user_id,user.username,user.wx_info,ol.level_type
+		FROM wemall_order_level ol
+		LEFT JOIN wemall_order o ON ol.order_id = o.orderid 
+		LEFT JOIN wemall_user user ON o.user_id = user.id 
+		WHERE ol.level_id = {$uid} AND (ol.active_time >= '{$start_time}' AND ol.active_time <= '{$end_time}')  AND o.pay_status > 0
+		GROUP BY o.user_id 
+		";
+		$top_info = $db->query($sql3);
+		$level_type = array(1=>'一级代理商',2=>'二级代理商',3=>'三级代理商');
+		$this->assign ( "top_info", $top_info );
+		$this->assign ( "level_type", $level_type );
+		
+		$user = D('Member')->getOne( array('id'=>$uid) );
+		$this->assign ( "top_info", $top_info );
+		$this->assign ( "user", $user );
+		$this->display();
+	}
+	
+	//结算
+	public function buy()
+	{
+		$uid = $this->uid;
+		$goodsList = $_SESSION['buyData'];
+		$buy_info  = $_SESSION['buyInfo'];
+		$user      = D('Member')->getOne($uid);
+		$address   = $user['address'];
+		$address2  = '';
+		$address1  = '';
+		if( !empty($address) ){
+			$address = explode(',', $address);
+			$address1 = $address[0].','.$address[1].','.$address[2];
+			$address2 = $address[3];
+		}
+		$this->assign( "user", $user );
+		$this->assign( "address1", $address1 );
+		$this->assign( "address2", $address2 );
+		$this->assign( "goodsList", $goodsList );
+		$this->assign( "buy_info", $buy_info );
+		$this->display();
+	}
+	
+	//支付
+	public function pay()
+	{
+		$openid     = $this->openid;
+		$oid        = $_GET['oid'];//订单唯一Id，order表主键
+		$ERROR_LIST = $this->ERROR_LIST;
+		$agent = $_SERVER['HTTP_USER_AGENT']; 
+/*
+		if( !strpos($agent,"icroMessenger") ) {
+			showMsg(50105,$ERROR_LIST[50105],'','html');
+		}
+*/
+		
+		$order_info = M('Order')->find($oid);
+		if(empty($order_info))
+		{
+			showMsg(50106,$ERROR_LIST[50106],'','html');
+		}
+		if( $order_info['user_id'] != $this->uid ){
+			showMsg(50107,$ERROR_LIST[50107],'','html');
+		}
+		if( $order_info['pay_status'] == 1 ){
+			showMsg(50108,$ERROR_LIST[50108],'','html');
+		}
+		$out_trade_no = $order_info['orderid'];
+		$returnUrl    = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/payover',array('out_trade_no'=>$out_trade_no));
+		
+		$cartdata     = json_decode($order_info['cartdata'],true);
+		$cartnames    = '购买商品：';
+		foreach($cartdata as $cart){
+			$cartnames .= $cart['name'].',';
+		}
+		$cartnames = trim($cartnames,",");
+
+		$this->assign ( "shouhuoname", $order_info['shouhuoname'] );
+		$this->assign ( "phone", $order_info['phone'] );
+		$this->assign ( "address", $order_info['address'] );
+		$this->assign ( "postcode", $order_info['postcode'] );
+		$this->assign ( "totalprice", $order_info['totalprice'] );
+		
+		import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
+		$config = M ( "Wxconfig" )->where ( array (
+				"id" => "1" 
+		) )->find ();
+		$options = array (
+				'token' => $config ["token"], // 填写你设定的key
+				'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
+				'appid' => $config ["appid"], // 填写高级调用功能的app id
+				'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
+				'partnerid' => $config ["partnerid"], // 财付通商户身份标识
+				'partnerkey' => $config ["partnerkey"], // 财付通商户权限密钥Key
+				'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
+				);
+		$weObj            = new Wechat ( $options );
+		$appid            = $options['appid'];
+		$mch_id           = $options['partnerid'];
+		$body             = $cartnames;
+		$total_fee        = $order_info['totalprice'] * 100;
+		$notify_url       = 'http://' . $_SERVER ['SERVER_NAME'];
+		$spbill_create_ip = $_SERVER["REMOTE_ADDR"];
+		$nonce_str        = $weObj->generateNonceStr();
+		
+		$pay_xml = $weObj->createPackageXml($appid,$mch_id,$nonce_str,$body,$out_trade_no,$total_fee,$spbill_create_ip,$notify_url,$openid);
+		
+		$pay_xml =  $weObj->get_pay_id($pay_xml);
+		if($pay_xml['err_code']=="ORDERPAID")
+		{
+			$this->redirect( $returnUrl ); 
+			exit();
+		}
+		
+		$prepay_id = $pay_xml['prepay_id'];
+		$jsApiObj["appId"] = $appid;
+	    $jsApiObj["timeStamp"] = time();
+	    $jsApiObj["nonceStr"] = $nonce_str;
+		$jsApiObj["package"] = "prepay_id=$prepay_id";
+	    $jsApiObj["signType"] = "MD5";
+	    $jsApiObj["paySign"] = $weObj->getPaySignature($jsApiObj);
+		$jsApiObj = json_encode($jsApiObj);
+		$this->assign ( "jsApiObj", $jsApiObj );
+		$this->assign( "returnUrl", $returnUrl );
+		$this->display();
+	}
+	
+	public function sale_top_()
+	{
+		$id = $this->uid;
+		if ($id > 0) {
+			$usersresult = D('Member')->getOne( array('id'=>$id) );
+			
+			if(empty($usersresult))
+			{
+				exit('未查到该用户信息');
+			}
+			
+			$db = new Model();
+			$top_info = $db->query("SELECT level_id, SUM( totalprice ) AS total, wx_info
+			FROM (
+			SELECT level_id, totalprice
+			FROM  `wemall_order_level` 
+			INNER JOIN  `wemall_order` ON  `wemall_order_level`.`order_id` =  `wemall_order`.`orderid`
+			) AS t1
+			INNER JOIN  `wemall_user` ON  `wemall_user`.id = level_id
+			GROUP BY level_id
+			ORDER BY `total` DESC , `t1`.`level_id` DESC 
+			LIMIT 0 , 100");
+
+			
+			$ALL_COUNT = $db->query("SELECT sum(`totalprice`) as total FROM `wemall_order_level` inner join `wemall_order` on `wemall_order_level`.`order_id` =  `wemall_order`.`orderid` where `level_id`=$usersresult[id]");
+			$all_buy_price = empty($ALL_COUNT[0]['total']) ? 0 : $ALL_COUNT[0]['total'];
+				
+			$query_info = $db->query("SELECT  SUM( totalprice ) AS total
+			FROM (
+			SELECT level_id, totalprice
+			FROM  `wemall_order_level` 
+			INNER JOIN  `wemall_order` ON  `wemall_order_level`.`order_id` =  `wemall_order`.`orderid`
+			) AS t1
+			GROUP BY level_id
+	having total>$all_buy_price");
+
+			$my_top = count($query_info)+1;
+			
+			$this->assign ( "top_info", $top_info );
+			$this->assign ( "users", $usersresult );
+			$this->assign ( "my_top", $my_top );
+			$this->display("sale_top_");
+		}
+	}
+	
+	//订单列表
+	public function orderlist()
+	{
+		$uid = $this->uid;
+		$count = M('Order')->where( array('user_id'=>$uid) )->count();
+		$total_page = ceil($count / C('ORDER_PAGESIZE'));
+		$this->assign("total_page",$total_page);
 		$this->display();
 	}
 	
@@ -170,230 +407,6 @@ class MemberAction extends BaseAction {
 		}
 	}
 	
-	//销售榜单
-	public function sale()
-	{
-		$uid = $this->uid;
-		
-		$month = $_GET['month'] ? $_GET['month'] : date('Y-m');
-		$month = date('Y-m',strtotime($month));
-		$this->assign( "month",$month );
-		$this->assign( "currentY",date('Y',strtotime($month)) );
-		$this->assign( "currentM",date('m',strtotime($month)) );
-		$this->assign( "month",$month );
-		$this->assign( "maxMonth", date('m') );
-		$this->assign( "maxYear", date('Y') );
-		$start_time = $month.'-01 00:00:00';//所选月份始天
-		$end_time   = date('Y-m-t',strtotime($month)).' 23:59:59';//所选月份末天
-		
-		$db = new Model();
-		//获得佣金
-		$sql1 = "SELECT SUM(ol.price) as yongjin,SUM(o.totalprice) as team_sale  
-		FROM wemall_order_level ol
-		LEFT JOIN wemall_order o ON ol.order_id = o.orderid 
-		WHERE ol.level_id = {$uid} AND (ol.active_time >= '{$start_time}' AND ol.active_time <= '{$end_time}')";
-		$team_sale = $db->query($sql1);
-		if( $team_sale ){
-			$team_sale = $team_sale[0];
-			$team_sale['yongjin']   = sprintf("%.2f",$team_sale['yongjin']);
-			$team_sale['team_sale'] = sprintf("%.2f",$team_sale['team_sale']);//团队销售额
-		}
-		$this->assign( "team_sale", $team_sale );
-		
-		//个人销售额
-		$sql2 = "SELECT SUM(totalprice) AS totalprice 
-		FROM wemall_order 
-		WHERE user_id = {$uid} AND (time >= '{$start_time}' AND time <= '{$end_time}')
-		";
-		$my_sale = $db->query($sql2);
-		if( $my_sale ){
-			$my_sale = $my_sale[0]['totalprice'];
-		}
-		$my_sale  = sprintf("%.2f",$my_sale);
-		$all_sale = sprintf("%.2f",$my_sale + $team_sale['team_sale']);
-		$this->assign( "my_sale", $my_sale );
-		$this->assign( "all_sale", $all_sale );
-		
-		$sql3 = "SELECT SUM(o.totalprice) as sale,o.user_id user_id,user.username,user.wx_info,ol.level_type
-		FROM wemall_order_level ol
-		LEFT JOIN wemall_order o ON ol.order_id = o.orderid 
-		LEFT JOIN wemall_user user ON o.user_id = user.id 
-		WHERE ol.level_id = {$uid} AND (ol.active_time >= '{$start_time}' AND ol.active_time <= '{$end_time}') 
-		GROUP BY o.user_id 
-		";
-		$top_info = $db->query($sql3);
-		$level_type = array(1=>'一级代理商',2=>'二级代理商',3=>'三级代理商');
-		$this->assign ( "top_info", $top_info );
-		$this->assign ( "level_type", $level_type );
-		
-		$user = D('Member')->getOne( array('id'=>$uid) );
-		$this->assign ( "top_info", $top_info );
-		$this->assign ( "user", $user );
-		$this->display();
-	}
-	
-	//结算
-	public function buy()
-	{
-		$uid = $this->uid;
-		$goodsList = $_SESSION['buyData'];
-		$buy_info  = $_SESSION['buyInfo'];
-		$user      = D('Member')->getOne($uid);
-		$address   = $user['address'];
-		$address2  = '';
-		$address1  = '';
-		if( !empty($address) ){
-			$address = explode(',', $address);
-			$address1 = $address[0].','.$address[1].','.$address[2];
-			$address2 = $address[3];
-		}
-		$this->assign( "user", $user );
-		$this->assign( "address1", $address1 );
-		$this->assign( "address2", $address2 );
-		$this->assign( "goodsList", $goodsList );
-		$this->assign( "buy_info", $buy_info );
-		$this->display();
-	}
-	
-	//支付
-	public function pay()
-	{
-		$openid     = $this->openid;
-		$oid        = $_GET['oid'];
-		$ERROR_LIST = $this->ERROR_LIST;
-		$agent = $_SERVER['HTTP_USER_AGENT']; 
-/*
-		if( !strpos($agent,"icroMessenger") ) {
-			showMsg(50105,$ERROR_LIST[50105],'','html');
-		}
-*/
-		
-		$order_info = M('Order')->find($oid);
-		if(empty($order_info))
-		{
-			showMsg(50106,$ERROR_LIST[50106],'','html');
-		}
-		if( $order_info['user_id'] != $this->uid ){
-			showMsg(50107,$ERROR_LIST[50107],'','html');
-		}
-		if( $order_info['pay_status'] == 1 ){
-			showMsg(50108,$ERROR_LIST[50108],'','html');
-		}
-		$out_trade_no = $order_info['orderid'];
-		$returnUrl    = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/payover',array('out_trade_no'=>$out_trade_no));
-		
-		$cartdata     = json_decode($order_info['cartdata'],true);
-		$cartnames    = '购买商品：';
-		foreach($cartdata as $cart){
-			$cartnames .= $cart['name'].',';
-		}
-		$cartnames = trim($cartnames,",");
-
-		$this->assign ( "shouhuoname", $order_info['shouhuoname'] );
-		$this->assign ( "phone", $order_info['phone'] );
-		$this->assign ( "address", $order_info['address'] );
-		$this->assign ( "postcode", $order_info['postcode'] );
-		$this->assign ( "totalprice", $order_info['totalprice'] );
-		
-		import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
-		$config = M ( "Wxconfig" )->where ( array (
-				"id" => "1" 
-		) )->find ();
-		$options = array (
-				'token' => $config ["token"], // 填写你设定的key
-				'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
-				'appid' => $config ["appid"], // 填写高级调用功能的app id
-				'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
-				'partnerid' => $config ["partnerid"], // 财付通商户身份标识
-				'partnerkey' => $config ["partnerkey"], // 财付通商户权限密钥Key
-				'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
-				);
-		$weObj            = new Wechat ( $options );
-		$appid            = $options['appid'];
-		$mch_id           = $options['partnerid'];
-		$body             = $cartnames;
-		$total_fee        = $order_info['totalprice'] * 100;
-		$notify_url       = 'http://' . $_SERVER ['SERVER_NAME'];
-		$spbill_create_ip = $_SERVER["REMOTE_ADDR"];
-		$nonce_str        = $weObj->generateNonceStr();
-		
-		$pay_xml = $weObj->createPackageXml($appid,$mch_id,$nonce_str,$body,$out_trade_no,$total_fee,$spbill_create_ip,$notify_url,$openid);
-		
-		$pay_xml =  $weObj->get_pay_id($pay_xml);
-		if($pay_xml['err_code']=="ORDERPAID")
-		{
-			$this->redirect( $returnUrl ); 
-			eixt();
-		}
-		
-		$prepay_id = $pay_xml['prepay_id'];
-		$jsApiObj["appId"] = $appid;
-	    $jsApiObj["timeStamp"] = time();
-	    $jsApiObj["nonceStr"] = $nonce_str;
-		$jsApiObj["package"] = "prepay_id=$prepay_id";
-	    $jsApiObj["signType"] = "MD5";
-	    $jsApiObj["paySign"] = $weObj->getPaySignature($jsApiObj);
-		$jsApiObj = json_encode($jsApiObj);
-		$this->assign ( "jsApiObj", $jsApiObj );
-		$this->assign( "returnUrl", $returnUrl );
-		$this->display();
-	}
-	
-	public function sale_top_()
-	{
-		$id = $this->uid;
-		if ($id > 0) {
-			$usersresult = D('Member')->getOne( array('id'=>$id) );
-			
-			if(empty($usersresult))
-			{
-				exit('未查到该用户信息');
-			}
-			
-			$db = new Model();
-			$top_info = $db->query("SELECT level_id, SUM( totalprice ) AS total, wx_info
-			FROM (
-			SELECT level_id, totalprice
-			FROM  `wemall_order_level` 
-			INNER JOIN  `wemall_order` ON  `wemall_order_level`.`order_id` =  `wemall_order`.`orderid`
-			) AS t1
-			INNER JOIN  `wemall_user` ON  `wemall_user`.id = level_id
-			GROUP BY level_id
-			ORDER BY `total` DESC , `t1`.`level_id` DESC 
-			LIMIT 0 , 100");
-
-			
-			$ALL_COUNT = $db->query("SELECT sum(`totalprice`) as total FROM `wemall_order_level` inner join `wemall_order` on `wemall_order_level`.`order_id` =  `wemall_order`.`orderid` where `level_id`=$usersresult[id]");
-			$all_buy_price = empty($ALL_COUNT[0]['total']) ? 0 : $ALL_COUNT[0]['total'];
-				
-			$query_info = $db->query("SELECT  SUM( totalprice ) AS total
-			FROM (
-			SELECT level_id, totalprice
-			FROM  `wemall_order_level` 
-			INNER JOIN  `wemall_order` ON  `wemall_order_level`.`order_id` =  `wemall_order`.`orderid`
-			) AS t1
-			GROUP BY level_id
-	having total>$all_buy_price");
-
-			$my_top = count($query_info)+1;
-			
-			$this->assign ( "top_info", $top_info );
-			$this->assign ( "users", $usersresult );
-			$this->assign ( "my_top", $my_top );
-			$this->display("sale_top_");
-		}
-	}
-	
-	//订单列表
-	public function orderlist()
-	{
-		$uid = $this->uid;
-		$count = M('Order')->where( array('user_id'=>$uid) )->count();
-		$total_page = ceil($count / C('ORDER_PAGESIZE'));
-		$this->assign("total_page",$total_page);
-		$this->display();
-	}
-	
 	public function get_l_info($l_id)
 	{
 		$result_l = M("User")->where(array('id'=>$l_id))->find();
@@ -502,6 +515,83 @@ class MemberAction extends BaseAction {
 		$this->display();
 	}
 	
+	//微信授权登录
+	function wxlogin()
+	{
+		$ERROR_LIST = $this->ERROR_LIST;
+		import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
+	$config = M ( "Wxconfig" )->where ( array (
+				"id" => "1" 
+		) )->find ();
+		$options = array (
+			'token' => $config ["token"], // 填写你设定的key
+			'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
+			'appid' => $config ["appid"], // 填写高级调用功能的app id
+			'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
+			);
+			
+		$weObj                 = new Wechat ( $options );
+	    
+		//没有授权登录的 授权登录获取openid
+		if( empty($this->openid) ){
+			$info = $weObj->getOauthAccessToken();
+			if( empty($info) )
+			{
+				$redirect = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+				$url = $weObj->getOauthRedirect($redirect,'','snsapi_userinfo');
+				header("Location: $url");
+				exit();
+			}
+			else
+			{
+				$this->openid = $_SESSION['openid'] = $info['openid'];
+			}
+		}
+		$wx_info = $weObj->getUserInfo($this->openid);
+		if( $wx_info['subscribe'] != 1 )
+		{
+			showMsg(101,$ERROR_LIST[101],'','html');
+		}else
+		{
+			if( $this->uid ){
+				$userinfo = $this->userinfo = D('Member')->getOne($this->uid);
+				if( $userinfo['openid'] != $this->openid ){
+					showMsg(103,$ERROR_LIST[103],'','html');
+				}
+				$user            = array();
+				if( strlen($userinfo['head_img']) < 10 ){
+					$user['head_img'] = $wx_info['headimgurl'];
+				}
+				$user['id']      = $this->uid;
+				$user['wx_info'] = json_encode($wx_info);
+				$user['openid']  = $this->openid;
+				M( "User" )->save ( $user );
+			}else{
+				$userinfo = M('User')->where( array('openid'=>$this->openid) )->find();
+				if( $userinfo ){
+					$this->uid       = $_SESSION['uid'] = $userinfo['id'];
+					$this->userinfo  = $userinfo;
+					$user            = array();
+					if( strlen($userinfo['head_img']) < 10 ){
+						$user['head_img'] = $wx_info['headimgurl'];
+					}
+					$user['id']      = $this->uid;
+					$user['wx_info'] = json_encode($wx_info);
+					M( "User" )->save ( $user );
+				}else{
+					//根据微信信息新增用户
+					$user             = array();
+					$user['head_img'] = $wx_info['headimgurl'];
+					$user['wx_info']  = json_encode($wx_info);
+					$user['openid']   = $this->openid;
+					$user['uid']      = $this->openid;
+					$this->uid        = $_SESSION['uid'] = M( "User" )->add( $user );
+					$this->userinfo   = D('Member')->getOne($this->uid);
+				}
+			}
+		}
+		$this->redirect( U('Member/index') ); 
+	}
 	
 	function logout() {
 		unset($_SESSION["uid"]);
@@ -511,6 +601,10 @@ class MemberAction extends BaseAction {
 	
 	//注册
 	function register() {
+		$ERROR_LIST = $this->ERROR_LIST;
+		if( $this->uid > 0 ){
+			showMsg(104,$ERROR_LIST[104],'','html');
+		}
 		if ( IS_POST ) {
 			if (!$_POST['phone']) {
 				$this->error("请输入用户名");
@@ -636,9 +730,9 @@ class MemberAction extends BaseAction {
 			}
 			
 			M("User")->where($map)->save($user);
-			$_SESSION["uid"] = $new_user_id;
-			$this->success("登陆成功！",U('App/Index/member',array("uid"=>$id)));exit;
-			
+			$this->uid = $_SESSION["uid"] = $new_user_id;
+			$this->success("登陆成功！",U('App/Member/index')));
+			exit;
 		}
 		$this->display();
 	}

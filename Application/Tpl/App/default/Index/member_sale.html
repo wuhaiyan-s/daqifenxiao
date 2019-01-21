@@ -14,7 +14,7 @@
 </head>
 <body>
 <header class="mui-bar mui-bar-nav headerTop">
-	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<a  href="{:U('Member/index')}" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title">
 				<php>
 					$wx_info = json_decode($user['wx_info'],true);
@@ -73,7 +73,6 @@
 </div>
 <script src="{$StaticJs}jquery.min.js "></script>
 <script src="{$StaticDir}mui/js/mui.min.js "></script>
-<script src="{$StaticDir}mui/js/mui.view.js "></script>
 <script language="javascript" type="text/javascript">
 	var maxMonth = {$maxMonth};
 	var maxYear  = {$maxYear};
@@ -99,7 +98,6 @@
 			return;
 		}
 		var pre_month = pre_y + '-' + pre_m;
-		console.log(pre_month);
 		window.location.href = "{:U('Member/sale')}&month="+pre_month;
 	}
 	
@@ -118,7 +116,6 @@
 			return;
 		}
 		var next_month = next_y + '-' + next_m;
-		console.log(next_month);
 		window.location.href = "{:U('Member/sale')}&month="+next_month;
 	}
 </script>

@@ -1199,3 +1199,6 @@ vertical-align: middle;
 #indicator > li:last-child {
 	margin:0;
 }
+#successDom .kuang th{
+	color: #0B8E00;
+}

@@ -14,7 +14,7 @@
 </head>
 <body>
 <header class="mui-bar mui-bar-nav headerTop">
-	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<a  href="<?php echo U('Member/index');?>" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title">
 				<?php $wx_info = json_decode($user['wx_info'],true); $nickname = $wx_info['nickname']; echo $nickname; ?>的销售</h1>
 </header>
@@ -57,7 +57,6 @@
 </div>
 <script src="<?php echo ($StaticJs); ?>jquery.min.js "></script>
 <script src="<?php echo ($StaticDir); ?>mui/js/mui.min.js "></script>
-<script src="<?php echo ($StaticDir); ?>mui/js/mui.view.js "></script>
 <script language="javascript" type="text/javascript">
 	var maxMonth = <?php echo ($maxMonth); ?>;
 	var maxYear  = <?php echo ($maxYear); ?>;
@@ -83,7 +82,6 @@
 			return;
 		}
 		var pre_month = pre_y + '-' + pre_m;
-		console.log(pre_month);
 		window.location.href = "<?php echo U('Member/sale');?>&month="+pre_month;
 	}
 	
@@ -102,7 +100,6 @@
 			return;
 		}
 		var next_month = next_y + '-' + next_m;
-		console.log(next_month);
 		window.location.href = "<?php echo U('Member/sale');?>&month="+next_month;
 	}
 </script>

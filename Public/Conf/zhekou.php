@@ -1,1 +1,1 @@
-<?php $zhekou = 90;?>
+<?php $zhekou = 0;?>

@@ -233,9 +233,6 @@
 			defaultPage: '#setting'
 		});
 
-			
-		//getUserInfo();
-
 		var view = viewApi.view;
 		(function($) {
 			//处理view的后退与webview后退

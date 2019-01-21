@@ -420,8 +420,6 @@ class IndexAction extends BaseAction {
 		$pay_xml = $weObj->createPackageXml($appid,$mch_id,$nonce_str,$body,$out_trade_no,$total_fee,$spbill_create_ip,$notify_url,$openid);
 		
 		$pay_xml =  $weObj->get_pay_id($pay_xml);
-		var_dump($pay_xml);
-		exit;
 		if($pay_xml['err_code']=="ORDERPAID")
 		{
 			$this->redirect('App/Index/payover', array('out_trade_no'=>$out_trade_no,'uid'=>$_SESSION['uid'])); 
@@ -449,11 +447,11 @@ class IndexAction extends BaseAction {
 	
 	public function payover()
 	{
-		if(empty($_SESSION['uid']))
+		$uid = $this->uid;
+		if(empty($uid))
 		{
 			exit('请先关注该公众号');
 		}
-		
 		$out_trade_no = $_GET['out_trade_no'];
 
 		$order_info = M ("Order")->where(array('orderid'=>$out_trade_no))->find();
@@ -462,9 +460,7 @@ class IndexAction extends BaseAction {
 			exit('未找到订单信息');
 		}
 		
-		$userdata = M ( "User" )->where ( array (
-				"uid" => $_SESSION['uid']
-		) )->find ();
+		$userdata = D( "Member" )->getOne($uid);
 		
 		$Order_level_info = M ("Order_level")->where(array('order_id'=>$out_trade_no))->select();
 		if(!empty($Order_level_info))
@@ -528,15 +524,14 @@ class IndexAction extends BaseAction {
 			}
 			
 		}
-		
 		if($userdata["member"]!=1)
 		{
 			$user_id = $userdata ["id"];
-			$member_obj = D ( "Member" );
+			$member_obj = D( "Member" );
 			$result = $member_obj->add_meber($user_id);
 
 			//生成分享图片
-			$url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/get_pic',array('uid'=>$_SESSION['uid']));
+			$url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/get_pic',array('id'=>$this->uid));
 		
 			$oCurl = curl_init();
 			curl_setopt($oCurl, CURLOPT_URL, $url);
@@ -1053,15 +1048,11 @@ class IndexAction extends BaseAction {
 	
 	public function get_pic()
 	{
-		if($_GET['uid'])
-		{
-			$usersresult = M ( "User" )->where ( array (
-					"uid" => $_GET['uid']
-			) )->find ();
-			
-			$ticket = R ( "Api/Api/ticket", array (
-					$usersresult 
-			) );
-		}
+		//$uid = $this->uid;
+		$uid = intval($_GET['uid']);
+		$usersresult = D('Member')->getOne($uid);
+		$ticket = R ( "Api/Api/ticket", array (
+				$usersresult 
+		) );
 	}
 }

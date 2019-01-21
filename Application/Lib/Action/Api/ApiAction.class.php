@@ -282,6 +282,7 @@ class ApiAction extends Action {
 				}
 			}
 			$orders[$k]['status'] = $status;
+			$orders[$k]['pay_url'] = U('App/Member/pay',array('oid'=>$o['id']));
 		}
 		showMsg(200,'',$orders);
 	}
@@ -325,9 +326,7 @@ class ApiAction extends Action {
 
 	public function get_user_pic($uid,$ticket)
 	{
-		//$user_pic = "./imgpublic/user_".$uid.".jpg";
 		$ticket = "./imgpublic/ticket_".$uid.".png";
-		//if(!file_exists($user_pic))
 		if(!file_exists($ticket))
 		{
 /*
@@ -340,10 +339,7 @@ class ApiAction extends Action {
 */
 			$filepath = "./imgpublic/";
 			$site_url = M ( "Info" )->where ( "id = 1" )->getField('site_url');
-			$usersresult = R ( "Api/Api/getuser", array (
-					$uid
-			) );
-			$url = trim($site_url,'/').'/index.php?g=App&m=Member&a=register&mid='.$usersresult['id'];
+			$url = trim($site_url,'/').'/index.php?g=App&m=Member&a=register&mid='.$uid;
 			$filename = "ticket_".$uid.".png";
 			$ticket = $filepath.$filename;
 			$this->createQrcode($url,$ticket);
@@ -384,7 +380,6 @@ class ApiAction extends Action {
 	{
 		//推荐人
 		$result_l = M("User")->where(array('id'=>$usersresult['l_id']))->find();
-			
 		//二维码
 		if($usersresult['member']==1)
 		{
@@ -394,7 +389,7 @@ class ApiAction extends Action {
 			$logo = $wx_info['headimgurl'];
 			$name = $wx_info['nickname'];
 */
-			$ticket = $this->get_user_pic($usersresult['uid'],$ticket); 
+			$ticket = $this->get_user_pic($usersresult['id'],$ticket); 
 			//$pic = 'user_'.$usersresult['uid'].'.jpg';
 		}
 		elseif(!empty($result_l))

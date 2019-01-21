@@ -21,7 +21,7 @@ class BaseAction extends Action {
 	
 	public function userAuth()
 	{
-		$whiteArr = array('index.index','index.detail','index.cart','member.login');//免登录的方法名
+		$whiteArr = array('index.index','index.detail','index.cart','member.login','member.register','member.wxlogin');//免登录的方法名
 		$action_name = strtolower( $this->getActionName() ).'.'.strtolower(ACTION_NAME);
 		$ERROR_LIST = $this->ERROR_LIST;
 				
@@ -33,6 +33,12 @@ class BaseAction extends Action {
 		}
 		
 		$agent = $_SERVER['HTTP_USER_AGENT'];
+		if( empty($this->uid) && !in_array($action_name,$whiteArr) ){
+			$url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Member/login');
+			header("Location: $url");
+			exit();
+		}
+		/*
 		if( strpos($agent,"icroMessenger") ){//用微信浏览器打开
 			import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
 	$config = M ( "Wxconfig" )->where ( array (
@@ -77,7 +83,7 @@ class BaseAction extends Action {
 				}else
 				{
 					$userinfo = $this->userinfo;
-					if( $userinfo['openid'] && $userinfo['openid'] != $this->openid ){
+					if( $userinfo['openid'] != $this->openid ){
 						showMsg(103,$ERROR_LIST[103],'','html');
 					}
 					
@@ -117,6 +123,6 @@ class BaseAction extends Action {
 			$url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Member/login');
 			header("Location: $url");
 			exit();
-		}
+		}*/
 	}
 }

@@ -67,7 +67,7 @@ function callpay()
 		</li>
 	</ul>
 	<div class="footReturn"style="text-align:center">
-		<a href="javascript:void(0)" onclick="callpay()" class="payBtn">重新进行支付</a>
+		<a href="javascript:void(0)" onclick="callpay()" class="payBtn submit">重新进行支付</a>
 	</div>
 </div>
 <div id="successDom"style="display:none"class="cardexplain">

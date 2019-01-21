@@ -39,12 +39,15 @@
 	  </div>
 	</div>
 	<div class="uinfolist" id="uinfolist">
+		<div class="ublock">
+			<h2><a href="{:U('Member/orderlist')}">订单列表</a></h2>
+		</div>
 		<div class="ublock umember">
 			<h2>家族成员<span><i>{$all_cnt}</i>人</span><em></em></h2>
 			<ul>
-				<li>一级会员<span>{$users.a_cnt}</span></li>
-				<li>二级会员<span>{$users.b_cnt}</span></li>
-				<li>三级会员<span>{$users.c_cnt}</span></li>
+				<li>一级会员<span>{$user.a_cnt}</span></li>
+				<li>二级会员<span>{$user.b_cnt}</span></li>
+				<li>三级会员<span>{$user.c_cnt}</span></li>
 			</ul>
 		</div>
 		<div class="ublock ubuy">
@@ -66,9 +69,11 @@
 				<li>可提现佣金<span>{$users.price}</span></li>
 			</ul>
 		</div>
-		<div class="ublock">
-			<h2>申请提现</h2>
-		</div>
+		<if condition="$yongjin gt 0">
+			<div class="ublock">
+				<h2><a href="{:U('Member/tixian')}">申请提现</a></h2>
+			</div>
+		</if>
 	</div>
 </div>
 <include file="Application/Tpl/App/default/Index/toolbar.html"/>

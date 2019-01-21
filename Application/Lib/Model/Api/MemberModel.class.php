@@ -45,7 +45,7 @@ class MemberModel extends RelationModel {
 	//获取当个用户信息
 	public function getOne($where)
 	{
-		if( is_int($where) ){
+		if( is_numeric($where) ){
 			$user = M("User")->find($where);
 		}else{
 			$user = M("User")->where($where)->find();
