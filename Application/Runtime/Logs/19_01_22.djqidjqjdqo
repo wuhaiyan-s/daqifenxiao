@@ -14750,3 +14750,106 @@ INFO: [ view_end ] --START--
 INFO: ShowPageTrace Behavior ::run [ RunTime:0.000556s ]
 INFO: [ view_end ] --END-- [ RunTime:0.000604s ]
 
+[ 2019-01-22T14:36:58+08:00 ] 124.64.160.111 /index.php?g=Admin&m=Index&a=index
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000372s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000460s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.000914s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.000969s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000229s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.000231s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000142s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000273s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000993s ]
+INFO: [ view_end ] --START--
+INFO: ShowPageTrace Behavior ::run [ RunTime:0.000382s ]
+INFO: [ view_end ] --END-- [ RunTime:0.000424s ]
+
+[ 2019-01-22T14:36:58+08:00 ] 124.64.160.111 /index.php?g=Admin&m=Index&a=set
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000401s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000480s ]
+SQL: SELECT * FROM `wemall_info` LIMIT 1   [ RunTime:0.000105s ]
+NOTIC: [2] simplexml_load_file(): I/O warning : failed to load external entity &quot;./Application/Tpl/Appdefault/config.xml&quot; /var/www/site/daqifenxiao/Application/Lib/Action/Admin/IndexAction.class.php 第 36 行.
+NOTIC: [2] Creating default object from empty value /var/www/site/daqifenxiao/Application/Lib/Action/Admin/IndexAction.class.php 第 38 行.
+SQL: SELECT * FROM `wemall_alipay` LIMIT 1   [ RunTime:0.000066s ]
+SQL: SELECT * FROM `wemall_admin`  [ RunTime:0.000087s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Undefined variable: page /var/www/site/daqifenxiao/Application/Runtime/Cache/Admin/942076ad0708dc2856e4049a37c8d331.php 第 326 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.001133s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001193s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000291s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.000289s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000116s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000243s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001078s ]
+INFO: [ view_end ] --START--
+INFO: ShowPageTrace Behavior ::run [ RunTime:0.000339s ]
+INFO: [ view_end ] --END-- [ RunTime:0.000377s ]
+
+[ 2019-01-22T14:36:59+08:00 ] 124.64.160.111 /index.php?g=App&m=Index&a=listsp&id=1
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000397s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000474s ]
+NOTIC: [2048] Declaration of IndexAction::display() should be compatible with Action::display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 2 行.
+NOTIC: [8] Undefined index: openid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 11 行.
+SQL: SELECT * FROM `wemall_user` WHERE ( `id` = 50013 ) LIMIT 1   [ RunTime:0.000094s ]
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 15 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 16 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 17 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 18 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 19 行.
+SQL: SELECT * FROM `wemall_order_level` WHERE ( `level_id` = 50013 ) AND ( `status` = 2 ) AND ( `active_time` <= '2019-01-22 14:36:58' )  [ RunTime:0.000469s ]
+NOTIC: [2] Invalid argument supplied for foreach() /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 20 行.
+SQL: SELECT * FROM `wemall_order` WHERE ( `order_status` = 1 ) AND ( `pay_status` = 1 ) AND ( `time` <= '2019-01-22 14:36:58' )  [ RunTime:0.000286s ]
+NOTIC: [2] Invalid argument supplied for foreach() /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 52 行.
+SQL: SELECT * FROM `wemall_menu`  [ RunTime:0.000108s ]
+SQL: SELECT * FROM `wemall_good` WHERE ( `menu_id` = 1 ) AND ( `status` = 1 )  [ RunTime:0.000074s ]
+NOTIC: [8] Undefined index: uid /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 873 行.
+NOTIC: [8] Undefined index: member /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 753 行.
+NOTIC: [8] Undefined index: l_id /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 762 行.
+SQL: SELECT * FROM `wemall_user` WHERE ( `id` = null ) LIMIT 1   [ RunTime:0.000291s ]
+NOTIC: [8] Undefined index: l_id /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 765 行.
+SQL: SELECT * FROM `wemall_user` WHERE ( `id` = null ) LIMIT 1   [ RunTime:0.000066s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Undefined index: wx_info /var/www/site/daqifenxiao/Application/Runtime/Cache/App/b3c722e141311b9aeeaad99effc631f4.php 第 18 行.
+NOTIC: [8] Undefined index: id /var/www/site/daqifenxiao/Application/Runtime/Cache/App/b3c722e141311b9aeeaad99effc631f4.php 第 22 行.
+NOTIC: [8] Undefined variable: info /var/www/site/daqifenxiao/Application/Runtime/Cache/App/b3c722e141311b9aeeaad99effc631f4.php 第 28 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.000729s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.000782s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000285s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.000244s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000146s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000307s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001232s ]
+INFO: [ view_end ] --START--
+INFO: ShowPageTrace Behavior ::run [ RunTime:0.000424s ]
+INFO: [ view_end ] --END-- [ RunTime:0.000473s ]
+
+[ 2019-01-22T14:36:59+08:00 ] 124.64.160.111 /index.php?g=Admin&m=Index&a=set
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000397s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000482s ]
+SQL: SELECT * FROM `wemall_info` LIMIT 1   [ RunTime:0.000050s ]
+NOTIC: [2] simplexml_load_file(): I/O warning : failed to load external entity &quot;./Application/Tpl/Appdefault/config.xml&quot; /var/www/site/daqifenxiao/Application/Lib/Action/Admin/IndexAction.class.php 第 36 行.
+NOTIC: [2] Creating default object from empty value /var/www/site/daqifenxiao/Application/Lib/Action/Admin/IndexAction.class.php 第 38 行.
+SQL: SELECT * FROM `wemall_alipay` LIMIT 1   [ RunTime:0.000060s ]
+SQL: SELECT * FROM `wemall_admin`  [ RunTime:0.000063s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Undefined variable: page /var/www/site/daqifenxiao/Application/Runtime/Cache/Admin/942076ad0708dc2856e4049a37c8d331.php 第 326 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.001093s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001148s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000326s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.000246s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000139s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000232s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001066s ]
+INFO: [ view_end ] --START--
+INFO: ShowPageTrace Behavior ::run [ RunTime:0.000436s ]
+INFO: [ view_end ] --END-- [ RunTime:0.000482s ]
+
