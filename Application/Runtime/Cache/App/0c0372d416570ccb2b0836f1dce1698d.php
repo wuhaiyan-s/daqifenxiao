@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo ($StaticDir); ?>iconfont/iconfont.css">
 <link href="<?php echo ($StaticCss); ?>base.css" type="text/css" rel="stylesheet">
 <link href="<?php echo ($StaticCss); ?>member_index.css" type="text/css" rel="stylesheet">
+<script src="<?php echo ($StaticJs); ?>jquery3.min.js" language="javascript" type="text/javascript"></script>
 </head>
 <body id="ucenter">
 <div class="page-container">
@@ -25,7 +26,7 @@
 	      </div>
 	      <div class="personal_wrap">
 	        <div class="name line1">
-	          <span class="line1"><?php echo ($username); ?></span>
+	          <span class="line1"><?php echo ($user['username']); ?></span>
 <!-- 	          <span class="my_header_v4_name_edit"></span> -->
 	          <span class="my_header_level hide">(一级代理商)</span>
 	        </div>
@@ -88,21 +89,31 @@
     <span class="tb-toolbar-iconfont iconfont tb-icon-mine"></span>
     <p class="text">我的</p></a>
 </div>
-<script src="./Public/Static/js/jquery3.min.js" language="javascript" type="text/javascript"></script>
 <script language="javascript" type="text/javascript">
 	$(function(){
-		var a = getParam('a').toLowerCase();
-		var m = getParam('m').toLowerCase();
-		var action = m + '_' + a;
-		$('.tb-toolbar-container a[data-action='+action+']').addClass('active').siblings().removeClass('active');
+		renderBar();
 	});
 	
+	//渲染底部菜单的当前项
+	function renderBar()
+	{
+		var a = getParam('a');
+		var m = getParam('m');
+		if( m == '' || m == null ){
+			m = 'Index';
+		}
+		if( a == '' || a == null ){
+			a = 'index';
+		}
+		var action = m.toLowerCase() + '_' + a.toLowerCase();
+		$('.tb-toolbar-container a[data-action='+action+']').addClass('active').siblings().removeClass('active');
+	}
 	function getParam(paramName) { 
 	    paramValue = "", isFound = !1; 
 	    if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) { 
 	        arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0; 
 	        while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++ 
-	    } 
+	    }
 	    return paramValue == "" && (paramValue = null), paramValue 
 	} 
 </script>

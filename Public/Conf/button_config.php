@@ -48,7 +48,7 @@ $newmenu = ' {
         ]
     }';
 
-$message_name = '官方网';
+$message_name = '';
 $link_config = 'http://mp.weixin.qq.com/s?__biz=MzA5NzcxNjM3MQ==&mid=207351453&idx=2&sn=6ae645fcefa34543d29466d55bf99c82#rd';
 $config_good_pic = 'http://m.020369.com/Public/Plugin/umeditor/php/upload/20150406/1428297272533.jpg';
 $headimgurl = 'http://m.020369.com/Public/Plugin/umeditor/php/upload/20150406/1428297272533.jpg';

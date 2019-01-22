@@ -33,7 +33,8 @@ class MemberAction extends BaseAction {
 		WHERE ol.level_id = {$uid} AND o.pay_status > 0";
 		$sale1 = $db->query($sql1);
 		$team_sale = $sale1 ? $sale1[0]['team_sale'] : 0;
-		$this->assign("yongjin", $sale1[0]['yongjin']);
+		$yongjin = $sale1[0]['yongjin'] > 0 ? sprintf("%.2f",$sale1[0]['yongjin']) : "0.00";
+		$this->assign("yongjin", $yongjin);
 		
 		//个人销售额
 		$sql2 = "SELECT SUM(totalprice) AS totalprice 
@@ -154,7 +155,6 @@ class MemberAction extends BaseAction {
 			showMsg(50105,$ERROR_LIST[50105],'','html');
 		}
 */
-		
 		$order_info = M('Order')->find($oid);
 		if(empty($order_info))
 		{
@@ -512,6 +512,8 @@ class MemberAction extends BaseAction {
 					}, 1500);
 				</script>");
 		}
+		$is_wx    = strpos($_SERVER['HTTP_USER_AGENT'],"icroMessenger") ? 1 : 0;
+		$this->assign("is_wx", $is_wx );
 		$this->display();
 	}
 	
@@ -553,44 +555,35 @@ class MemberAction extends BaseAction {
 			showMsg(101,$ERROR_LIST[101],'','html');
 		}else
 		{
-			if( $this->uid ){
-				$userinfo = $this->userinfo = D('Member')->getOne($this->uid);
-				if( $userinfo['openid'] != $this->openid ){
-					showMsg(103,$ERROR_LIST[103],'','html');
-				}
+			$userinfo = M('User')->where( array('openid'=>$this->openid) )->find();
+			if( $userinfo ){
+				$this->uid       = $_SESSION['uid'] = $userinfo['id'];
 				$user            = array();
 				if( strlen($userinfo['head_img']) < 10 ){
 					$user['head_img'] = $wx_info['headimgurl'];
 				}
 				$user['id']      = $this->uid;
 				$user['wx_info'] = json_encode($wx_info);
-				$user['openid']  = $this->openid;
 				M( "User" )->save ( $user );
+				$this->redirect( U('Member/index') );
 			}else{
-				$userinfo = M('User')->where( array('openid'=>$this->openid) )->find();
-				if( $userinfo ){
-					$this->uid       = $_SESSION['uid'] = $userinfo['id'];
-					$this->userinfo  = $userinfo;
-					$user            = array();
-					if( strlen($userinfo['head_img']) < 10 ){
-						$user['head_img'] = $wx_info['headimgurl'];
-					}
-					$user['id']      = $this->uid;
-					$user['wx_info'] = json_encode($wx_info);
-					M( "User" )->save ( $user );
-				}else{
-					//根据微信信息新增用户
-					$user             = array();
-					$user['head_img'] = $wx_info['headimgurl'];
-					$user['wx_info']  = json_encode($wx_info);
-					$user['openid']   = $this->openid;
-					$user['uid']      = $this->openid;
-					$this->uid        = $_SESSION['uid'] = M( "User" )->add( $user );
-					$this->userinfo   = D('Member')->getOne($this->uid);
-				}
+				//根据微信信息新增用户
+				$user             = array();
+				$user['head_img'] = $wx_info['headimgurl'];
+				$user['wx_info']  = json_encode($wx_info);
+				$user['openid']   = $this->openid;
+				$user['uid']      = $this->openid;
+				$this->uid        = $_SESSION['uid'] = M( "User" )->add( $user );
+				//这个地方要跳转到用户填写手机号的地方
+				$this->redirect( U('Member/wxreg') );
 			}
 		}
-		$this->redirect( U('Member/index') ); 
+	}
+	
+	//微信登录 发现是新用户的话 提示填写手机号
+	public function addmobile()
+	{
+		$this->display();
 	}
 	
 	function logout() {
@@ -605,135 +598,11 @@ class MemberAction extends BaseAction {
 		if( $this->uid > 0 ){
 			showMsg(104,$ERROR_LIST[104],'','html');
 		}
-		if ( IS_POST ) {
-			if (!$_POST['phone']) {
-				$this->error("请输入用户名");
-				exit;
-			}else {
-				$map['login'] = $_POST['phone'];
-				$map['phone'] = $_POST['phone'];
-				$map['_logic'] = 'OR';
-				$check = M("User")->where($map)->find();
-				if (!empty($check)) {
-					$this->error("手机号已存在！请重新输入");
-					exit;
-				}
-			}
-			if (!$_POST['password']) {
-				$this->error("请输入登陆密码");
-				exit;
-			}
-			$_POST['uid'] = rand();
-			$_POST['password'] = md5($_POST['password']);
-			$_POST['login'] = $_POST['phone'];
-			$id = M("User")->add($_POST);
-			$new_user_id = $id;
-			$user = array();
-			$user['uid'] = $id;
-			$wx_info = json_encode(array('nickname'=>$map['phone'],'subscribe_time'=>time()));
-			$user['wx_info'] = $wx_info;
-			
-			if($_GET['mid']){
-				$m = M ( "User" );
-				include dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/Conf/button_config.php'; 
-				$where = array();
-				$where["id"] = (int)$_GET['mid'];
-				$results = $m->where($where)->find ();
-				
-				if(!empty($results['id']))
-				{
-					import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
-			$config = M ( "Wxconfig" )->where ( array (
-					"id" => "1" 
-			) )->find ();
-			
-			$options = array (
-					'token' => $config ["token"], // 填写你设定的key
-					'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
-					'appid' => $config ["appid"], // 填写高级调用功能的app id
-					'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
-					'partnerid' => $config ["partnerid"], // 财付通商户身份标识
-					'partnerkey' => $config ["partnerkey"], // 财付通商户权限密钥Key
-					'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
-					);
-					$weObj = new Wechat ( $options );
-				
-					$user ["l_id"] = $results['id'];
-					
-					//增加分销人
-					$a_info = array();
-					$a_info['id'] = $results['id'];
-					$a_info['a_cnt'] = $results['a_cnt']+1;
-					$user_id = M ( "User" )->save ( $a_info );
-					
-					if(strlen($results['uid'])>10)
-					{
-						$data = array();
-						$data['touser'] = $results['uid'];
-						$data['msgtype'] = 'text';
-						$data['text']['content'] = '【'.$map[login].'】通过分享链接，成为您的'.$message_name.'团队成员！';
-						$weObj->sendCustomMessage($data);
-					}
-					
-					if($results['l_id'])//b jibie
-					{
-						$where = array();
-						$where["id"] = $results['l_id'];
-						$b_results = $m->where($where)->find ();
-						
-						if(!empty($b_results))
-						{
-							$b_info = array();
-							$b_info['id'] = $b_results['id'];
-							$b_info['b_cnt'] = $b_results['b_cnt']+1;
-							$user_id = M ( "User" )->save ( $b_info );
-							
-							$user["l_b"] = $b_results['id'];
-							
-							if(strlen($b_results['uid'])>10)
-							{
-								$data = array();
-								$data['touser'] = $b_results["uid"];
-								$data['msgtype'] = 'text';
-								$data['text']['content'] = '【'.$map[login].'】通过分享链接，成为您的'.$message_name.'团队成员！';
-								$weObj->sendCustomMessage($data);
-							}
-							
-							if($b_results['l_id'])//c jibie
-							{
-								$where = array();
-								$where["id"] = $b_results['l_id'];
-								$c_results = $m->where($where)->find ();
-								
-								if(!empty($c_results))
-								{
-									$c_info = array();
-									$c_info['id'] = $c_results['id'];
-									$c_info['c_cnt'] = $c_results['c_cnt']+1;
-									$user_id = M ( "User" )->save ( $c_info );
-									
-									$user["l_c"] = $c_results['id'];
-									
-									if(strlen($c_results['uid'])>10)
-									{
-										$data = array();
-										$data['touser'] = $c_results["uid"];
-										$data['msgtype'] = 'text';
-										$data['text']['content'] = '【'.$map[login].'】通过分享链接，成为您的'.$message_name.'团队成员！';
-										$weObj->sendCustomMessage($data);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			
-			M("User")->where($map)->save($user);
-			$this->uid = $_SESSION["uid"] = $new_user_id;
-			$this->success("登陆成功！",U('App/Member/index')));
-			exit;
+		$mid = 0;
+		if( isset($_GET['mid']) ){
+			$mid = intval($_GET['mid']);
 		}
+		$this->assign("mid", $mid );
 		$this->display();
 	}
 	

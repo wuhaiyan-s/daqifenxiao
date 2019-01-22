@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html style="font-size: 37.5px;"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
@@ -7,10 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>用户注册</title>
-<link href="{$StaticDir}mui/css/mui.min.css" type="text/css" rel="stylesheet">
-<link href="{$StaticCss}base.css" type="text/css" rel="stylesheet">
-<link href="{$StaticCss}login.css" type="text/css" rel="stylesheet">
-<script src="{$StaticJs}jquery3.min.js" language="javascript" type="text/javascript"></script>
+<link href="<?php echo ($StaticDir); ?>mui/css/mui.min.css" type="text/css" rel="stylesheet">
+<link href="<?php echo ($StaticCss); ?>base.css" type="text/css" rel="stylesheet">
+<link href="<?php echo ($StaticCss); ?>login.css" type="text/css" rel="stylesheet">
+<script src="<?php echo ($StaticJs); ?>jquery3.min.js" language="javascript" type="text/javascript"></script>
 <script type="text/javascript">
     $(function(){
 		var fontSize = $(window).width() / 375 * 37.5;
@@ -19,9 +19,9 @@
 </script>
 </head>
 <body>
-	<div class="head"><a class="backBtn" href="{:U('App/Member/login')}"></a>用户注册</div>
+	<div class="head"><a class="backBtn" href="<?php echo U('App/Member/login');?>"></a>用户注册</div>
 	<form id="regForm"  onSubmit="javascript:return check(formUser);" class="mlogin"  name="userReg" action="" method="post">
-		<input type="hidden" name="mid" value="{$mid}"/>
+		<input type="hidden" name="mid" value="<?php echo ($mid); ?>"/>
 	    <div class="field autoClear">
             <div class="label">手机号</div>
             <div class="field-control">
@@ -51,7 +51,7 @@
         </div>
     </form>
 </body>
-<script src="{$StaticDir}mui/js/mui.min.js" language="javascript" type="text/javascript"></script>
-<script src="{$StaticJs}main.js" language="javascript" type="text/javascript"></script>
-<script src="{$StaticJs}member.js" language="javascript" type="text/javascript"></script>
+<script src="<?php echo ($StaticDir); ?>mui/js/mui.min.js" language="javascript" type="text/javascript"></script>
+<script src="<?php echo ($StaticJs); ?>main.js" language="javascript" type="text/javascript"></script>
+<script src="<?php echo ($StaticJs); ?>member.js" language="javascript" type="text/javascript"></script>
 </html>

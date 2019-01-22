@@ -7,7 +7,8 @@
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title></title>
+<title>首页</title>
+<link rel="stylesheet" type="text/css" href="{$StaticDir}iconfont/iconfont.css">
 <link href="{$StaticCss}base.css" type="text/css" rel="stylesheet">
 <link href="{$StaticCss}carousel.css" type="text/css" rel="stylesheet">
 <link href="{$StaticCss}index.css" type="text/css" rel="stylesheet">
@@ -26,7 +27,7 @@
 	<div id="header" class="">
 		<a class="menu icon"><img src="./images/logo.png"/></a>
 		<i class="space"></i>
-		<a href="{:U('App/Index/cart')}" id="j-mui-tinycart" target="_blank" class="tinycart icon" data-spm="dcart" href=""><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 1077 1024"><path d="M267 879a70 70 0 1 1 0 139 70 70 0 0 1 0-139zm605 0a70 70 0 1 1 0 139 70 70 0 0 1 0-139zm37-131H255l-50-474h776l-72 474zm145-537a38 38 0 0 0-29-13H197L179 31a38 38 0 0 0-38-34H18v76h89l76 717c2 19 19 34 38 34h720a38 38 0 0 0 38-33l84-549a38 38 0 0 0-9-31z"></path></svg><span id="cart_num">{$cart_num}</span></a>
+		<a href="{:U('Member/index')}" id="headLogin">登录</a>
 	</div>
 </div>
 <div class="index-con">
@@ -97,5 +98,15 @@
 	</div>
 	<div class="banPre100 hide"><a href=""><img src="../images/banner03_s.jpg"/></a></div>
 </div>
+<include file="Application/Tpl/App/default/Index/toolbar.html"/>
+<script language="javascript" type="text/javascript">
+	$(function(){
+		user_id = {$user_id};
+		var is_login = isLogin();
+		if( is_login ){
+			$('#headLogin').html('<span class="iconfont icon-icon7"></span>');
+		}
+	});
+</script>
 </body>
 </html>

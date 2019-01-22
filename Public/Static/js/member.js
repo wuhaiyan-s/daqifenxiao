@@ -1,4 +1,6 @@
 var base_url = '';
+
+//用户登录
 function login()
 {
 	var param = {};
@@ -20,12 +22,92 @@ function login()
 	});
 }
 
-//微信授权登录
-function wxlogin()
+//注册时用户信息检测
+function check()
 {
-	
+	var theForm =  document.forms['userReg'] ;
+	var phone = theForm.phone.value;
+	if( phone == ""){
+	    showMsg('请输入手机号!','alert');
+	    theForm.phone.focus();
+	    return false;
+	}
+	if(theForm.password.value == ""){
+	    showMsg('请输入密码!','alert');
+	    theForm.password.focus();
+	    return false;
+	}
+	var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+	if( !myreg.test( phone ) ){ 
+	    showMsg('手机号格式不正确，请重新输入!','alert');
+	    theForm.phone.focus();
+	    return false;
+	}
+	return true;
 }
 
+//用户注册
+function reg()
+{
+	var Check = check();
+	if( Check == false ){
+		return;
+	}
+	var param = $('#regForm').serialize();
+	var url = base_url+'/index.php?g=Api&m=Member&a=reg';
+	$.post(url,param,function(res){
+		if( typeof res == 'string' ){
+			res = JSON.parse(res);
+		}
+		if( res.errno == 200 ){
+			showMsg(res.errmsg);
+			setTimeout(function(){
+				window.location.href = base_url+'/index.php?g=App&m=Member&a=index';
+			}, 1000);
+		}else{
+			showMsg(res.errmsg,'alert');
+		}
+	});
+}
+
+//微信上注册后绑定手机号
+function addmobile()
+{
+	var theForm =  document.forms['addMobile'] ;
+	var phone = theForm.phone.value;
+	if( phone == ""){
+	    showMsg('请输入手机号!','alert');
+	    theForm.phone.focus();
+	    return;
+	}	var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+	if( !myreg.test( phone ) ){ 
+	    showMsg('手机号格式不正确，请重新输入!','alert');
+	    theForm.phone.focus();
+	    return;
+	}
+	var param = $('#addMobileForm').serialize();
+	var url = base_url+'/index.php?g=Api&m=Member&a=addmobile';
+	$.post(url,param,function(res){
+		if( typeof res == 'string' ){
+			res = JSON.parse(res);
+		}
+		if( res.errno == 200 ){
+			showMsg(res.errmsg);
+			setTimeout(function(){
+				window.location.href = base_url+'/index.php?g=App&m=Member&a=index';
+			}, 1000);
+		}else{
+			showMsg(res.errmsg,'alert');
+			if( res.errno == 105 ){
+				setTimeout(function(){
+					window.location.href = base_url+'/index.php?g=App&m=Member&a=login';
+				}, 1000);
+			}
+		}
+	});
+}
+
+//用户退出
 function logout()
 {
 	var url = base_url+'/index.php?g=Api&m=Member&a=logout';
@@ -137,10 +219,12 @@ function getorders(page)
 //修改密码
 function savePwd()
 {
+/*
 	if( $('#oldpassword').val().length < 1 ){
 		showMsg('旧密码不能为空','alert');
 		return;
 	}
+*/
 	if( $('#password').val().length < 6 ){
 		showMsg('新密码长度不得少于6位','alert');
 		return;

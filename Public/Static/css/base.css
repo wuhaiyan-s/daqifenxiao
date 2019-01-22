@@ -174,6 +174,7 @@ div {
     display: block;
     text-align: center;
     width: 25%;
+    line-height: 12px;
 }
 .tb-toolbar-iconfont {
     font-size: 16px;
@@ -187,7 +188,8 @@ div {
     line-height: 22px;
     color: #5D656B;
 }
-.tb-toolbar-container .text {
+.tb-toolbar-container .text{
+	line-height: 12px;
     font-size: 12px;
     padding:0px;
     margin:0px;

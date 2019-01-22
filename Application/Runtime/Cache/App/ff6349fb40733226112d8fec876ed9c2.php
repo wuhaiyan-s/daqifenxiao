@@ -7,7 +7,8 @@
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title></title>
+<title>首页</title>
+<link rel="stylesheet" type="text/css" href="<?php echo ($StaticDir); ?>iconfont/iconfont.css">
 <link href="<?php echo ($StaticCss); ?>base.css" type="text/css" rel="stylesheet">
 <link href="<?php echo ($StaticCss); ?>carousel.css" type="text/css" rel="stylesheet">
 <link href="<?php echo ($StaticCss); ?>index.css" type="text/css" rel="stylesheet">
@@ -26,7 +27,7 @@
 	<div id="header" class="">
 		<a class="menu icon"><img src="./images/logo.png"/></a>
 		<i class="space"></i>
-		<a href="<?php echo U('App/Index/cart');?>" id="j-mui-tinycart" target="_blank" class="tinycart icon" data-spm="dcart" href=""><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 1077 1024"><path d="M267 879a70 70 0 1 1 0 139 70 70 0 0 1 0-139zm605 0a70 70 0 1 1 0 139 70 70 0 0 1 0-139zm37-131H255l-50-474h776l-72 474zm145-537a38 38 0 0 0-29-13H197L179 31a38 38 0 0 0-38-34H18v76h89l76 717c2 19 19 34 38 34h720a38 38 0 0 0 38-33l84-549a38 38 0 0 0-9-31z"></path></svg><span id="cart_num"><?php echo ($cart_num); ?></span></a>
+		<a href="<?php echo U('Member/index');?>" id="headLogin">登录</a>
 	</div>
 </div>
 <div class="index-con">
@@ -95,5 +96,56 @@
 	</div>
 	<div class="banPre100 hide"><a href=""><img src="../images/banner03_s.jpg"/></a></div>
 </div>
+<div class="tb-toolbar-container">
+  <a class="tab" href="<?php echo U('App/Index/index');?>" data-action="index_index">
+    <span class="tb-toolbar-iconfont iconfont tb-icon-homepage"></span>
+    <p class="text">首页</p></a>
+  <a class="tab" href="<?php echo U('App/Index/cart');?>" data-action="index_cart">
+    <span class="tb-toolbar-iconfont iconfont tb-icon-cart"></span>
+    <p class="text">购物车</p></a>
+  <a class="tab" href="<?php echo U('App/Member/orderlist');?>" data-action="member_orderlist">
+    <span class="tb-toolbar-iconfont iconfont tb-icon-activity"></span>
+    <p class="text">订单</p></a>
+  <a class="tab" href="<?php echo U('App/Member/index');?>" data-action="member_index">
+    <span class="tb-toolbar-iconfont iconfont tb-icon-mine"></span>
+    <p class="text">我的</p></a>
+</div>
+<script language="javascript" type="text/javascript">
+	$(function(){
+		renderBar();
+	});
+	
+	//渲染底部菜单的当前项
+	function renderBar()
+	{
+		var a = getParam('a');
+		var m = getParam('m');
+		if( m == '' || m == null ){
+			m = 'Index';
+		}
+		if( a == '' || a == null ){
+			a = 'index';
+		}
+		var action = m.toLowerCase() + '_' + a.toLowerCase();
+		$('.tb-toolbar-container a[data-action='+action+']').addClass('active').siblings().removeClass('active');
+	}
+	function getParam(paramName) { 
+	    paramValue = "", isFound = !1; 
+	    if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) { 
+	        arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0; 
+	        while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++ 
+	    }
+	    return paramValue == "" && (paramValue = null), paramValue 
+	} 
+</script>
+<script language="javascript" type="text/javascript">
+	$(function(){
+		user_id = <?php echo ($user_id); ?>;
+		var is_login = isLogin();
+		if( is_login ){
+			$('#headLogin').html('<span class="iconfont icon-icon7"></span>');
+		}
+	});
+</script>
 </body>
 </html>

@@ -6,8 +6,7 @@
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title></title>
-<link href="<?php echo ($StaticDir); ?>bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+<title>用户登录</title>
 <link href="<?php echo ($StaticDir); ?>mui/css/mui.min.css" type="text/css" rel="stylesheet">
 <link href="<?php echo ($StaticCss); ?>base.css" type="text/css" rel="stylesheet">
 <link href="<?php echo ($StaticCss); ?>login.css" type="text/css" rel="stylesheet">
@@ -48,14 +47,14 @@
 	        <a href="<?php echo U('App/Member/register');?>" class="ft-right reg">免费注册</a>
 	        <div class="clearfix"></div>
 	    </div>
-	    <div class="other-link">
-	    	<div class="weixinLogin">
-	        	<a href="<?php echo U('Member/wxlogin');?>">
-		        	<span class="icon"></span>
-					<span class="txt">微信登录</span>
-	        	</a>
-	    	</div>
-	    </div>
+	    <?php if($is_wx == 1): ?><div class="other-link">
+		    	<div class="weixinLogin">
+		        	<a href="<?php echo U('Member/wxlogin');?>">
+			        	<span class="icon"></span>
+						<span class="txt">微信登录</span>
+		        	</a>
+		    	</div>
+		    </div><?php endif; ?>
 	</div>
 </body>
 </html>

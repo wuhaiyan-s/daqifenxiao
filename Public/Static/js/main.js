@@ -1,38 +1,8 @@
 var base_url = '';
-function getGoods()
+var user_id = '';
+function isLogin()
 {
-	var url = base_url+'/index.php?g=App&m=Goods&a=getList';
-	$.post(url,function(res){
-		console.log(res);
-		var html = '';
-		if( res.length > 0 ){
-/*
-			for(){
-				html += '\
-		<div class="mui-chaoshi-item">\
-			<a class="mui-chaoshi-item-column-inner" href="">\
-				<div class="img-wrapper ">\
-					<img class="item-img" src="">\
-					<div class="soldout-mark"></div>\
-				</div>\
-				<div class="item-main">\
-					<div class="item-info">\
-						<h3 class="item-title"></h3>\
-						<p class="item-specs"><span>250ml×16盒</span></p>\
-					</div>\
-					<div class="item-imp">\
-						<div class="imp-main">\
-							<div class="item-price"><b class="promotion-price">¥69.9</b></div>\  												<button class="cart j_AddCart"></button>\
-						</div>\
-					</div>\
-				</div>\
-			</a>\
-		</div>';
-*/
-			//}
-		}
-		
-	});
+	return (user_id > 0) ? 1 : 0;
 }
 
 //获取根据url获取url中参数值

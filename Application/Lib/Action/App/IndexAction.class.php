@@ -78,7 +78,8 @@ class IndexAction extends BaseAction {
 		
 		$goodsArr = D('Goods')->getGoods( array('status'=>1),'id,name,price,old_price,image,goods_desc' );
 		$this->assign ( "goods", $goodsArr );
-		$this->assign("users", $this->$userinfo );
+		$this->assign("users", $this->userinfo );
+		$this->assign("user_id", $this->uid ); 
 		$this->display();
 	}
 	

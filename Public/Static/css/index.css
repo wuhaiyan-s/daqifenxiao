@@ -1,12 +1,26 @@
 body,html{
-	background: #dc2405;
+/* 	background: #dc2405; */
 }
 .carousel-caption{
 	display: none;
 }
+#header{
+	position: relative;
+}
 #header-wrapper{
 	height: -webkit-calc(44px + var(--safe-area-inset-top))!important;
     height: calc(44px + var(--safe-area-inset-top))!important;
+}
+#headLogin{
+	font-size: 1.167rem;
+	position: absolute;
+	top: 0px;
+	right: 0.75rem;
+}
+#headLogin span{
+	font-size: 22px;
+	color: #777;
+	margin-right: 0.5rem;
 }
 #header-wrapper #header:not([class=transparent]) {
     color: #fff;
@@ -289,7 +303,7 @@ div#header .menu svg {
     transition: transform ease .3s, background-color ease .2s, opacity ease .2s;
 }
 .index-con{
-	padding:0px;
+	padding:0px; 
 	background: #f0f0f0;
 }
 .m-slider,.m-icon-entrance,.banPre100{
@@ -390,6 +404,7 @@ div#header .menu svg {
     background-color: #f8f8f8;
     overflow: hidden;
     min-height: 390px;
+    padding-bottom: 45px;
 }
 .social-title{
 	display: block;
