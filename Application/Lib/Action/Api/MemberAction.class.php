@@ -203,6 +203,16 @@ class MemberAction extends Action {
 		if( strlen($phone) < 11 ){
 			showMsg(50254,$ERROR_LIST[50254]);
 		}
+		
+		$user = M('User')->where("phone = '{$phone}'")->find();
+		if( $user && $user['id'] != $uid ){
+			showMsg(50252,$ERROR_LIST[50252]);
+		}
+		$data          = array();
+		$data['id']    = $uid;
+		$data['phone'] = $phone;
+		M('User')->save($data);
+		showMsg(200,'绑定成功');
 	}
 	
 	//修改个人资料

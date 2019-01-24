@@ -28,18 +28,12 @@
 	
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
-	    <div class="item active">
-	      <img src="<?php echo ($UploadDir); echo ($goods["image"]); ?>"/>
-	      <div class="carousel-caption">
-	        1/2
-	      </div>
-	    </div>
-	    <div class="item">
-	      <img src="./images/p2.png" alt="">
-	      <div class="carousel-caption">
-	       	2/2
-	      </div>
-	    </div>
+		<?php if(is_array($goodsimages)): $num = 0; $__LIST__ = $goodsimages;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$img): $mod = ($num % 2 );++$num;?><div class="item <?php if($num == 1) echo 'active';?>">
+		      <img src="<?php echo ($UploadDir); echo ($img["src"]); ?>"/>
+		      <div class="carousel-caption">
+		        <?php echo ($num); ?>/<?php echo ($imagecount); ?>
+		      </div>
+		    </div><?php endforeach; endif; else: echo "" ;endif; ?>
 	  </div>
 	
 	  <!-- Controls -->

@@ -7,6 +7,60 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Plugin/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Plugin/umeditor/umeditor.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Plugin/umeditor/lang/zh-cn/zh-cn.js"></script>
+<style type="text/css" media="screen">
+	.goodsimageLi{
+		float: left;
+		margin:0px;
+		padding:0px;
+		margin-right: 2%;
+		margin-bottom: 10px;
+		display: block;
+		list-style:none;
+		width: 18%;
+	}
+	.goodsimageLi span{
+		display: block;
+		cursor: pointer;
+		padding:6px 12px;
+		text-align: center;
+		margin:0px auto;
+		margin-top: 5px;
+		color: #ffff;
+		border-radius: 3px;
+		background: #337ab7;
+		line-height: 1.42857143;
+		font-size: 14px;
+	}
+	.goodsimageLi span.setCover{
+		float: left;
+	}
+	.goodsimageLi span.delImg{
+		background: #d9534f;
+		float: right;
+	}
+	.goodsimageLi b{
+		text-align: left;
+		font-style: normal;
+		font-weight: normal;
+		height: 20px;
+		line-height: 20px;
+		display: block;
+	}
+	.goodsimage{
+		width: 100%;
+		margin-top: 5px;
+		max-width: 200px;
+		max-height: 200px;
+	}
+	.help-block{
+		display: block;
+		clear: both;
+	}
+	.goodsfile{
+		height: 20px;
+		overflow: hidden;
+	}
+</style>
 
 <div class="col-sm-12 widget-container-span">
 	<div class="widget-box transparent">
@@ -57,7 +111,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 												<td>{$result.menu}</td>
 												<td>{$result.price}</td>
 												<td>{$result.time}</td>
-												<td><a href="javascript:void(0);" onclick="reGood(this);" class="btn btn-white btn-sm">修改</a><a class="J_ajax_del btn btn-white btn-sm" href="{:U('Admin/Good/delgood',array('id'=>$result['id']))}">删除</a></td>
+												<td><a href="javascript:void(0);" onclick="reGood({$result.id});" class="btn btn-white btn-sm">修改</a><a class="J_ajax_del btn btn-white btn-sm" href="{:U('Admin/Good/delgood',array('id'=>$result['id']))}">删除</a></td>
 											</tr>
 										</volist>
 										</tbody>
@@ -72,6 +126,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 					
 					<div id="home2" class="tab-pane in">
 						<form class="form-horizontal J_ajaxForm" enctype="multipart/form-data" id="myform" action="{:U('Admin/Good/addgood')}" method="post">
+							<input type="hidden" name="goodid"/>
 							<div class="tabbable">
 								<div class="tab-content">
 									<div class="tab-pane active">
@@ -111,8 +166,49 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 												</tr>
 												<tr>
 													<td>商品图片:</td>
-													<td><input multiple="multiple" type="file" name="addimage">
-													<p class="help-block">允许的附件文件类型: jpg,gif,png,jpeg并且图片大小小于200k.</p></td>
+													<td>
+														<li class="goodsimageLi"><b>图片1</b>
+															<input multiple="multiple" type="file" name="goodsimage[0][file]" class="goodsfile">
+															<input type="hidden" value="" name="goodsimage[0][imageContent]" class="imagesrc"/>
+															<input type="hidden" value="" name="goodsimage[0][imageType]" class="imagetype"/>
+															<img src="./Public/Uploads/goods_default.png" class="goodsimage"/>
+															<input type="hidden" value="" name="goodsimage[0][isCover]" class="imagesort"/>
+															<span onclick="setCover(0)" class="setCover">设为封面</span><span class="delImg" onclick="delImg(1)">删除图片</span>
+														</li>
+														<li class="goodsimageLi"><b>图片2</b>
+															<input multiple="multiple" type="file" name="goodsimage[1][file]" class="goodsfile">
+															<input type="hidden" value="" name="goodsimage[1][imageContent]" class="imagesrc"/>
+															<input type="hidden" value="" name="goodsimage[1][imageType]" class="imagetype"/>
+															<img src="./Public/Uploads/goods_default.png" class="goodsimage"/>
+															<input type="hidden" value="" name="goodsimage[1][isCover]" class="imagesort"/>
+															<span onclick="setCover(1)" class="setCover">设为封面</span><span class="delImg" onclick="delImg(1)">删除图片</span>
+														</li>
+														<li class="goodsimageLi"><b>图片3</b>
+															<input multiple="multiple" type="file" name="goodsimage[2][file]" class="goodsfile">
+															<input type="hidden" value="" name="goodsimage[2][imageContent]" class="imagesrc"/>
+															<input type="hidden" value="" name="goodsimage[2][imageType]" class="imagetype"/>
+															<img src="./Public/Uploads/goods_default.png" class="goodsimage"/>
+															<input type="hidden" value="" name="goodsimage[2][isCover]" class="imagesort"/>
+															<span onclick="setCover(2)" class="setCover">设为封面</span><span class="delImg" onclick="delImg(2)">删除图片</span>
+														</li>
+														<li class="goodsimageLi"><b>图片4</b>
+															<input multiple="multiple" type="file" name="goodsimage[3][file]" class="goodsfile">
+															<input type="hidden" value="" name="goodsimage[3][imageContent]" class="imagesrc"/>
+															<input type="hidden" value="" name="goodsimage[3][imageType]" class="imagetype"/>
+															<img src="./Public/Uploads/goods_default.png" class="goodsimage"/>
+															<input type="hidden" value="" name="goodsimage[3][isCover]" class="imagesort"/>
+															<span onclick="setCover(3)" class="setCover">设为封面</span><span class="delImg" onclick="delImg(3)">删除图片</span>
+														</li>
+														<li class="goodsimageLi"><b>图片5</b>
+															<input multiple="multiple" type="file" name="goodsimage[4][file]" class="goodsfile">
+															<input type="hidden" value="" name="goodsimage[4][imageContent]" class="imagesrc"/>
+															<input type="hidden" value="" name="goodsimage[4][imageType]" class="imagetype"/>
+															<img src="./Public/Uploads/goods_default.png" class="goodsimage"/>
+															<input type="hidden" value="" name="goodsimage[4][isCover]" class="imagesort"/>
+															<span onclick="setCover(4)" class="setCover">设为封面</span><span class="delImg" onclick="delImg(4)">删除图片</span>
+														</li>
+														<p class="help-block">允许的附件文件类型: jpg,gif,png,jpeg并且图片大小小于200k，图片宽高比例为1:1，第一张图片作为封面图片。</p>
+													</td>
 												</tr>
 												<tr>
 													<td>商品状态:</td>
@@ -254,11 +350,10 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 		
 		<script type="text/javascript">
 			var flag = true;
-			function reGood(o) {
-				var goodid = $(o).parent().prev().prev().prev().prev().prev().html();
-				$.post("{:U('Admin/Good/getgoodid')}",{"id":goodid},function(data){
+			function reGood(goodsId) {
+				$.post("{:U('Admin/Good/getgoodid')}",{"id":goodsId},function(data){
 					var json = eval(data);
-					
+					$('input[name="goodid"]').val(goodsId);
 					$('select[name="addmenuid"]').val(json.menu_id);
 					$('input[name="addname"]').val(json.name);
 					$('input[name="goods_desc"]').val(json.goods_desc);
@@ -268,14 +363,11 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 					$('input[name="addsort"]').val(json.sort);
 					$('select[name="addstatus"]').val(json.status);
 					$('#myEditor').html(json.detail);
-					
-					if (flag) {
-						$('input[name="addname"]').parent().append('<input type="hidden" name="goodid" value="'+json.id+'">');
-						$('input[name="addimage"]').parent().append('<img src="__PUBLIC__/Uploads/'+json.image+'" id="goodimage" style="max-width:650px" class="img-thumbnail">');
-						flag = false;
-					}else{
-						$('input[name="goodid"]').val(json.id);
-						$('#goodimage').attr("src","__PUBLIC__/Uploads/"+json.image);
+					var images = JSON.parse(json.images);
+					for( var i = 0; i < images.length;i++ ){
+						$('.goodsimage').eq(i).attr('src',"{$UploadDir}"+images[i].src);
+						$('.imagetype').eq(i).val(images[i].type);
+						$('.imagesrc').eq(i).val(images[i].src);
 					}
 				});
 				$('#myTab li').removeClass("active");
@@ -293,6 +385,42 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 	    um.addListener('focus',function(){
 	        $('#focush2').html('')
 	    });
+	    
+	    //设置为封面
+	    function setCover(imgSort)
+	    {
+		    if( $('.imagesrc').eq(imgSort).val() == '' ){
+			    alert('请先上传图片')
+			    return;
+		    }
+		    $('.imagesort').val(0);
+		    $('.imagesort').eq(imgSort).val(1);
+	    }
+	    
+	    //删除图片
+	    function delImg(imgSort)
+	    {
+		    $('.imagesrc').eq(imgSort).val(0);
+		    $('.imagetype').eq(imgSort).val(0);
+		    $('.goodsimage').eq(imgSort).attr('src',"{$UploadDir}goods_default.png");
+	    }
+	    
+	    //html5实现图片预览功能
+        $(function () {
+            $(".goodsfile").change(function (e) {
+	            var fileObj = $(this);
+                var file = e.target.files[0] || e.dataTransfer.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function () {
+	                    fileObj.parent().find('.goodsimage').attr('src',this.result);
+	                    fileObj.parent().find('.imagesrc').val(this.result);
+	                    fileObj.parent().find('.imagetype').val(file.type);
+                    }
+                }
+            });
+        });
 	</script>
 	</div>
 </div>

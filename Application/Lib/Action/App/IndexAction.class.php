@@ -110,10 +110,13 @@ class IndexAction extends BaseAction {
 				$goods['price'] = $goods['price'] * ($zhekou/100);
 			}
 		}
+		$goods['images'] = json_decode($goods['images'],true);
 			
 		$cartData = json_decode($_COOKIE['cartData'],true);
 		$this->assign( "cart_num", count($cartData) );
 		$this->assign( "goods", $goods );
+		$this->assign( "goodsimages", $goods['images'] );
+		$this->assign( "imagecount", count($goods['images']) );
 		$this->display();
 	}
 	

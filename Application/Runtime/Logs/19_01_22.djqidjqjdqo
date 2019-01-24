@@ -14853,3 +14853,187 @@ INFO: [ view_end ] --START--
 INFO: ShowPageTrace Behavior ::run [ RunTime:0.000436s ]
 INFO: [ view_end ] --END-- [ RunTime:0.000482s ]
 
+[ 2019-01-22T22:55:15+08:00 ] 114.250.55.2 /
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000719s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000917s ]
+NOTIC: [2048] Declaration of IndexAction::display() should be compatible with Action::display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 2 行.
+NOTIC: [8] Undefined index: uid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 10 行.
+NOTIC: [8] Undefined index: openid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 11 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 15 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 16 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 17 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 18 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 19 行.
+SQL: SHOW COLUMNS FROM `wemall_goods` [ RunTime:0.000597s ]
+ERR: 1146:Table 'fenxiao01.wemall_goods' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `wemall_goods`
+SQL: SELECT `id`,`name`,`price`,`old_price`,`image`,`goods_desc` FROM `wemall_good` WHERE ( `status` = 1 ) ORDER BY sort asc,id desc  [ RunTime:0.000080s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Undefined index: title /var/www/site/daqifenxiao/Application/Runtime/Cache/App/ff6349fb40733226112d8fec876ed9c2.php 第 86 行.
+NOTIC: [8] Undefined index: title /var/www/site/daqifenxiao/Application/Runtime/Cache/App/ff6349fb40733226112d8fec876ed9c2.php 第 86 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.000990s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001050s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000275s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.000252s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000133s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000331s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001110s ]
+INFO: [ view_end ] --START--
+INFO: ShowPageTrace Behavior ::run [ RunTime:0.000414s ]
+INFO: [ view_end ] --END-- [ RunTime:0.000460s ]
+
+[ 2019-01-22T22:55:18+08:00 ] 114.250.55.2 /
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000522s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000685s ]
+NOTIC: [2048] Declaration of IndexAction::display() should be compatible with Action::display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 2 行.
+NOTIC: [8] Undefined index: uid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 10 行.
+NOTIC: [8] Undefined index: openid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 11 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 15 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 16 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 17 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 18 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 19 行.
+SQL: SHOW COLUMNS FROM `wemall_goods` [ RunTime:0.000618s ]
+ERR: 1146:Table 'fenxiao01.wemall_goods' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `wemall_goods`
+SQL: SELECT `id`,`name`,`price`,`old_price`,`image`,`goods_desc` FROM `wemall_good` WHERE ( `status` = 1 ) ORDER BY sort asc,id desc  [ RunTime:0.000102s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Undefined index: title /var/www/site/daqifenxiao/Application/Runtime/Cache/App/ff6349fb40733226112d8fec876ed9c2.php 第 86 行.
+NOTIC: [8] Undefined index: title /var/www/site/daqifenxiao/Application/Runtime/Cache/App/ff6349fb40733226112d8fec876ed9c2.php 第 86 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.001026s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001080s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000267s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.000242s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000155s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000333s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001122s ]
+INFO: [ view_end ] --START--
+INFO: ShowPageTrace Behavior ::run [ RunTime:0.000468s ]
+INFO: [ view_end ] --END-- [ RunTime:0.000531s ]
+
+[ 2019-01-22T22:55:20+08:00 ] 114.250.55.2 /index.php?m=Member&a=index
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000376s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000459s ]
+NOTIC: [2048] Declaration of MemberAction::display() should be compatible with Action::display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') /var/www/site/daqifenxiao/Application/Lib/Action/App/MemberAction.class.php 第 2 行.
+NOTIC: [8] Undefined index: uid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 10 行.
+NOTIC: [8] Undefined index: openid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 11 行.
+
+[ 2019-01-22T22:55:20+08:00 ] 114.250.55.2 /index.php?g=App&m=Member&a=login
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000466s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000568s ]
+NOTIC: [2048] Declaration of MemberAction::display() should be compatible with Action::display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') /var/www/site/daqifenxiao/Application/Lib/Action/App/MemberAction.class.php 第 2 行.
+NOTIC: [8] Undefined index: uid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 10 行.
+NOTIC: [8] Undefined index: openid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 11 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 15 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 16 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 17 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 18 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.000610s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.000672s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000260s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.000308s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000140s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000302s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001171s ]
+INFO: [ view_end ] --START--
+INFO: ShowPageTrace Behavior ::run [ RunTime:0.000523s ]
+INFO: [ view_end ] --END-- [ RunTime:0.000575s ]
+
+[ 2019-01-22T22:55:23+08:00 ] 114.250.55.2 /
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000543s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000714s ]
+NOTIC: [2048] Declaration of IndexAction::display() should be compatible with Action::display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 2 行.
+NOTIC: [8] Undefined index: uid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 10 行.
+NOTIC: [8] Undefined index: openid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 11 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 15 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 16 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 17 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 18 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 19 行.
+SQL: SHOW COLUMNS FROM `wemall_goods` [ RunTime:0.001022s ]
+ERR: 1146:Table 'fenxiao01.wemall_goods' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `wemall_goods`
+SQL: SELECT `id`,`name`,`price`,`old_price`,`image`,`goods_desc` FROM `wemall_good` WHERE ( `status` = 1 ) ORDER BY sort asc,id desc  [ RunTime:0.000075s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Undefined index: title /var/www/site/daqifenxiao/Application/Runtime/Cache/App/ff6349fb40733226112d8fec876ed9c2.php 第 86 行.
+NOTIC: [8] Undefined index: title /var/www/site/daqifenxiao/Application/Runtime/Cache/App/ff6349fb40733226112d8fec876ed9c2.php 第 86 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.000970s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001024s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000273s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.000318s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000136s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000403s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001284s ]
+INFO: [ view_end ] --START--
+INFO: ShowPageTrace Behavior ::run [ RunTime:0.001366s ]
+INFO: [ view_end ] --END-- [ RunTime:0.001433s ]
+
+[ 2019-01-22T22:55:37+08:00 ] 114.250.55.2 /index.php?g=App&m=Index&a=cart
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000471s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000604s ]
+NOTIC: [2048] Declaration of IndexAction::display() should be compatible with Action::display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') /var/www/site/daqifenxiao/Application/Lib/Action/App/IndexAction.class.php 第 2 行.
+NOTIC: [8] Undefined index: uid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 10 行.
+NOTIC: [8] Undefined index: openid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 11 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 15 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 16 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 17 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 18 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.001129s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001229s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000271s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.000250s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000126s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000304s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001077s ]
+INFO: [ view_end ] --START--
+INFO: ShowPageTrace Behavior ::run [ RunTime:0.000402s ]
+INFO: [ view_end ] --END-- [ RunTime:0.000449s ]
+
+[ 2019-01-22T22:55:38+08:00 ] 114.250.55.2 /index.php?g=App&m=Member&a=index
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000393s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000476s ]
+NOTIC: [2048] Declaration of MemberAction::display() should be compatible with Action::display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') /var/www/site/daqifenxiao/Application/Lib/Action/App/MemberAction.class.php 第 2 行.
+NOTIC: [8] Undefined index: uid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 10 行.
+NOTIC: [8] Undefined index: openid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 11 行.
+
+[ 2019-01-22T22:55:38+08:00 ] 114.250.55.2 /index.php?g=App&m=Member&a=login
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000354s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000427s ]
+NOTIC: [2048] Declaration of MemberAction::display() should be compatible with Action::display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '') /var/www/site/daqifenxiao/Application/Lib/Action/App/MemberAction.class.php 第 2 行.
+NOTIC: [8] Undefined index: uid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 10 行.
+NOTIC: [8] Undefined index: openid /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 11 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 15 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 16 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 17 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 18 行.
+NOTIC: [8] Use of undefined constant __PUBLIC__ - assumed '__PUBLIC__' /var/www/site/daqifenxiao/Application/Lib/Action/App/BaseAction.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.000754s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.000819s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000254s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.000240s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000138s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000292s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001057s ]
+INFO: [ view_end ] --START--
+INFO: ShowPageTrace Behavior ::run [ RunTime:0.000454s ]
+INFO: [ view_end ] --END-- [ RunTime:0.000497s ]
+

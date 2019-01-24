@@ -58,11 +58,10 @@ class GoodAction extends PublicAction {
 		}
 		
 		$this->assign ( "tixianinfo", $tixianinfo );
-		
-		
-		
+		$this->assign ( "UploadDir", __UPLOADS__);
 		$this->display ();
 	}
+	
 	public function addgood() {
 		if ($_POST["goodid"]) {
 			$data ["id"] = $_POST["goodid"];
@@ -73,10 +72,47 @@ class GoodAction extends PublicAction {
 			$data ["old_price"] = $_POST ["add_old_price"];
 			$data ["commision"] = $_POST ["add_commision"];
 			$data ["sort"] = $_POST ["addsort"];
-			if ($_FILES ['addimage'] ['name'] !== '') {
-				$img = $this->upload ();
-				$picurl = $img [0] [savename];
-				$data ["image"] = $picurl;
+			
+			$images = array();
+			foreach( $_POST['goodsimage'] as $img ){
+				if( strlen($img['imageContent']) < 10 ){
+					continue;
+				}
+				
+				$Img = array();
+				if( strlen($img['imageContent']) > 10 && strlen($img['imageContent']) <= 100 ){
+					if( $img['isCover'] ){
+						$data['image'] = $img['imageContent'];//封面图片
+					}
+					$Img['src']  = $img['imageContent'];
+					$Img['type'] = $img['imageType'];
+					$images[] = $Img;
+				}elseif( strlen($img['imageContent']) > 100 ){
+					$type = explode("/", $img['imageType']);
+					$type = $type[1];
+					
+					$file_content = explode(",", $img['imageContent']);
+					$file_content = base64_decode($file_content[1]);
+					
+					$filename = 'g'.time().'_'.rand(1000,9999).'.'.$type;
+					$path = __UPLOADS__.$filename;
+					file_put_contents($path,$file_content );
+					
+					if( $img['isCover'] ){
+						$data['image'] = $filename;//封面图片
+					}
+					
+					$Img['src']  = $filename;
+					$Img['type'] = $img['imageType'];
+					$images[] = $Img;
+				}
+				
+			}
+			if( !empty($images) ){
+				if( empty($data['image']) ){
+					$data['image'] = $images[0]['src'];//封面图片
+				}
+				$data['images'] = json_encode($images);
 			}
 			$data ["status"] = $_POST ["addstatus"];
 			if(!empty($_POST ["editorValue"]))$data ["detail"] = $_POST ["editorValue"];
@@ -91,12 +127,24 @@ class GoodAction extends PublicAction {
 			$data ["goods_desc"] = $_POST ["goods_desc"];
 			$data ["commision"] = $_POST ["add_commision"];
 			$data ["sort"] = $_POST ["addsort"];
-			if ($_FILES ['addimage'] ['name'] !== '') {
-				$img = $this->upload ();
-				$picurl = $img [0] [savename];
-				$data ["image"] = $picurl;
-			} else {
-				$this->error ( "未上传图片！" );
+			$images = array();
+			foreach( $_POST['goodsimage'] as $img ){
+				if( strlen($img['imageContent']) > 100 ){
+					$type = explode("/", $img['imageType']);
+					$type = $type[1];
+					
+					$file_content = explode(",", $img['imageContent']);
+					$file_content = base64_decode($file_content[1]);
+					
+					$filename = 'g'.time().'_'.rand(1000,9999).'.'.$type;
+					$path = __UPLOADS__.$filename;
+					file_put_contents($path,$file_content );
+					$images[] = $filename;
+				}
+			}
+			if( !empty($images) ){
+				$data['image'] = $images[0];//封面图片
+				$data['images'] = json_encode($images);
 			}
 			$data ["status"] = $_POST ["addstatus"];
 			$data ["detail"] = $_POST ["editorValue"];
@@ -105,6 +153,7 @@ class GoodAction extends PublicAction {
 			$this->success ( "添加商品成功！" );
 		}
 	}
+	
 	public function delgood() {
 		$result = R ( "Api/Api/delgood", array (
 				$_GET ["id"] 

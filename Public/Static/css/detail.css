@@ -481,6 +481,9 @@
 .module-adds span:first-child {
     text-align: left
 }
+.module-desc{
+	margin-bottom: 50px;
+}
 .module-desc .scrolltips{
 	background: #f5f5f5;
 	

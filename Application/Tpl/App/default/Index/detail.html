@@ -28,18 +28,14 @@
 	
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
-	    <div class="item active">
-	      <img src="{$UploadDir}{$goods.image}"/>
-	      <div class="carousel-caption">
-	        1/2
-	      </div>
-	    </div>
-	    <div class="item">
-	      <img src="./images/p2.png" alt="">
-	      <div class="carousel-caption">
-	       	2/2
-	      </div>
-	    </div>
+		<volist name="goodsimages" key="num" id="img">
+			<div class="item <?php if($num == 1) echo 'active';?>">
+		      <img src="{$UploadDir}{$img.src}"/>
+		      <div class="carousel-caption">
+		        {$num}/{$imagecount}
+		      </div>
+		    </div>
+		</volist>
 	  </div>
 	
 	  <!-- Controls -->

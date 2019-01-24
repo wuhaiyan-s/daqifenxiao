@@ -49,6 +49,14 @@
     	<div class="submit">
             <a href="javascript:void(0);" onclick="reg();" class="regBtn" id="submit-btn">确定</a>
         </div>
+        <?php if($is_wx == 1): ?><div class="other-link">
+		    	<div class="weixinLogin">
+		        	<a href="<?php echo U('Member/wxlogin');?>">
+			        	<span class="icon"></span>
+						<span class="txt">微信登录</span>
+		        	</a>
+		    	</div>
+		    </div><?php endif; ?>
     </form>
 </body>
 <script src="<?php echo ($StaticDir); ?>mui/js/mui.min.js" language="javascript" type="text/javascript"></script>

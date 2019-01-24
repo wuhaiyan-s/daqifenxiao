@@ -22,7 +22,7 @@ define ( 'APP_PATH', APP_SITE.'/Application/' );
 
 define ( 'APP_DEBUG', true );
 
-define ( '__UPLOADS__',APP_SITE.'/Public/uploads/' );
+define ( '__UPLOADS__','./Public/Uploads/' );
 require './Core/index.php';
 
 

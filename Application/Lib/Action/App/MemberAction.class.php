@@ -575,7 +575,7 @@ class MemberAction extends BaseAction {
 				$user['uid']      = $this->openid;
 				$this->uid        = $_SESSION['uid'] = M( "User" )->add( $user );
 				//这个地方要跳转到用户填写手机号的地方
-				$this->redirect( U('Member/wxreg') );
+				$this->redirect( U('Member/addmobile') );
 			}
 		}
 	}
@@ -602,6 +602,8 @@ class MemberAction extends BaseAction {
 		if( isset($_GET['mid']) ){
 			$mid = intval($_GET['mid']);
 		}
+		$is_wx    = strpos($_SERVER['HTTP_USER_AGENT'],"icroMessenger") ? 1 : 0;
+		$this->assign("is_wx", $is_wx );
 		$this->assign("mid", $mid );
 		$this->display();
 	}
