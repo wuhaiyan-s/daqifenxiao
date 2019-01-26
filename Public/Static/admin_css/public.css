@@ -1,0 +1,52 @@
+.imageLi{
+		float: left;
+		margin:0px;
+		padding:0px;
+		margin-right: 2%;
+		margin-bottom: 10px;
+		display: block;
+		list-style:none;
+		width: 18%;
+	}
+	.imageLi span{
+		display: block;
+		cursor: pointer;
+		padding:6px 12px;
+		text-align: center;
+		margin:0px auto;
+		margin-top: 5px;
+		color: #ffff;
+		border-radius: 3px;
+		background: #337ab7;
+		line-height: 1.42857143;
+		font-size: 14px;
+	}
+	.imageLi span.setCover{
+		float: left;
+	}
+	.imageLi span.delImg{
+		background: #d9534f;
+		float: right;
+	}
+	.imageLi b{
+		text-align: left;
+		font-style: normal;
+		font-weight: normal;
+		height: 20px;
+		line-height: 20px;
+		display: block;
+	}
+	.imageimg{
+		width: 100%;
+		margin-top: 5px;
+		max-width: 200px;
+		max-height: 200px;
+	}
+	.help-block{
+		display: block;
+		clear: both;
+	}
+	.goodsfile{
+		height: 20px;
+		overflow: hidden;
+	}

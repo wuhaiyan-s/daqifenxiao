@@ -545,3 +545,9 @@ body {
     background: #04be02;
     color: #fff;
 }
+.toHomeBtn{
+	margin-left: 5px;
+	font-style: normal;
+	padding-left:5px;
+	padding-right: 5px;
+}

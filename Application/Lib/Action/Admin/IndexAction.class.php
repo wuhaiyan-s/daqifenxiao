@@ -51,8 +51,7 @@ class IndexAction extends PublicAction {
 			$this->assign ( "buyday", $buyday );
 			$result = M ( "Admin" )->select ();
 			
-			
-			$group_des=array();
+			$group_des   =array();
 			$group_des[1]='商城设置';
 			$group_des[2]='菜单管理';
 			$group_des[3]='商品管理';
@@ -60,7 +59,8 @@ class IndexAction extends PublicAction {
 			$group_des[5]='用户管理';
 			$group_des[6]='微信管理';
 			$group_des[7]='提现管理';
-			
+			$group_des[8]='广告管理';
+			$this->assign('group_des',$group_des);
 			foreach($result as $key=>$info)
 			{
 				if(file_exists("./Public/Conf/group_".$info["username"].".php"))
@@ -71,7 +71,7 @@ class IndexAction extends PublicAction {
 				}
 				else
 				{
-					$group_json = array(1,2,3,4,5,6,7);
+					$group_json = array(1,2,3,4,5,6,7,8);
 				}
 				
 				

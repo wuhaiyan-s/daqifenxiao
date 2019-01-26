@@ -38,24 +38,21 @@
 	<div id="carousel-example-generic" class="carousel slide m-slider " data-ride="carousel">
 	  <!-- Indicators -->
 	  <ol class="carousel-indicators">
-	    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-	    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+		  	<volist name="ads" id="ad" key="n">
+				<li data-target="#carousel-example-generic" data-slide-to="0" class="<?php if($n == 1) echo 'active';?>"></li>
+			</volist>
 	  </ol>
 	
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
-	    <div class="item active">
-	      <img src="./Public/Uploads/a.dpg" alt=>
+		<volist name="ads" id="ad" key="n">
+		<div class="item <?php if($n == 1) echo 'active';?>" onclick="window.location.href='{$ad.url}'">
+	      <img src="{$UploadDir}{$ad.image}" alt="">
 	      <div class="carousel-caption">
-	        图片1
+	        {$ad.title}
 	      </div>
 	    </div>
-	    <div class="item">
-	      <img src="./Public/Uploads/b.dpg" alt="...">
-	      <div class="carousel-caption">
-	        图2
-	      </div>
-	    </div>
+		</volist>
 	  </div>
 	
 	  <!-- Controls -->
@@ -82,14 +79,15 @@
 			<div class="item-list-content ban-dom">
 				<li class="ban-dom">
 					<div class="ui-p-r more-today-pic-div">
-						<img src="__PUBLIC__/Uploads/{$vo.image}" alt="图片" class="more-today-pic"></div>
+						<a href="{:U('Index/detail',array('id'=>$vo['id']))}"><img src="__PUBLIC__/Uploads/{$vo.image}" alt="图片" class="more-today-pic"></a>
+					</div>
 					<div class="more-today-title">
 						<div class="ui-nowrap-two ui-word-break more-zhu-title ui-nowrap-one-new"><span>{$vo.title}</span></div>
 						<div class="ui-nowrap-one-new more-sub-title">{$vo.goods_desc}</div>
 					</div>
 					<div class="ui-rows-m more-item-info more-price-info">
 						<div class="ui-cols ui-cols-75"><em class="more-curr-price">￥{$vo.price}</em><em class="more-pre-price">￥{$vo.old_price}</em></div>
-						<a class="more-buy-now-btn ui-cols ui-text-right" href="./index.php?g=App&m=Index&a=detail&id={$vo.id}">立即抢购</i></a>
+						<a class="more-buy-now-btn ui-cols ui-text-right" href="{:U('Index/detail',array('id'=>$vo['id']))}">立即抢购</i></a>
 					</div>
 				</li>
 			</div>

@@ -188,12 +188,18 @@ div {
     line-height: 22px;
     color: #5D656B;
 }
+.tb-toolbar-container > .tab.active .tb-toolbar-iconfont{
+	color:#e93b3d;
+}
 .tb-toolbar-container .text{
 	line-height: 12px;
     font-size: 12px;
     padding:0px;
     margin:0px;
     transform: scale(0.83333);
+}
+.tb-toolbar-container > .tab.active .text{
+	color:#e93b3d;
 }
 .tb-toolbar-container .tb-toolbar-iconfont.tb-icon-cart{
 	font-weight: bold;

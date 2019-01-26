@@ -58,6 +58,16 @@
 		<script src="__PUBLIC__/Plugin/style/js/ace.min.js"></script>
 	</head>
 	<body>
+<style type="text/css" media="screen">
+	.group-list li{
+		margin:0px 0px 10px 0px;
+		padding:0px;
+		list-style: none;
+	}
+	.group-list li input{
+		margin-right: 3px;
+	}
+</style>
 <div class="col-sm-12 widget-container-span">
 	<div class="widget-box transparent">
 		<div class="widget-header">
@@ -262,15 +272,8 @@
 										<label class="col-sm-3 control-label no-padding-right"
 											for="form-field-2"> 权限组： </label>
 
-										<div class="col-sm-9">
-											商城设置：<input name="group[]" type="checkbox" value="1" />
-											菜单管理：<input name="group[]" type="checkbox" value="2" />
-											商品管理：<input name="group[]" type="checkbox" value="3" />
-											订单管理：<input name="group[]" type="checkbox" value="4" />
-											用户管理：<input name="group[]" type="checkbox" value="5" />
-											微信管理：<input name="group[]" type="checkbox" value="6" />
-											提现管理：<input name="group[]" type="checkbox" value="7" />
-												
+										<div class="col-sm-9 group-list">
+											<?php if(is_array($group_des)): $n = 0; $__LIST__ = $group_des;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$group): $mod = ($n % 2 );++$n;?><li class="col-sm-2"><input name="group[]" type="checkbox" value="<?php echo ($n); ?>" /><?php echo ($group); ?></li><?php endforeach; endif; else: echo "" ;endif; ?>
 										</div>
 									</div>
 

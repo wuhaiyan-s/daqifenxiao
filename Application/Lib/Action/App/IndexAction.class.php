@@ -73,6 +73,9 @@ class IndexAction extends BaseAction {
 	
 	//新首页
 	public function index() {
+		$ads = M('Ad')->where( "status=1" )->order('sort asc,id asc')->select();
+		$this->assign ( "ads", $ads );
+		
 		$cartData = json_decode($_COOKIE['cartData'],true);
 		$this->assign( "cart_num", count($cartData) );
 		

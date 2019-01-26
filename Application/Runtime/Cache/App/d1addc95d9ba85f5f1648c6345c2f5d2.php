@@ -149,7 +149,9 @@
 						<li class="mui-table-view-cell">
 							<a>我的二维码
 								<span class="mui-pull-right">
-									<img src="<?php echo ($ticket); ?>" id="ticket_img" class="bigImgFixed" onclick="showImg('<?php echo ($ticket); ?>');"/>
+									<?php if($user['member'] == '1' ): ?><img src="<?php echo ($ticket); ?>" id="ticket_img" class="bigImgFixed" onclick="showImg('<?php echo ($ticket); ?>');"/>
+									<?php else: ?>
+										购买商品后自动生成推广二维码<i onclick="window.location.href='<?php echo U('Index/index');?>'" class="mui-btn mui-btn-primary mui-btn-outlined toHomeBtn">去首页选购</i><?php endif; ?>
 								</span>
 							</a>
 						</li>

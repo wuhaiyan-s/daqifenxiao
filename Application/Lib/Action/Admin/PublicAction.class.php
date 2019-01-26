@@ -4,6 +4,8 @@ class PublicAction extends Action {
 		if (! $_SESSION ["wadmin"]) {
 			$this->redirect ( "Admin/Login/index" );
 		}
+		$this->assign('StaticCss',__PUBLIC__.'/Static/admin_css/');
+		$this->assign('UploadDir',__PUBLIC__.'/Uploads/');
 	}
 	public function upload() {
 		import ( 'ORG.Net.UploadFile' );

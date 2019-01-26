@@ -1,0 +1,95 @@
+<include file="Public:header"/>
+<link href="{$StaticCss}public.css" type="text/css" rel="stylesheet">
+<div class="col-sm-12 widget-container-span">
+	<div class="widget-box transparent">
+		<div class="widget-header">
+			<div class="widget-toolbar no-border">
+				<ul class="nav nav-tabs" id="myTab">
+					<li><a href="{:U('Ad/index')}">广告管理</a></li>
+					<li class="active"><a href="javascript:void(0);">添加/修改广告</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="widget-body">
+			<div class="widget-main padding-12 no-padding-left no-padding-right">
+				<div class="tab-content padding-4">
+					<div id="home1" class="tab-pane in active">
+						<form class="form-horizontal J_ajaxForm" enctype="multipart/form-data" id="myform" action="{:U('Admin/Ad/edit')}" method="post">
+							<input type="hidden" name="id" value="{$ad.id}"/>
+							<div class="tabbable">
+								<div class="tab-content">
+									<div class="tab-pane active">
+										<table cellpadding="2" cellspacing="2" width="100%">
+											<tbody>
+												<tr>
+													<td>广告标题:</td>
+													<td><input type="text" class="input col-sm-6" name="title" value="{$ad.title}"></td>
+												</tr>
+												<tr>
+													<td>跳转网址:</td>
+													<td><input type="text" class="input col-sm-6" name="url" value="{$ad.url}"></td>
+												</tr>
+												<tr>
+													<td>广告排序:</td>
+													<td><input type="text" class="input col-sm-2" name="sort" value="{$ad.sort}"></td>
+												</tr>
+												<tr>
+													<td>广告图片:</td>
+													<td>
+														<li class="imageLi">
+															<input multiple="multiple" type="file" name="imagefile" class="imagefile">
+															<input type="hidden" value="{$ad.image}" name="image[imageContent]" class="imagesrc"/>
+															<input type="hidden" value="" name="image[imageType]" class="imagetype"/>
+															<img src="<?php 
+																if($ad['image']) echo $UploadDir.$ad['image'];
+																else './Public/Uploads/goods_default.png';?>" class="imageimg"/>
+														</li>
+														<p class="help-block">允许的附件文件类型: jpg,png,jpeg并且图片大小小于200k。</p>
+													</td>
+												</tr>
+												<tr>
+													<td>广告状态:</td>
+													<td>
+														<select name="status">
+															<option <?php if($ad['status'] == 1) echo 'selected';?>"  value="1">显示</option>
+															<option <?php if($ad['status'] == 0) echo 'selected';?>" value="0">隐藏</option>
+														</select>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="form-actions">
+								<button class="btn btn-primary btn_submit J_ajax_submit_btn"
+									type="submit">提交</button>
+								<a class="btn" href="">返回</a>
+							</div>
+						</form>
+					</div>                 
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			//html5实现图片预览功能
+	        $(function () {
+	            $(".imagefile").change(function (e) {
+		            var fileObj = $(this);
+	                var file = e.target.files[0] || e.dataTransfer.files[0];
+	                if (file) {
+	                    var reader = new FileReader();
+	                    reader.readAsDataURL(file);
+	                    reader.onload = function () {
+		                    fileObj.parent().find('.imageimg').attr('src',this.result);
+		                    fileObj.parent().find('.imagesrc').val(this.result);
+		                    fileObj.parent().find('.imagetype').val(file.type);
+	                    }
+	                }
+	            });
+	        });
+		</script>
+	</div>
+</div>

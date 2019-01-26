@@ -7,61 +7,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Plugin/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Plugin/umeditor/umeditor.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Plugin/umeditor/lang/zh-cn/zh-cn.js"></script>
-<style type="text/css" media="screen">
-	.goodsimageLi{
-		float: left;
-		margin:0px;
-		padding:0px;
-		margin-right: 2%;
-		margin-bottom: 10px;
-		display: block;
-		list-style:none;
-		width: 18%;
-	}
-	.goodsimageLi span{
-		display: block;
-		cursor: pointer;
-		padding:6px 12px;
-		text-align: center;
-		margin:0px auto;
-		margin-top: 5px;
-		color: #ffff;
-		border-radius: 3px;
-		background: #337ab7;
-		line-height: 1.42857143;
-		font-size: 14px;
-	}
-	.goodsimageLi span.setCover{
-		float: left;
-	}
-	.goodsimageLi span.delImg{
-		background: #d9534f;
-		float: right;
-	}
-	.goodsimageLi b{
-		text-align: left;
-		font-style: normal;
-		font-weight: normal;
-		height: 20px;
-		line-height: 20px;
-		display: block;
-	}
-	.goodsimage{
-		width: 100%;
-		margin-top: 5px;
-		max-width: 200px;
-		max-height: 200px;
-	}
-	.help-block{
-		display: block;
-		clear: both;
-	}
-	.goodsfile{
-		height: 20px;
-		overflow: hidden;
-	}
-</style>
-
+<link href="{$StaticCss}public.css" type="text/css" rel="stylesheet">
 <div class="col-sm-12 widget-container-span">
 	<div class="widget-box transparent">
 		<div class="widget-header">
@@ -167,47 +113,47 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 												<tr>
 													<td>商品图片:</td>
 													<td>
-														<li class="goodsimageLi"><b>图片1</b>
-															<input multiple="multiple" type="file" name="goodsimage[0][file]" class="goodsfile">
+														<li class="imageLi"><b>图片1</b>
+															<input multiple="multiple" type="file" name="goodsimage[0][file]" class="imagefile">
 															<input type="hidden" value="" name="goodsimage[0][imageContent]" class="imagesrc"/>
 															<input type="hidden" value="" name="goodsimage[0][imageType]" class="imagetype"/>
-															<img src="./Public/Uploads/goods_default.png" class="goodsimage"/>
+															<img src="./Public/Uploads/goods_default.png" class="imageimg"/>
 															<input type="hidden" value="" name="goodsimage[0][isCover]" class="imagesort"/>
 															<span onclick="setCover(0)" class="setCover">设为封面</span><span class="delImg" onclick="delImg(1)">删除图片</span>
 														</li>
-														<li class="goodsimageLi"><b>图片2</b>
-															<input multiple="multiple" type="file" name="goodsimage[1][file]" class="goodsfile">
+														<li class="imageLi"><b>图片2</b>
+															<input multiple="multiple" type="file" name="goodsimage[1][file]" class="imagefile">
 															<input type="hidden" value="" name="goodsimage[1][imageContent]" class="imagesrc"/>
 															<input type="hidden" value="" name="goodsimage[1][imageType]" class="imagetype"/>
-															<img src="./Public/Uploads/goods_default.png" class="goodsimage"/>
+															<img src="./Public/Uploads/goods_default.png" class="imageimg"/>
 															<input type="hidden" value="" name="goodsimage[1][isCover]" class="imagesort"/>
 															<span onclick="setCover(1)" class="setCover">设为封面</span><span class="delImg" onclick="delImg(1)">删除图片</span>
 														</li>
-														<li class="goodsimageLi"><b>图片3</b>
-															<input multiple="multiple" type="file" name="goodsimage[2][file]" class="goodsfile">
+														<li class="imageLi"><b>图片3</b>
+															<input multiple="multiple" type="file" name="goodsimage[2][file]" class="imagefile">
 															<input type="hidden" value="" name="goodsimage[2][imageContent]" class="imagesrc"/>
 															<input type="hidden" value="" name="goodsimage[2][imageType]" class="imagetype"/>
-															<img src="./Public/Uploads/goods_default.png" class="goodsimage"/>
+															<img src="./Public/Uploads/goods_default.png" class="imageimg"/>
 															<input type="hidden" value="" name="goodsimage[2][isCover]" class="imagesort"/>
 															<span onclick="setCover(2)" class="setCover">设为封面</span><span class="delImg" onclick="delImg(2)">删除图片</span>
 														</li>
-														<li class="goodsimageLi"><b>图片4</b>
-															<input multiple="multiple" type="file" name="goodsimage[3][file]" class="goodsfile">
+														<li class="imageLi"><b>图片4</b>
+															<input multiple="multiple" type="file" name="goodsimage[3][file]" class="imagefile">
 															<input type="hidden" value="" name="goodsimage[3][imageContent]" class="imagesrc"/>
 															<input type="hidden" value="" name="goodsimage[3][imageType]" class="imagetype"/>
-															<img src="./Public/Uploads/goods_default.png" class="goodsimage"/>
+															<img src="./Public/Uploads/goods_default.png" class="imageimg"/>
 															<input type="hidden" value="" name="goodsimage[3][isCover]" class="imagesort"/>
 															<span onclick="setCover(3)" class="setCover">设为封面</span><span class="delImg" onclick="delImg(3)">删除图片</span>
 														</li>
-														<li class="goodsimageLi"><b>图片5</b>
-															<input multiple="multiple" type="file" name="goodsimage[4][file]" class="goodsfile">
+														<li class="imageLi"><b>图片5</b>
+															<input multiple="multiple" type="file" name="goodsimage[4][file]" class="imagefile">
 															<input type="hidden" value="" name="goodsimage[4][imageContent]" class="imagesrc"/>
 															<input type="hidden" value="" name="goodsimage[4][imageType]" class="imagetype"/>
-															<img src="./Public/Uploads/goods_default.png" class="goodsimage"/>
+															<img src="./Public/Uploads/goods_default.png" class="imageimg"/>
 															<input type="hidden" value="" name="goodsimage[4][isCover]" class="imagesort"/>
 															<span onclick="setCover(4)" class="setCover">设为封面</span><span class="delImg" onclick="delImg(4)">删除图片</span>
 														</li>
-														<p class="help-block">允许的附件文件类型: jpg,gif,png,jpeg并且图片大小小于200k，图片宽高比例为1:1，第一张图片作为封面图片。</p>
+														<p class="help-block">允许的附件文件类型: jpg,png,jpeg并且图片大小小于200k，图片宽高比例为1:1，第一张图片作为封面图片。</p>
 													</td>
 												</tr>
 												<tr>
@@ -365,7 +311,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 					$('#myEditor').html(json.detail);
 					var images = JSON.parse(json.images);
 					for( var i = 0; i < images.length;i++ ){
-						$('.goodsimage').eq(i).attr('src',"{$UploadDir}"+images[i].src);
+						$('.imageimg').eq(i).attr('src',"{$UploadDir}"+images[i].src);
 						$('.imagetype').eq(i).val(images[i].type);
 						$('.imagesrc').eq(i).val(images[i].src);
 					}
@@ -402,19 +348,19 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 	    {
 		    $('.imagesrc').eq(imgSort).val(0);
 		    $('.imagetype').eq(imgSort).val(0);
-		    $('.goodsimage').eq(imgSort).attr('src',"{$UploadDir}goods_default.png");
+		    $('.imageimg').eq(imgSort).attr('src',"{$UploadDir}goods_default.png");
 	    }
 	    
 	    //html5实现图片预览功能
         $(function () {
-            $(".goodsfile").change(function (e) {
+            $(".imagefile").change(function (e) {
 	            var fileObj = $(this);
                 var file = e.target.files[0] || e.dataTransfer.files[0];
                 if (file) {
                     var reader = new FileReader();
                     reader.readAsDataURL(file);
                     reader.onload = function () {
-	                    fileObj.parent().find('.goodsimage').attr('src',this.result);
+	                    fileObj.parent().find('.imageimg').attr('src',this.result);
 	                    fileObj.parent().find('.imagesrc').val(this.result);
 	                    fileObj.parent().find('.imagetype').val(file.type);
                     }
